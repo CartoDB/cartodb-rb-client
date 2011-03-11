@@ -1,0 +1,4 @@
+host: 'http://test.cartodb.com:3000'
+api_key: '8523ab8065a69338d5006c34310dc8d2c0179ebb'
+oauth_key: 'T8ibybfhqR7H1RjqrdVrdAeIG3OaskpbYMAT8Rnl'
+oauth_secret: '8HKVa1tQC0z8q0lTzK3BVzsQti0sY17WwzYaIsI3'
