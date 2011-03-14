@@ -15,6 +15,7 @@ module CartoDB
 
       headers                  = {}
       headers['Accept']        = MIME::Types['application/json']
+      headers['User-Agent']    = 'CartoDB Ruby Client - https://github.com/vizzuality/cartodb-rb-client'
       headers.merge!(arguments[:headers]) if arguments[:headers]
 
       request = signed_request(url,
