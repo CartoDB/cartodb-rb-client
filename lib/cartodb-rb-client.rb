@@ -1,4 +1,5 @@
-require "ostruct"
+require 'ostruct'
+require 'oauth'
 require 'typhoeus'
 require 'mime/types'
 require 'json'
