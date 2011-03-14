@@ -32,8 +32,7 @@ module CartoDB
                           :name => column_name,
                           :type => column_type
                         }
-                      },
-                      :headers => {'Content-Length' => '0'}
+                      }
 
       execute_queue
     end
@@ -46,8 +45,7 @@ module CartoDB
                         :column  => {
                           :name => column_name
                         }
-                      },
-                      :headers => {'Content-Length' => '0'}
+                      }
 
       execute_queue
     end
@@ -62,8 +60,7 @@ module CartoDB
                           :new_name => new_column_name,
                           :type => column_type
                         }
-                      },
-                      :headers => {'Content-Length' => '0'}
+                      }
 
       execute_queue
     end
