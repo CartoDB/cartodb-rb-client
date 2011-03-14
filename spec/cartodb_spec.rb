@@ -145,22 +145,22 @@ describe CartoDB do
       'longitude'   => -3.699871,
       'field1'      => 'illum',
       'field2'      => -83.24,
-      'field3'      => today + 1.day,
+      'field3'      => today + 84600,
       'field4'      => false
     }
 
     table = @cartodb.table table.id
-    table.total_rows.should == 1
+    table.total_rows.should             == 1
     table.rows.should have(1).item
-    table.rows.first.cartodb_id.should == 1
-    table.rows.first.name.should == 'updated_row'
-    table.rows.first.latitude.should == 40.415113
-    table.rows.first.longitude.should == -3.699871
+    table.rows.first.cartodb_id.should  == 1
+    table.rows.first.name.should        == 'updated_row'
+    table.rows.first.latitude.should    == 40.415113
+    table.rows.first.longitude.should   == -3.699871
     table.rows.first.description.should == 'Eu capto illum, iustum, brevitas, lobortis torqueo importunus, capio sudo. Genitus importunus amet iaceo, abluo obruo consequat, virtus eros, aliquip iustum nisl duis zelus. Ymo augue nobis exerci letatio sed.'
-    table.rows.first.field1.should == 'illum'
-    table.rows.first.field2.should == -83.24
-    table.rows.first.field3.should == (today + 1.day).strftime("%Y-%m-%d %H:%M:%S")
-    table.rows.first.field4.should == false
+    table.rows.first.field1.should      == 'illum'
+    table.rows.first.field2.should      == -83.24
+    table.rows.first.field3.should      == (today + 84600).strftime("%Y-%m-%d %H:%M:%S")
+    table.rows.first.field4.should      == false
   end
 
   it "should delete a table's row" do
@@ -199,8 +199,8 @@ describe CartoDB do
       @cartodb.insert_row table.id, {
         'name'        => String.random(15),
         'description' => String.random(200),
-        'latitude'    => rand(180),
-        'longitude'   => rand(360)
+        'latitude'    => rand(90),
+        'longitude'   => rand(180)
       }
     end
 
