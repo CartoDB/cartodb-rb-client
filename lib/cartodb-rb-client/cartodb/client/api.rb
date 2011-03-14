@@ -124,7 +124,7 @@ module CartoDB
     end
 
     def query(query)
-      request = cartodb_request "tables/query", :params => {:query => query} do |response|
+      request = cartodb_request "tables/query", :params => {:sql => query} do |response|
         return Utils.parse_json(response)
       end
 

@@ -1,23 +1,18 @@
 module CartoDB
   class CartoError < Exception
 
-    def initialize(uri, method, http_response)
+    def initialize(uri, method = nil, http_response = nil)
       @uri            = uri
       @method         = method
       @error_messages = ['undefined CartoDB error']
       @status_code    = 400
       @error_messages = [uri] if method == nil && http_response == nil
 
-
       if http_response
         @status_code = http_response.code
         @error_messages = custom_error(http_response) || standard_error(@status_code)
       end
 
-    end
-
-    def initialize(error_message)
-      @error_messages = [error_message]
     end
 
     def to_s
