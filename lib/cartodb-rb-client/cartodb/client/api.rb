@@ -85,7 +85,7 @@ module CartoDB
         table_name = id_or_name
         found_table = tables.select{|table| table.name.eql? table_name}.first
 
-        found_table = table(found_table.id)
+        found_table = found_table ? table(found_table.id) : nil
       when id_or_name.is_a?(Integer)
         table_id = id_or_name
         request = cartodb_request "tables/#{table_id}" do |response|
