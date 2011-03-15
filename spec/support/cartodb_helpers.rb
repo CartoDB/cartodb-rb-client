@@ -5,7 +5,7 @@ module CartodbHelpers
 
     tables_list = cartodb_client.tables
     tables_list.each do |table|
-      cartodb_client.drop_table(table.id) if table && table.id
+      cartodb_client.drop_table(table.name) if table && table.name
     end
   end
 

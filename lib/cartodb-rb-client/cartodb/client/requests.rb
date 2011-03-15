@@ -10,7 +10,7 @@ module CartoDB
         method = :get
       end
 
-      uri = "/api/json/#{uri}"
+      uri = "/#{CartoDB::API::VERSION}/#{uri}"
       url = generate_url uri
 
       headers                  = {}
