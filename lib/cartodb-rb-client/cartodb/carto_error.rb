@@ -1,6 +1,12 @@
 module CartoDB
   class CartoError < Exception
 
+    HTTP_MESSAGES = {
+                      401 => 'Unauthorized request',
+                      404 => 'Not found',
+                      500 => 'Server error'
+                    }
+
     def initialize(uri, method = nil, http_response = nil)
       @uri            = uri
       @method         = method
@@ -36,18 +42,15 @@ module CartoDB
     end
 
     def standard_error(status_code)
-      case status_code
-      when 401
-        ["401 - Unauthorized request"]
-      else
-        nil
-      end
+      "#{status_code} - #{HTTP_MESSAGES[status_code.to_i]}"
     end
     private :standard_error
 
     def format_error_messages
       return '' unless @error_messages
-      if @error_messages.count == 1
+      if @error_messages.is_a?(String)
+        @error_messages
+      elsif @error_messages.is_a?(Array) && @error_messages.count == 1
         @error_messages.first
       else
         @error_messages.map{|e| "- #{e}"}.join("\n")

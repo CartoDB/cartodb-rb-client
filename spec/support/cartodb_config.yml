@@ -1,4 +1,4 @@
-host: 'http://test.cartodb.com:3000' # format: http://host:port
+host: 'http://api.myhost.local:3000' # format: http://host:port
 oauth_key: 'ZUHZOLMg1w8FT7JfvOnMKi5ux7mZbvuK2WaqWyjd'
 oauth_secret: '0Wnozz7NeUp6N6GgSbC288XsfjnjcJsNEPhYO8yy'
 api_key: 'e99d67a8279f1be4be6c361fbb37c9c5e92037e7'

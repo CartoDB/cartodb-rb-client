@@ -13,45 +13,45 @@ describe CartoDB do
 
     table.should_not be_nil
     table.id.should be > 0
-    table = @cartodb.table table.id
-    table.columns.should have(11).items
-    table.columns.should include(["cartodb_id", "number"])
-    table.columns.should include(["name", "string"])
-    table.columns.should include(["latitude", "number", "latitude"])
-    table.columns.should include(["longitude", "number", "longitude"])
-    table.columns.should include(["description", "string"])
-    table.columns.should include(["created_at", "date"])
-    table.columns.should include(["updated_at", "date"])
-    table.columns.should include(["field1", "string"])
-    table.columns.should include(["field2", "number"])
-    table.columns.should include(["field3", "date"])
-    table.columns.should include(["field4", "boolean"])
+    table = @cartodb.table 'cartodb_spec'
+    table.schema.should have(11).items
+    table.schema.should include(["cartodb_id", "number"])
+    table.schema.should include(["name", "string"])
+    table.schema.should include(["latitude", "number", "latitude"])
+    table.schema.should include(["longitude", "number", "longitude"])
+    table.schema.should include(["description", "string"])
+    table.schema.should include(["created_at", "date"])
+    table.schema.should include(["updated_at", "date"])
+    table.schema.should include(["field1", "string"])
+    table.schema.should include(["field2", "number"])
+    table.schema.should include(["field3", "date"])
+    table.schema.should include(["field4", "boolean"])
   end
 
   it "should add and remove colums in a previously created table" do
-    table = @cartodb.create_table 'cartodb_spec'
-    @cartodb.add_column table.id, 'field1', 'text'
-    @cartodb.add_column table.id, 'field2', 'number'
-    @cartodb.add_column table.id, 'field3', 'date'
+    @cartodb.create_table 'cartodb_spec'
+    @cartodb.add_column 'cartodb_spec', 'field1', 'text'
+    @cartodb.add_column 'cartodb_spec', 'field2', 'number'
+    @cartodb.add_column 'cartodb_spec', 'field3', 'date'
 
-    table = @cartodb.table table.id
-    table.columns.should have(10).items
-    table.columns.should include(["field1", "string"])
-    table.columns.should include(["field2", "number"])
-    table.columns.should include(["field3", "date"])
+    table = @cartodb.table 'cartodb_spec'
+    table.schema.should have(10).items
+    table.schema.should include(["field1", "string"])
+    table.schema.should include(["field2", "number"])
+    table.schema.should include(["field3", "date"])
 
-    @cartodb.drop_column table.id, 'field3'
-    table = @cartodb.table table.id
-    table.columns.should have(9).items
-    table.columns.should_not include(["field3", "date"])
+    @cartodb.drop_column 'cartodb_spec', 'field3'
+    table = @cartodb.table 'cartodb_spec'
+    table.schema.should have(9).items
+    table.schema.should_not include(["field3", "date"])
   end
 
   it "should change a previously created column" do
-    table = @cartodb.create_table 'cartodb_spec', [{:name => 'field1', :type => 'text'}]
-    @cartodb.change_column table.id, "field1", "changed_field", "number"
-    table = @cartodb.table table.id
-    table.columns.should_not include(["field1", "string"])
-    table.columns.should include(["changed_field", "number"])
+    @cartodb.create_table 'cartodb_spec', [{:name => 'field1', :type => 'text'}]
+    @cartodb.change_column 'cartodb_spec', "field1", "changed_field", "number"
+    table = @cartodb.table 'cartodb_spec'
+    table.schema.should_not include(["field1", "string"])
+    table.schema.should include(["changed_field", "number"])
   end
 
   it "should return user's table list" do
@@ -70,7 +70,7 @@ describe CartoDB do
     table_2 = @cartodb.create_table 'table #2'
     table_3 = @cartodb.create_table 'table #3'
 
-    @cartodb.drop_table table_2.id
+    @cartodb.drop_table 'table_2'
 
     tables_list = @cartodb.tables
     tables_list.should have(2).items
@@ -88,7 +88,7 @@ describe CartoDB do
 
     today = Time.now
 
-    @cartodb.insert_row table.id, {
+    @cartodb.insert_row 'table_1', {
       'name'        => 'cartoset',
       'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       'latitude'    => 40.423012,
@@ -99,18 +99,20 @@ describe CartoDB do
       'field4'      => true
     }
 
-    table = @cartodb.table table.id
-    table.total_rows.should == 1
-    table.rows.should have(1).item
-    table.rows.first.cartodb_id.should == 1
-    table.rows.first.name.should == 'cartoset'
-    table.rows.first.latitude.should == 40.423012
-    table.rows.first.longitude.should == -3.699732
-    table.rows.first.description.should == 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    table.rows.first.field1.should == 'lorem'
-    table.rows.first.field2.should == 100.99
-    table.rows.first.field3.should == today.strftime("%Y-%m-%d %H:%M:%S")
-    table.rows.first.field4.should == true
+    records = @cartodb.records 'table_1'
+
+    records.name.should be == 'table_1'
+    records.total_rows.should == 1
+    records.rows.should have(1).item
+    records.rows.first.cartodb_id.should == 1
+    records.rows.first.name.should == 'cartoset'
+    records.rows.first.latitude.should == 40.423012
+    records.rows.first.longitude.should == -3.699732
+    records.rows.first.description.should == 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+    records.rows.first.field1.should == 'lorem'
+    records.rows.first.field2.should == 100.99
+    records.rows.first.field3.should == today.strftime("%Y-%m-%d %H:%M:%S")
+    records.rows.first.field4.should == true
   end
 
   it "should update a row in a table" do
@@ -123,7 +125,7 @@ describe CartoDB do
 
     today = Time.now
 
-    @cartodb.insert_row table.id, {
+    @cartodb.insert_row 'table_1', {
       'name'        => 'cartoset',
       'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       'latitude'    => 40.423012,
@@ -134,11 +136,11 @@ describe CartoDB do
       'field4'      => true
     }
 
-    table = @cartodb.table table.id
+    records = @cartodb.records 'table_1'
 
-    row_id = table.rows.first.cartodb_id
+    row_id = records.rows.first.cartodb_id
 
-    @cartodb.update_row table.id, row_id, {
+    @cartodb.update_row 'table_1', row_id, {
       'name'        => 'updated_row',
       'description' => 'Eu capto illum, iustum, brevitas, lobortis torqueo importunus, capio sudo. Genitus importunus amet iaceo, abluo obruo consequat, virtus eros, aliquip iustum nisl duis zelus. Ymo augue nobis exerci letatio sed.',
       'latitude'    => 40.415113,
@@ -149,18 +151,20 @@ describe CartoDB do
       'field4'      => false
     }
 
-    table = @cartodb.table table.id
-    table.total_rows.should             == 1
-    table.rows.should have(1).item
-    table.rows.first.cartodb_id.should  == 1
-    table.rows.first.name.should        == 'updated_row'
-    table.rows.first.latitude.should    == 40.415113
-    table.rows.first.longitude.should   == -3.699871
-    table.rows.first.description.should == 'Eu capto illum, iustum, brevitas, lobortis torqueo importunus, capio sudo. Genitus importunus amet iaceo, abluo obruo consequat, virtus eros, aliquip iustum nisl duis zelus. Ymo augue nobis exerci letatio sed.'
-    table.rows.first.field1.should      == 'illum'
-    table.rows.first.field2.should      == -83.24
-    table.rows.first.field3.should      == (today + 84600).strftime("%Y-%m-%d %H:%M:%S")
-    table.rows.first.field4.should      == false
+    records = @cartodb.records 'table_1'
+
+    records.name.should be == 'table_1'
+    records.total_rows.should             == 1
+    records.rows.should have(1).item
+    records.rows.first.cartodb_id.should  == 1
+    records.rows.first.name.should        == 'updated_row'
+    records.rows.first.latitude.should    == 40.415113
+    records.rows.first.longitude.should   == -3.699871
+    records.rows.first.description.should == 'Eu capto illum, iustum, brevitas, lobortis torqueo importunus, capio sudo. Genitus importunus amet iaceo, abluo obruo consequat, virtus eros, aliquip iustum nisl duis zelus. Ymo augue nobis exerci letatio sed.'
+    records.rows.first.field1.should      == 'illum'
+    records.rows.first.field2.should      == -83.24
+    records.rows.first.field3.should      == (today + 84600).strftime("%Y-%m-%d %H:%M:%S")
+    records.rows.first.field4.should      == false
   end
 
   it "should delete a table's row" do
@@ -173,7 +177,7 @@ describe CartoDB do
 
     today = Time.now
 
-    @cartodb.insert_row table.id, {
+    @cartodb.insert_row 'table_1', {
       'name'        => 'cartoset',
       'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       'latitude'    => 40.423012,
@@ -185,18 +189,20 @@ describe CartoDB do
     }
     row_id = 1
 
-    @cartodb.delete_row table.id, row_id
+    @cartodb.delete_row 'table_1', row_id
 
-    table = @cartodb.table table.id
-    table.total_rows.should == 0
-    table.rows.should be_empty
+    records = @cartodb.records 'table_1'
+
+    records.name.should be == 'table_1'
+    records.total_rows.should == 0
+    records.rows.should be_empty
   end
 
   it "should execute a select query and return results" do
     table = @cartodb.create_table 'table #1'
 
     50.times do
-      @cartodb.insert_row table.id, {
+      @cartodb.insert_row 'table_1', {
         'name'        => String.random(15),
         'description' => String.random(200),
         'latitude'    => rand(90),
@@ -204,8 +210,7 @@ describe CartoDB do
       }
     end
 
-    table = @cartodb.table table.id
-    results = @cartodb.query("SELECT * FROM #{table.name}")
+    results = @cartodb.query("SELECT * FROM table_1")
     results.should_not be_nil
     results.time.should be > 0
     results.total_rows.should == 50
@@ -229,6 +234,6 @@ describe CartoDB do
   end
 
   it "should return nil when requesting a table which does not exists" do
-    @cartodb.table('non_existing_table').should be == nil
+    expect{@cartodb.table('non_existing_table')}.to raise_error(CartoDB::CartoError, /404 - Not found/)
   end
 end
