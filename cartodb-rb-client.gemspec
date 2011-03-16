@@ -25,4 +25,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'json',        '1.5.1'
   s.add_dependency 'mime-types',  '1.16'
   s.add_dependency 'rails_warden', '0.5.2'
+  s.add_dependency 'activesupport', '3.0.5'
+  s.add_dependency 'i18n', '0.5.0'
 end

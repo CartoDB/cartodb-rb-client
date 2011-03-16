@@ -17,7 +17,7 @@ module CartoDB
           end
         end
 
-        return created_table
+        return table table_name
       end
 
       execute_queue

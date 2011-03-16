@@ -1,5 +1,6 @@
 module CartoDB
   class CartoError < Exception
+    attr_accessor :status_code
 
     HTTP_MESSAGES = {
                       401 => 'Unauthorized request',
@@ -16,7 +17,7 @@ module CartoDB
 
       if http_response
         @status_code = http_response.code
-        @error_messages = custom_error(http_response) || standard_error(@status_code)
+        @error_messages = custom_error(http_response) || standard_error
       end
 
     end
@@ -41,7 +42,7 @@ module CartoDB
       json['errors'] if json
     end
 
-    def standard_error(status_code)
+    def standard_error
       "#{status_code} - #{HTTP_MESSAGES[status_code.to_i]}"
     end
     private :standard_error
