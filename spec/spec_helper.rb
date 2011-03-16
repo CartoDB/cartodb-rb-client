@@ -3,6 +3,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
 require 'yaml'
 require 'cartodb-rb-client'
+require 'cartodb-rb-client/cartodb'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
@@ -10,9 +11,9 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 RSpec.configure do |config|
   config.before(:all) do
-    cartodb_settings = YAML.load_file("#{File.dirname(__FILE__)}/support/cartodb_config.yml")
+    CartoDB::Settings = YAML.load_file("#{File.dirname(__FILE__)}/support/cartodb_config.yml")
 
-    @cartodb = CartoDB::Client.new cartodb_settings
+    @cartodb = CartoDB::Client.new
   end
 
   config.before(:each) do

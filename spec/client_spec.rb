@@ -1,7 +1,6 @@
 require 'spec_helper'
-require 'cartodb-rb-client/cartodb'
 
-describe CartoDB do
+describe 'CartoDB client' do
 
   it "should create a table and get its table definition" do
     table = @cartodb.create_table 'cartodb_spec', [
