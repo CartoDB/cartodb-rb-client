@@ -10,9 +10,9 @@ module CartoDB
   class Railtie < Rails::Railtie
 
     initializer "cartoDB_railtie.configure_rails_initialization" do |app|
-      cartodb_settings = YAML.load_file("#{Rails.root}/config/cartodb_config.yml")[Rails.env.to_s]
 
-      CartoDB::Connection = CartoDB::Client.new cartodb_settings
+      CartoDB::Settings = YAML.load_file("#{Rails.root}/config/cartodb_config.yml")[Rails.env.to_s]
+      CartoDB::Connection = CartoDB::Client.new
 
       app.middleware.use OmniAuth::Builder do
         provider :cartodb, cartodb_settings['host'], cartodb_settings['oauth_key'], cartodb_settings['oauth_secret']

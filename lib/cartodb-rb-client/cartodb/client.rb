@@ -8,13 +8,14 @@ module CartoDB
     include CartoDB::Authorization
     include CartoDB::Requests
 
-    def initialize(init_settings = nil)
-      raise Exception.new 'CartoDB settings not found' if init_settings.nil?
+    def initialize
+      raise Exception.new 'CartoDB settings not found' if CartoDB::Settings.nil?
+
       @settings = {}
-      @settings[:host]         = init_settings['host']
-      @settings[:oauth_key]    = init_settings['oauth_key']
-      @settings[:oauth_secret] = init_settings['oauth_secret']
-      @settings[:api_key]      = init_settings['api_key']
+      @settings[:host]         = CartoDB::Settings['host']
+      @settings[:oauth_key]    = CartoDB::Settings['oauth_key']
+      @settings[:oauth_secret] = CartoDB::Settings['oauth_secret']
+      @settings[:api_key]      = CartoDB::Settings['api_key']
 
       @hydra = Typhoeus::Hydra.new(:max_concurrency => 200)
     end
