@@ -21,8 +21,7 @@ module CartoDB
         :method        => method,
         :headers       => headers,
         :params        => params,
-        :verbose       => false,
-        :uri           => uri
+        :verbose       => false
       )
 
       request.on_complete do |response|
