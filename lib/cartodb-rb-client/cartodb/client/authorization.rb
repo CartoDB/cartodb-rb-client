@@ -12,7 +12,7 @@ module CartoDB
 
         request.headers.merge!({'Authorization' => oauth_helper.header})
       elsif settings[:api_key]
-        arguments[:params] = {} unless arguments[:params]
+        arguments[:params] = {}.merge!(arguments[:params])
         arguments[:params][:api_key] = settings[:api_key]
 
         request = Request.new(url, arguments)

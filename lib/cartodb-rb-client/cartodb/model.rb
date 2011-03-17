@@ -18,7 +18,7 @@ module CartoDB
       @connection = CartoDB::Client.new
       @table_name = self.class.name.tableize
 
-      create_schema
+      update_cartodb_schema
     end
 
     def self.columns
@@ -34,20 +34,27 @@ module CartoDB
 
     def cartodb_table_exists?
       begin
-        @table ||= connection.table @table_name
-        table && table.id > 0 && table.name.eql?(@table_name)
+        cartodb_table && cartodb_table.id > 0 && cartodb_table.name.eql?(@table_name)
       rescue CartoDB::CartoError => e
         e.status_code != 404
       end
     end
 
-    def create_schema
-      unless cartodb_table_exists?
-        created_table = connection.create_table table_name, self.class.columns
-        read_metadata created_table
-      end
+    def cartodb_table
+      @cartodb_table ||= connection.table @table_name
     end
-    private :create_schema
+
+    def update_cartodb_schema
+      table = nil
+      if cartodb_table_exists?
+        table = cartodb_table
+      else
+        table = connection.create_table table_name, self.class.columns
+      end
+      read_metadata table
+      create_missing_columns
+    end
+    private :update_cartodb_schema
 
     def read_metadata(table)
       extract_columns table
@@ -58,6 +65,18 @@ module CartoDB
       @columns = table.schema.map{|c| {:name => c[0], :type => c[1]}}
     end
     private :extract_columns
+
+    def create_missing_columns
+      missing_columns = self.class.columns - @columns
+      return unless missing_columns && missing_columns.any?
+
+      missing_columns.each do |column|
+        connection.add_column @table_name, column[:name], column[:type]
+      end
+      @cartodb_table = nil
+      read_metadata cartodb_table
+    end
+    private :create_missing_columns
 
   end
 
