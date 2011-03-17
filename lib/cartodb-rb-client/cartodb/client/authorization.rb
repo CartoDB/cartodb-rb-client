@@ -1,35 +1,54 @@
+require 'oauth/request_proxy/typhoeus_request'
+
 module CartoDB
   module Authorization
-    include Typhoeus
 
-    def signed_request(url, arguments)
-      if @user
-        uri = arguments[:uri]
-        request = Request.new(url, arguments)
-
-        oauth_params = {:consumer => oauth_consumer, :token => @user.access_token}
-        oauth_helper = OAuth::Client::Helper.new(request, oauth_params.merge(:request_uri => uri))
-
-        request.headers.merge!({'Authorization' => oauth_helper.header})
-      elsif settings[:api_key]
+    def signed_request(request_uri, arguments)
+      if settings[:api_key]
         arguments[:params] = {}.merge!(arguments[:params])
         arguments[:params][:api_key] = settings[:api_key]
 
-        request = Request.new(url, arguments)
+        request = Typhoeus::Request.new(request_uri, arguments)
+        return request
       end
+
+      request = Typhoeus::Request.new(request_uri, arguments)
+
+      request.headers.merge!({"Authorization" => oauth_helper(request, request_uri).header})
+
       request
     end
     private :signed_request
 
+    def access_token
+      return @access_token if @access_token
+      # Set a new request_token
+      request_token = oauth_consumer.get_request_token
+
+      response = Typhoeus::Request.get(request_token.authorize_url, {'authorize' => '1', 'oauth_token' => request_token.token})
+      url = URI.parse(response.headers_hash['Location'])
+
+      # get the verifier from the url
+      verifier = url.query.split('&').select{ |q| q =~ /^oauth_verifier/}.first.split('=')[1]
+
+      # Get an access token with the verifier
+      @access_token = request_token.get_access_token(:oauth_verifier => verifier)
+    end
+    private :access_token
+
     def oauth_params
-      return {} unless @user
-      {:consumer => oauth_consumer, :token => @user.access_token}
+      {:consumer => oauth_consumer, :token => access_token}
     end
     private :oauth_params
 
     def oauth_consumer
-      @oauth_consumer ||= OAuth::Consumer.new(OAuthConfig['token'], OAuthConfig['secret'])
+      @oauth_consumer ||= OAuth::Consumer.new(CartoDB::Settings['oauth_key'], CartoDB::Settings['oauth_secret'], :site => CartoDB::Settings['host'])
     end
     private :oauth_consumer
+
+    def oauth_helper(request, request_uri)
+      OAuth::Client::Helper.new(request, oauth_params.merge(:request_uri => request_uri))
+    end
+    private :oauth_helper
   end
 end

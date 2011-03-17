@@ -4,6 +4,7 @@ require 'cartodb-rb-client/cartodb/client/requests'
 
 module CartoDB
   class Client
+    include OAuth::RequestProxy::Typhoeus
     include CartoDB::API
     include CartoDB::Authorization
     include CartoDB::Requests
