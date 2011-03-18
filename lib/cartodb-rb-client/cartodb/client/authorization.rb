@@ -4,6 +4,7 @@ module CartoDB
   module Authorization
 
     def signed_request(request_uri, arguments)
+      arguments[:disable_ssl_peer_verification] = true
       if settings[:api_key]
         arguments[:params] = {}.merge!(arguments[:params])
         arguments[:params][:api_key] = settings[:api_key]
@@ -25,7 +26,7 @@ module CartoDB
       # Set a new request_token
       request_token = oauth_consumer.get_request_token
 
-      response = Typhoeus::Request.get(request_token.authorize_url, {'authorize' => '1', 'oauth_token' => request_token.token})
+      response = Typhoeus::Request.get(request_token.authorize_url, 'authorize' => '1', 'oauth_token' => request_token.token, :disable_ssl_peer_verification => true)
       url = URI.parse(response.headers_hash['Location'])
 
       # get the verifier from the url
