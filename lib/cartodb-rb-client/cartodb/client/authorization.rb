@@ -23,10 +23,17 @@ module CartoDB
 
     def access_token
       return @access_token if @access_token
+
       # Set a new request_token
       request_token = oauth_consumer.get_request_token
 
-      response = Typhoeus::Request.get(request_token.authorize_url, 'authorize' => '1', 'oauth_token' => request_token.token, :disable_ssl_peer_verification => true)
+      response = Typhoeus::Request.get(request_token.authorize_url,
+        'authorize'                    => '1',
+        'oauth_token'                  => request_token.token,
+        :disable_ssl_peer_verification => !settings[:ssl_peer_verification],
+        :verbose                       => settings[:debug]
+      )
+
       url = URI.parse(response.headers_hash['Location'])
 
       # get the verifier from the url

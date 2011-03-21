@@ -21,7 +21,8 @@ module CartoDB
         :method        => method,
         :headers       => headers,
         :params        => params,
-        :verbose       => false
+        :cache_timeout => settings[:cache_timeout],
+        :verbose       => settings[:debug]
       )
 
       request.on_complete do |response|
