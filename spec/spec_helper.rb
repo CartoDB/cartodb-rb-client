@@ -14,7 +14,7 @@ RSpec.configure do |config|
   config.before(:all) do
     CartoDB::Settings = YAML.load_file("#{File.dirname(__FILE__)}/support/cartodb_config.yml") unless defined? CartoDB::Settings
 
-    @cartodb = CartoDB::Client.new
+    @cartodb = CartoDB::Client::Connection.new
   end
 
   config.before(:each) do

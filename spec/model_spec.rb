@@ -5,7 +5,7 @@ describe 'CartoDB model' do
   it "should have a valid CartoDB::Client instance as a connection object" do
     model = MotoGPCircuit.new
     model.connection.should_not be_nil
-    model.connection.should be_a CartoDB::Client
+    model.connection.should be_a CartoDB::Client::Connection
     table = model.connection.create_table 'model_connection_test'
     table.should_not be_nil
     table[:id].should be > 0

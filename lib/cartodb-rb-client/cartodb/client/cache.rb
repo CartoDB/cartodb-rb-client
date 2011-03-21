@@ -1,14 +1,14 @@
 module CartoDB
+  module Client
+    class Cache < Hash
 
-  class Cache < Hash
+      def get(key)
+        self[key]
+      end
 
-    def get(key)
-      self[key]
-    end
-
-    def set(key, object, timeout = 0)
-      self[key] = object
+      def set(key, object, timeout = 0)
+        self[key] = object
+      end
     end
   end
-
 end
