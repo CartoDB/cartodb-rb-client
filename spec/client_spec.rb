@@ -11,7 +11,7 @@ describe 'CartoDB client' do
                                   ]
 
     table.should_not be_nil
-    table.id.should be > 0
+    table[:id].should be > 0
     table = @cartodb.table 'cartodb_spec'
     table.schema.should have(11).items
     table.schema.should include(["cartodb_id", "number"])
@@ -59,8 +59,8 @@ describe 'CartoDB client' do
 
     tables_list = @cartodb.tables
     tables_list.should have(2).items
-    tables_list.first.id.should == table_1.id
-    tables_list.last.id.should == table_2.id
+    tables_list.first[:id].should == table_1[:id]
+    tables_list.last[:id].should == table_2[:id]
 
   end
 
@@ -73,8 +73,8 @@ describe 'CartoDB client' do
 
     tables_list = @cartodb.tables
     tables_list.should have(2).items
-    tables_list.first.id.should == table_1.id
-    tables_list.last.id.should == table_3.id
+    tables_list.first[:id].should == table_1[:id]
+    tables_list.last[:id].should == table_3[:id]
   end
 
   it "should insert a row in a table" do
@@ -229,7 +229,7 @@ describe 'CartoDB client' do
 
     table = @cartodb.table 'table_with_name'
     table.should_not be_nil
-    table.id.should be == created_table.id
+    table[:id].should be == created_table[:id]
   end
 
   it "should return nil when requesting a table which does not exists" do

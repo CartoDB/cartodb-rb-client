@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
   s.add_dependency 'typhoeus', '0.2.4'
+  s.add_dependency 'json', '1.5.1'
   s.add_dependency 'omniauth',    '0.1.6'
   s.add_dependency 'warden',      '1.0.3'
   s.add_dependency 'mime-types',  '1.16'

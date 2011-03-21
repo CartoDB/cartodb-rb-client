@@ -34,7 +34,7 @@ module CartoDB
 
     def cartodb_table_exists?
       begin
-        cartodb_table && cartodb_table.id > 0 && cartodb_table.name.eql?(@table_name)
+        cartodb_table && cartodb_table[:id] > 0 && cartodb_table.name.eql?(@table_name)
       rescue CartoDB::CartoError => e
         e.status_code != 404
       end

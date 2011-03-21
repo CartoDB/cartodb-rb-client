@@ -23,16 +23,16 @@ module CartoDB
     end
 
     def to_s
-      <<-EOF
+      message = <<-EOF
         #{http_error_message_header}
         #{format_error_messages}
       EOF
-      .strip
+      message.strip
     end
 
     def http_error_message_header
       if @method && @uri
-        %{There were errors running the #{@method.upcase} request "#{@uri}":}
+        %{There were errors running the #{@method.to_s.upcase} request "#{@uri}":}
       end
     end
     private :http_error_message_header
