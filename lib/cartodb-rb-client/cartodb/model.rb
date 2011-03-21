@@ -15,7 +15,7 @@ module CartoDB
     }
 
     def initialize()
-      @connection = CartoDB::Client.new
+      @connection = CartoDB::Client::Connection.new
       @table_name = self.class.name.tableize
 
       update_cartodb_schema
@@ -35,7 +35,7 @@ module CartoDB
     def cartodb_table_exists?
       begin
         cartodb_table && cartodb_table[:id] > 0 && cartodb_table.name.eql?(@table_name)
-      rescue CartoDB::CartoError => e
+      rescue CartoDB::Client::Error => e
         e.status_code != 404
       end
     end

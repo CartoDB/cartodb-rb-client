@@ -233,6 +233,6 @@ describe 'CartoDB client' do
   end
 
   it "should return nil when requesting a table which does not exists" do
-    expect{@cartodb.table('non_existing_table')}.to raise_error(CartoDB::CartoError, /404 - Not found/)
+    expect{@cartodb.table('non_existing_table')}.to raise_error(CartoDB::Client::Error, /404 - Not found/)
   end
 end
