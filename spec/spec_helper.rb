@@ -4,6 +4,7 @@ require 'rspec'
 require 'yaml'
 require 'cartodb-rb-client'
 require 'cartodb-rb-client/cartodb'
+require 'active_support/core_ext/array/random_access.rb'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

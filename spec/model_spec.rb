@@ -8,7 +8,7 @@ describe 'CartoDB model' do
     model.connection.should be_a CartoDB::Client
     table = model.connection.create_table 'model_connection_test'
     table.should_not be_nil
-    table.id.should be > 0
+    table[:id].should be > 0
     table.name.should be == 'model_connection_test'
   end
 
