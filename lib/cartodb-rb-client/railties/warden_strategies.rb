@@ -11,7 +11,7 @@ end
 Warden::Strategies.add(:cartodb_oauth) do
   def authenticate!
     if request.env["omniauth.auth"]
-      success!(request.env["omniauth.auth"].slice('uid', 'username', 'email'))
+      success!(request.env["omniauth.auth"].slice('uid', 'username', 'email', 'oauth_key', 'oauth_secret'))
     else
       fail!
     end

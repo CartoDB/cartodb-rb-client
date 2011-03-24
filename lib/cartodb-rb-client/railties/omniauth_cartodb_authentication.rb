@@ -15,9 +15,11 @@ module OmniAuth
 
       def auth_hash
         OmniAuth::Utils.deep_merge(super, {
-          'uid' => user_data['uid'],
-          'username' => user_data['username'],
-          'email' => user_data['email']
+          'uid'          => user_data['uid'],
+          'username'     => user_data['username'],
+          'email'        => user_data['email'],
+          'oauth_key'    => user_data['oauth_key'],
+          'oauth_secret' => user_data['oauth_secret']
         })
       end
     end
