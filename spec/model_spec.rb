@@ -83,7 +83,7 @@ describe 'CartoDB model' do
   end
 
   it "should initialize attributes of the model without persisting them into cartodb using the `new` method" do
-    losail_circuit = new_losail_circuit
+    losail_circuit = new_circuit
 
     records = @cartodb.records 'moto_gp_circuit'
     records.total_rows.should == 0
@@ -103,7 +103,7 @@ describe 'CartoDB model' do
   end
 
   it "should persist into cartodb using the save method" do
-    losail_circuit = new_losail_circuit
+    losail_circuit = new_circuit
 
      expect {
       losail_circuit.save.should be_true
@@ -195,6 +195,27 @@ describe 'CartoDB model' do
     losail_circuit.latitude.should be == 40.582394
     losail_circuit.longitude.should be == -3.994131
     losail_circuit.length.should be == '1243m'
+  end
+
+  it "should return all records" do
+    create_random_circuits(20)
+
+    circuits = MotoGPCircuit.all
+
+    circuits.should have(10).circuits
+    circuits.first.should be_a_kind_of(MotoGPCircuit)
+    circuits.first.cartodb_id.should be == 1
+    circuits.first.name.should be == 'circuit #1'
+    circuits.first.description.should be == 'awesome circuit #1'
+    circuits.first.latitude.should be == 25.488840
+    circuits.first.longitude.should be == 51.453352
+    circuits.first.length.should be == '5380m'
+    circuits.first.width.should be == '12m'
+    circuits.first.left_corners.should be == 6
+    circuits.first.right_corners.should be == 10
+    circuits.first.longest_straight.should be == '1068m'
+    circuits.first.constructed.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    circuits.first.modified.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
   end
 
 end
