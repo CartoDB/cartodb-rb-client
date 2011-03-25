@@ -81,10 +81,24 @@ module CartoDB
         execute_queue
       end
 
-      def insert_row(table_name, row)
-        cartodb_request "tables/#{table_name}/records", :post, :params => row
+      def row(table_name, row_id)
+        cartodb_request "tables/#{table_name}/records/#{row_id}" do |response|
+          return Utils.parse_json(response)
+        end
 
         execute_queue
+
+        request.handled_response
+      end
+
+      def insert_row(table_name, row)
+        cartodb_request "tables/#{table_name}/records", :post, :params => row do |response|
+          return Utils.parse_json(response)
+        end
+
+        execute_queue
+
+        request.handled_response
       end
 
       def update_row(table_name, row_id, row)

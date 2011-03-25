@@ -10,15 +10,6 @@ module CartoDB
       def initialize
         raise Exception.new 'CartoDB settings not found' if CartoDB::Settings.nil?
 
-        @settings = {}
-        @settings[:host]                  = CartoDB::Settings['host']
-        @settings[:oauth_key]             = CartoDB::Settings['oauth_key']
-        @settings[:oauth_secret]          = CartoDB::Settings['oauth_secret']
-        @settings[:api_key]               = CartoDB::Settings['api_key']
-        @settings[:cache_timeout]         = CartoDB::Settings['cache_timeout']
-        @settings[:ssl_peer_verification] = CartoDB::Settings['ssl_peer_verification'] || false
-        @settings[:debug]                 = CartoDB::Settings['debug'] || false
-
         @hydra = Typhoeus::Hydra.new(:max_concurrency => 200)
 
         # @cache = {}
@@ -32,7 +23,7 @@ module CartoDB
       end
 
       def settings
-        @settings
+        CartoDB::Settings || {}
       end
       private :settings
 
