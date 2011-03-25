@@ -82,4 +82,59 @@ describe 'CartoDB model' do
 
   end
 
+  it "should initialize attributes of the model without persisting them into cartodb using the `new` method" do
+    losail_circuit = new_losail_circuit
+
+    records = @cartodb.records 'moto_gp_circuit'
+    records.total_rows.should == 0
+    records.rows.should be_empty
+
+    losail_circuit.name.should be == 'Losail Circuit'
+    losail_circuit.description.should be == 'The fabulous Losail International Circuit lies on the outskirts of Doha, the capital city of Qatar. Built in little over a year, the track cost $58 million USD and required round-the-clock dedication from almost 1,000 workers in order to get it ready for the inaugural event - the Marlboro Grand Prix of Qatar on the 2nd October 2004.'
+    losail_circuit.latitude.should be == 25.488840
+    losail_circuit.longitude.should be == 51.453352
+    losail_circuit.length.should be == '5380m'
+    losail_circuit.width.should be == '12m'
+    losail_circuit.left_corners.should be == 6
+    losail_circuit.right_corners.should be == 10
+    losail_circuit.longest_straight.should be == '1068m'
+    losail_circuit.constructed.should be == Date.new(2004, 1, 1)
+    losail_circuit.modified.should be == Date.new(2004, 1, 1)
+  end
+
+  it "should persist into cartodb using the save method" do
+    losail_circuit = new_losail_circuit
+
+    expect {
+      losail_circuit.save.should be_true
+    }.to change{@cartodb.records('moto_gp_circuit').total_rows}.from(0).to(1)
+
+    record = @cartodb.row 'moto_gp_circuit', losail_circuit.cartodb_id
+    record[:cartodb_id].should             be == 1
+    record[:name].should             be == 'Losail Circuit'
+    record[:description].should      match /The fabulous Losail International Circuit lies/
+    record[:latitude].should         be == 25.488840
+    record[:longitude].should        be == 51.453352
+    record[:length].should           be == '5380m'
+    record[:width].should            be == '12m'
+    record[:left_corners].should     be == 6
+    record[:right_corners].should    be == 10
+    record[:longest_straight].should be == '1068m'
+    record[:constructed].should      be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    record[:modified].should         be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+
+    losail_circuit.cartodb_id.should be == 1
+    losail_circuit.name.should be == 'Losail Circuit'
+    losail_circuit.description.should be == 'The fabulous Losail International Circuit lies on the outskirts of Doha, the capital city of Qatar. Built in little over a year, the track cost $58 million USD and required round-the-clock dedication from almost 1,000 workers in order to get it ready for the inaugural event - the Marlboro Grand Prix of Qatar on the 2nd October 2004.'
+    losail_circuit.latitude.should be == 25.488840
+    losail_circuit.longitude.should be == 51.453352
+    losail_circuit.length.should be == '5380m'
+    losail_circuit.width.should be == '12m'
+    losail_circuit.left_corners.should be == 6
+    losail_circuit.right_corners.should be == 10
+    losail_circuit.longest_straight.should be == '1068m'
+    losail_circuit.constructed.should be == Date.new(2004, 1, 1)
+    losail_circuit.modified.should be == Date.new(2004, 1, 1)
+  end
+
 end

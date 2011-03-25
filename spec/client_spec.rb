@@ -59,9 +59,8 @@ describe 'CartoDB client' do
 
     tables_list = @cartodb.tables
     tables_list.should have(2).items
-    tables_list.first[:id].should == table_1[:id]
-    tables_list.last[:id].should == table_2[:id]
-
+    tables_list.map(&:id).should include(table_1[:id])
+    tables_list.map(&:id).should include(table_2[:id])
   end
 
   it "should drop a table" do
@@ -73,8 +72,8 @@ describe 'CartoDB client' do
 
     tables_list = @cartodb.tables
     tables_list.should have(2).items
-    tables_list.first[:id].should == table_1[:id]
-    tables_list.last[:id].should == table_3[:id]
+    tables_list.map(&:id).should include(table_1[:id])
+    tables_list.map(&:id).should include(table_3[:id])
   end
 
   it "should insert a row in a table" do
@@ -87,7 +86,7 @@ describe 'CartoDB client' do
 
     today = Time.now
 
-    @cartodb.insert_row 'table_1', {
+    inserted_row = @cartodb.insert_row 'table_1', {
       'name'        => 'cartoset',
       'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       'latitude'    => 40.423012,
@@ -98,20 +97,16 @@ describe 'CartoDB client' do
       'field4'      => true
     }
 
-    records = @cartodb.records 'table_1'
+    record = @cartodb.row 'table_1', inserted_row.id
 
-    records.name.should be == 'table_1'
-    records.total_rows.should == 1
-    records.rows.should have(1).item
-    records.rows.first.cartodb_id.should == 1
-    records.rows.first.name.should == 'cartoset'
-    records.rows.first.latitude.should == 40.423012
-    records.rows.first.longitude.should == -3.699732
-    records.rows.first.description.should == 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    records.rows.first.field1.should == 'lorem'
-    records.rows.first.field2.should == 100.99
-    records.rows.first.field3.should == today.strftime("%Y-%m-%d %H:%M:%S")
-    records.rows.first.field4.should == true
+    record.name.should == 'cartoset'
+    record.latitude.should == 40.423012
+    record.longitude.should == -3.699732
+    record.description.should == 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+    record.field1.should == 'lorem'
+    record.field2.should == 100.99
+    record.field3.should == today.strftime("%Y-%m-%d %H:%M:%S")
+    record.field4.should == true
   end
 
   it "should update a row in a table" do
@@ -124,7 +119,7 @@ describe 'CartoDB client' do
 
     today = Time.now
 
-    @cartodb.insert_row 'table_1', {
+    record = @cartodb.insert_row 'table_1', {
       'name'        => 'cartoset',
       'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       'latitude'    => 40.423012,
@@ -135,11 +130,7 @@ describe 'CartoDB client' do
       'field4'      => true
     }
 
-    records = @cartodb.records 'table_1'
-
-    row_id = records.rows.first.cartodb_id
-
-    @cartodb.update_row 'table_1', row_id, {
+    @cartodb.update_row 'table_1', record.id, {
       'name'        => 'updated_row',
       'description' => 'Eu capto illum, iustum, brevitas, lobortis torqueo importunus, capio sudo. Genitus importunus amet iaceo, abluo obruo consequat, virtus eros, aliquip iustum nisl duis zelus. Ymo augue nobis exerci letatio sed.',
       'latitude'    => 40.415113,
@@ -150,20 +141,16 @@ describe 'CartoDB client' do
       'field4'      => false
     }
 
-    records = @cartodb.records 'table_1'
+    record = @cartodb.row 'table_1', record.id
 
-    records.name.should be == 'table_1'
-    records.total_rows.should             == 1
-    records.rows.should have(1).item
-    records.rows.first.cartodb_id.should  == 1
-    records.rows.first.name.should        == 'updated_row'
-    records.rows.first.latitude.should    == 40.415113
-    records.rows.first.longitude.should   == -3.699871
-    records.rows.first.description.should == 'Eu capto illum, iustum, brevitas, lobortis torqueo importunus, capio sudo. Genitus importunus amet iaceo, abluo obruo consequat, virtus eros, aliquip iustum nisl duis zelus. Ymo augue nobis exerci letatio sed.'
-    records.rows.first.field1.should      == 'illum'
-    records.rows.first.field2.should      == -83.24
-    records.rows.first.field3.should      == (today + 84600).strftime("%Y-%m-%d %H:%M:%S")
-    records.rows.first.field4.should      == false
+    record.name.should        == 'updated_row'
+    record.latitude.should    == 40.415113
+    record.longitude.should   == -3.699871
+    record.description.should == 'Eu capto illum, iustum, brevitas, lobortis torqueo importunus, capio sudo. Genitus importunus amet iaceo, abluo obruo consequat, virtus eros, aliquip iustum nisl duis zelus. Ymo augue nobis exerci letatio sed.'
+    record.field1.should      == 'illum'
+    record.field2.should      == -83.24
+    record.field3.should      == (today + 84600).strftime("%Y-%m-%d %H:%M:%S")
+    record.field4.should      == false
   end
 
   it "should delete a table's row" do
@@ -176,7 +163,7 @@ describe 'CartoDB client' do
 
     today = Time.now
 
-    @cartodb.insert_row 'table_1', {
+    record = @cartodb.insert_row 'table_1', {
       'name'        => 'cartoset',
       'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       'latitude'    => 40.423012,
@@ -186,9 +173,8 @@ describe 'CartoDB client' do
       'field3'      => today,
       'field4'      => true
     }
-    row_id = 1
 
-    @cartodb.delete_row 'table_1', row_id
+    @cartodb.delete_row 'table_1', record.id
 
     records = @cartodb.records 'table_1'
 

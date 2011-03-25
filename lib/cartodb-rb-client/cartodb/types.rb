@@ -1,1 +1,1 @@
-require 'cartodb-rb-client/cartodb/types/record'
+require 'cartodb-rb-client/cartodb/types/metadata'

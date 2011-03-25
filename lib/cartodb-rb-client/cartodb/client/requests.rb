@@ -20,8 +20,8 @@ module CartoDB
           :method        => method,
           :headers       => headers,
           :params        => params,
-          :cache_timeout => settings[:cache_timeout],
-          :verbose       => settings[:debug]
+          :cache_timeout => settings['cache_timeout'],
+          :verbose       => settings['debug']
         )
 
         request.on_complete do |response|
@@ -48,7 +48,7 @@ module CartoDB
       private :execute_queue
 
       def generate_url(uri)
-        uri = URI.parse("#{settings[:host]}#{uri}")
+        uri = URI.parse("#{settings['host']}#{uri}")
         "#{uri.scheme}://#{uri.host}:#{uri.port}#{uri.path}"
       end
       private :generate_url
