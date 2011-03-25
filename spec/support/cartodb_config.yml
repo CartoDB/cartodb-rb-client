@@ -1,15 +1,19 @@
+#############################
 # CartoDB Local Instance
+#############################
 host: 'http://api.localhost.lan:3000'
 oauth_key: 'OS9iHTljfohpqUKMzGZvjs3Epm9NBtb8HINZxhrM'
 oauth_secret: 'HfhCy8N489FrNG9bqeWQ4AelDdgovULSS2DXMHak'
 # api_key: '418823098be62ed421f9c93725909ffb397626b2'
 
+#############################
 # CartoDB Production Instance
+#############################
 # host: 'https://api.cartodb.com'
 # oauth_key: 'bIVtTrUCl2DBYS5AZkty8OAOqn7EdvU3YFMGHbZt'
 # oauth_secret: 'nbt5H35vxX35W47b1sWkiMzQi1QRD5E9U4cHwvgu'
 # api_key: '9d6992e1b019278c50eb07edccf39139f6bc0a99'
 
 # cache_timeout: 60
-# debug: false
-# ssl_peer_verification: false
+# debug: true
+# ssl_peer_verification: true

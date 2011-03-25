@@ -28,15 +28,25 @@ module CartoDB
       set_attributes
     end
 
-    def self.columns
-      @@columns
-    end
+    class << self
 
-    def self.field(name, options = {:type => String})
-      @@columns ||= []
-      column = {:name => name.to_s}
-      column[:type] = CARTODB_TYPES[options[:type]] || 'string'
-      @@columns << column
+      def create(attributes = {})
+        model = self.new attributes
+        model.save
+        model
+      end
+
+      def columns
+        @@columns
+      end
+
+      def field(name, options = {:type => String})
+        @@columns ||= []
+        column = {:name => name.to_s}
+        column[:type] = CARTODB_TYPES[options[:type]] || 'string'
+        @@columns << column
+      end
+
     end
 
     def cartodb_table_exists?
@@ -65,6 +75,7 @@ module CartoDB
       if new_record?
         create_row
       else
+        update_row
       end
     end
 
@@ -79,6 +90,12 @@ module CartoDB
       self.cartodb_id = inserted_record.id
     end
     private :create_row
+
+    def update_row
+      row = attributes.select{|key,value| column_names.include?(key.to_s) }
+      connection.update_row table_name, cartodb_id, row
+    end
+    private :update_row
 
     def column_names
       columns.map{|column| column[:name]}
