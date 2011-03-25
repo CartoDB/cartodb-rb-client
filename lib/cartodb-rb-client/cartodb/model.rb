@@ -44,6 +44,19 @@ module CartoDB
         end
       end
 
+      def where(attributes = nil)
+        return all if attributes.nil? || (attributes.is_a?(Hash) && attributes.empty?) || (attributes.is_a?(Integer) && attributes <= 0)
+
+        if attributes.is_a?(Integer) || (attributes.length == 1 && (attributes[:cartodb_id] || attributes[:id]))
+          row_id = attributes.is_a?(Integer) ? attributes : (attributes[:cartodb_id] || attributes[:id])
+          return self.new(connection.row(table_name, row_id))
+        end
+      end
+
+      def find(id)
+        where(id)
+      end
+
       def count
         @@count ||= begin
           results = connection.query "SELECT COUNT(CARTODB_ID) FROM #{table_name}"
