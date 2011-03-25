@@ -1,6 +1,14 @@
 module Factories
-  def new_losail_circuit
-    MotoGPCircuit.new new_losail_circuit_attributes
+  def new_circuit(values = {})
+    defaults = new_losail_circuit_attributes
+    defaults = defaults.merge(values)
+    MotoGPCircuit.new defaults
+  end
+
+  def create_random_circuits(ammount = 1)
+    ammount.times do |i|
+      new_circuit(:name => "circuit ##{i + 1}", :description => "awesome circuit ##{i + 1}").save
+    end
   end
 
   def new_losail_circuit_attributes

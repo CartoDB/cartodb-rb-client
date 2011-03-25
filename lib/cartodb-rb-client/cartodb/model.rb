@@ -2,7 +2,7 @@ require 'active_support/core_ext/string'
 
 module CartoDB
   class Model
-    attr_reader :connection, :table_name, :table, :columns, :attributes
+    attr_reader :table, :columns, :attributes
 
     CARTODB_TYPES = {
       String     => 'string',
@@ -20,9 +20,8 @@ module CartoDB
     ].freeze
 
     def initialize(attributes = {})
-      @connection = CartoDB::Client::Connection.new
-      @table_name = self.class.name.tableize
-      @attributes = attributes.symbolize_keys.reject{|key,value| INVALID_COLUMNS.include?(key)}
+      @@table_name = self.class.name.tableize
+      @attributes = attributes
 
       update_cartodb_schema
       set_attributes
@@ -34,6 +33,23 @@ module CartoDB
         model = self.new attributes
         model.save
         model
+      end
+
+      def all
+        records = connection.records(table_name) || []
+        if records.any? && records.rows
+          records.rows.map{|r| self.new(r)}
+        else
+          []
+        end
+      end
+
+      def connection
+        CartoDB::Connection
+      end
+
+      def table_name
+        @@table_name
       end
 
       def columns
@@ -49,16 +65,24 @@ module CartoDB
 
     end
 
+    def connection
+      self.class.connection
+    end
+
+    def table_name
+      self.class.table_name
+    end
+
     def cartodb_table_exists?
       begin
-        cartodb_table && cartodb_table[:id] > 0 && cartodb_table.name.eql?(@table_name)
+        cartodb_table && cartodb_table[:id] > 0 && cartodb_table.name.eql?(table_name)
       rescue CartoDB::Client::Error => e
         e.status_code != 404
       end
     end
 
     def cartodb_table
-      @cartodb_table ||= connection.table @table_name
+      @cartodb_table ||= connection.table table_name
     end
 
     def method_missing(name, *args, &block)
@@ -85,7 +109,7 @@ module CartoDB
 
     def create_row
       # only the columns defined in the model are valid to create
-      row = attributes.select{|key,value| column_names.include?(key.to_s) }
+      row = attributes.symbolize_keys.reject{|key,value| INVALID_COLUMNS.include?(key)}.select{|key,value| column_names.include?(key.to_s) }
       inserted_record = connection.insert_row table_name, row
       self.cartodb_id = inserted_record.id
     end
@@ -129,7 +153,7 @@ module CartoDB
       return unless missing_columns && missing_columns.any?
 
       missing_columns.each do |column|
-        connection.add_column @table_name, column[:name], column[:type]
+        connection.add_column table_name, column[:name], column[:type]
       end
       @cartodb_table = nil
       read_metadata cartodb_table
