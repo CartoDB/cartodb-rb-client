@@ -11,6 +11,8 @@ module Factories
     end
   end
 
+  alias create_random_circuit create_random_circuits
+
   def new_losail_circuit_attributes
     {
       :name             => 'Losail Circuit',
