@@ -228,4 +228,39 @@ describe 'CartoDB model' do
     MotoGPCircuit.count.should be == 21
   end
 
+  it "should find a record by its id" do
+    create_random_circuit
+
+    circuit = MotoGPCircuit.where(:cartodb_id => 1)
+
+    circuit.cartodb_id.should be == 1
+    circuit.name.should be == 'circuit #1'
+    circuit.description.should be == 'awesome circuit #1'
+    circuit.latitude.should be == 25.488840
+    circuit.longitude.should be == 51.453352
+    circuit.length.should be == '5380m'
+    circuit.width.should be == '12m'
+    circuit.left_corners.should be == 6
+    circuit.right_corners.should be == 10
+    circuit.longest_straight.should be == '1068m'
+    circuit.constructed.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    circuit.modified.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+
+    same_circuit = MotoGPCircuit.find(1)
+
+    same_circuit.cartodb_id.should be == 1
+    same_circuit.name.should be == 'circuit #1'
+    same_circuit.description.should be == 'awesome circuit #1'
+    same_circuit.latitude.should be == 25.488840
+    same_circuit.longitude.should be == 51.453352
+    same_circuit.length.should be == '5380m'
+    same_circuit.width.should be == '12m'
+    same_circuit.left_corners.should be == 6
+    same_circuit.right_corners.should be == 10
+    same_circuit.longest_straight.should be == '1068m'
+    same_circuit.constructed.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    same_circuit.modified.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+
+  end
+
 end
