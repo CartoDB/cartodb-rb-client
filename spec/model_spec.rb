@@ -197,7 +197,7 @@ describe 'CartoDB model' do
     losail_circuit.length.should be == '1243m'
   end
 
-  it "should return all records" do
+  it "should return all records paginated" do
     create_random_circuits(20)
 
     circuits = MotoGPCircuit.all
@@ -216,6 +216,16 @@ describe 'CartoDB model' do
     circuits.first.longest_straight.should be == '1068m'
     circuits.first.constructed.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
     circuits.first.modified.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+  end
+
+  it "should count all records" do
+    create_random_circuits(20)
+
+    MotoGPCircuit.count.should be == 20
+
+    create_random_circuit
+
+    MotoGPCircuit.count.should be == 21
   end
 
 end

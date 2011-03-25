@@ -44,12 +44,29 @@ module CartoDB
         end
       end
 
+      def count
+        @@count ||= begin
+          results = connection.query "SELECT COUNT(CARTODB_ID) FROM #{table_name}"
+          results.rows.first[:count]
+        rescue Exception => e
+          0
+        end
+      end
+
+      def count=(ammount)
+        @@count = ammount
+      end
+
       def connection
         CartoDB::Connection
       end
 
       def table_name
         @@table_name
+      end
+
+      def table_name=(name)
+        @@table_name = name
       end
 
       def columns
@@ -62,6 +79,7 @@ module CartoDB
         column[:type] = CARTODB_TYPES[options[:type]] || 'string'
         @@columns << column
       end
+      private :field
 
     end
 
@@ -71,6 +89,14 @@ module CartoDB
 
     def table_name
       self.class.table_name
+    end
+
+    def count
+      self.class.count
+    end
+
+    def count=(ammount)
+      self.class.count= ammount
     end
 
     def cartodb_table_exists?
@@ -110,7 +136,9 @@ module CartoDB
     def create_row
       # only the columns defined in the model are valid to create
       row = attributes.symbolize_keys.reject{|key,value| INVALID_COLUMNS.include?(key)}.select{|key,value| column_names.include?(key.to_s) }
+      record_count = count
       inserted_record = connection.insert_row table_name, row
+      @@count = record_count + 1
       self.cartodb_id = inserted_record.id
     end
     private :create_row
