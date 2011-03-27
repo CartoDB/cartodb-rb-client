@@ -24,22 +24,9 @@ module CartoDB
             return self.new(connection.row(table_name, row_id))
           end
 
-          columns = cartodb_table.schema.map{|c| {:name => c[0], :type => c[1]}}
-
-          select = "SELECT #{columns.map{|c| c[:name]}.join(', ')}"
-          from = "FROM #{table_name}"
-          where = filters = nil
-
-          case attributes
-          when Hash
-            filters = attributes.to_a.map{|i| "#{table_name}.#{i.first} = #{i.last}"}.join(' AND ')
-          when String
-            filters = attributes
-            values  = rest
-            filters = filters.gsub(/[\?]/){|r| values.shift}
-          end
-
-          where = "WHERE #{filters}" if filters
+          select = build_select
+          from   = build_from
+          where  = build_where(attributes, rest)
 
           results = connection.query "#{select} #{from} #{where}"
 
@@ -66,6 +53,32 @@ module CartoDB
         def count=(ammount)
           @count = ammount
         end
+
+        def build_select
+          columns = cartodb_table.schema.map{|c| {:name => c[0], :type => c[1]}}
+          select = "SELECT #{columns.map{|c| c[:name]}.join(', ')}"
+        end
+        private :build_select
+
+        def build_from
+          from = "FROM #{table_name}"
+        end
+        private :build_from
+
+        def build_where(attributes, values)
+          where = filters = nil
+
+          case attributes
+          when Hash
+            filters = attributes.to_a.map{|i| "#{table_name}.#{i.first} = #{i.last}"}.join(' AND ')
+          when String
+            filters = attributes
+            filters = filters.gsub(/[\?]/){|r| values.shift}
+          end
+
+          where = "WHERE #{filters}" if filters
+        end
+
       end
 
       def count
