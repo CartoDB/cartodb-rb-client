@@ -20,11 +20,10 @@ module CartoDB
     ].freeze
 
     def initialize(attributes = {})
-      @@table_name = self.class.name.tableize
-      @attributes = attributes
-
+      @@cartodb_table = nil
+      @@table_name    = nil
+      @attributes     = attributes
       update_cartodb_schema
-      set_attributes
     end
 
     class << self
@@ -44,12 +43,37 @@ module CartoDB
         end
       end
 
-      def where(attributes = nil)
+      def where(attributes = nil, *rest)
         return all if attributes.nil? || (attributes.is_a?(Hash) && attributes.empty?) || (attributes.is_a?(Integer) && attributes <= 0)
 
         if attributes.is_a?(Integer) || (attributes.length == 1 && (attributes[:cartodb_id] || attributes[:id]))
           row_id = attributes.is_a?(Integer) ? attributes : (attributes[:cartodb_id] || attributes[:id])
           return self.new(connection.row(table_name, row_id))
+        end
+
+        columns = cartodb_table.schema.map{|c| {:name => c[0], :type => c[1]}}
+
+        select = "SELECT #{columns.map{|c| c[:name]}.join(', ')}"
+        from = "FROM #{table_name}"
+        where = filters = nil
+
+        case attributes
+        when Hash
+          filters = attributes.to_a.map{|i| "#{table_name}.#{i.first} = #{i.last}"}.join(' AND ')
+        when String
+          filters = attributes
+          values  = rest
+          filters = filters.gsub(/[\?]/){|r| values.shift}
+        end
+
+        where = "WHERE #{filters}" if filters
+
+        results = connection.query "#{select} #{from} #{where}"
+
+        if results && results.rows
+          results.rows.map{|r| self.new(r)}
+        else
+          []
         end
       end
 
@@ -58,7 +82,7 @@ module CartoDB
       end
 
       def count
-        @@count ||= begin
+        begin
           results = connection.query "SELECT COUNT(CARTODB_ID) FROM #{table_name}"
           results.rows.first[:count]
         rescue Exception => e
@@ -75,15 +99,27 @@ module CartoDB
       end
 
       def table_name
-        @@table_name
+        @@table_name ||= self.name.tableize
       end
 
       def table_name=(name)
         @@table_name = name
       end
 
+      def cartodb_table
+        @@cartodb_table ||= connection.table table_name
+      end
+
+      def cartodb_table=(table)
+        @@cartodb_table = table
+      end
+
       def columns
         @@columns
+      end
+
+      def columns=(columns)
+        @@columns = columns
       end
 
       def field(name, options = {:type => String})
@@ -121,7 +157,11 @@ module CartoDB
     end
 
     def cartodb_table
-      @cartodb_table ||= connection.table table_name
+      self.class.cartodb_table
+    end
+
+    def cartodb_table=(table)
+      self.class.cartodb_table = table
     end
 
     def method_missing(name, *args, &block)
@@ -196,15 +236,11 @@ module CartoDB
       missing_columns.each do |column|
         connection.add_column table_name, column[:name], column[:type]
       end
-      @cartodb_table = nil
-      read_metadata cartodb_table
+
+      self.cartodb_table = nil
+      read_metadata self.cartodb_table
     end
     private :create_missing_columns
-
-    def set_attributes
-
-    end
-    private :set_attributes
 
   end
 

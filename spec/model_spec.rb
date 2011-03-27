@@ -85,6 +85,7 @@ describe 'CartoDB model' do
   it "should initialize attributes of the model without persisting them into cartodb using the `new` method" do
     losail_circuit = new_circuit
 
+    # expects{ @cartodb.records 'moto_gp_circuit' }.to raise_error(CartoDB::Client:Error, /404 - Not found/)
     records = @cartodb.records 'moto_gp_circuit'
     records.total_rows.should == 0
     records.rows.should be_empty
@@ -260,7 +261,26 @@ describe 'CartoDB model' do
     same_circuit.longest_straight.should be == '1068m'
     same_circuit.constructed.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
     same_circuit.modified.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+  end
 
+  it "should search records by certain filters" do
+    new_circuit(:name => 'Losail circuit',       :left_corners => 6, :right_corners => 10).save
+    new_circuit(:name => 'Jerez',                :left_corners => 5, :right_corners => 8).save
+    new_circuit(:name => 'Estoril',              :left_corners => 4, :right_corners => 9).save
+    new_circuit(:name => 'Lemans',               :left_corners => 4, :right_corners => 9).save
+    new_circuit(:name => 'Circuit de Catalunya', :left_corners => 5, :right_corners => 8).save
+
+    circuits = MotoGPCircuit.where(:left_corners => 4, :right_corners => 9)
+
+    circuits.should have(2).circuits
+    circuits.first.name.should be == 'Estoril'
+    circuits.last.name.should be == 'Lemans'
+
+    circuits = MotoGPCircuit.where("left_corners = ? AND right_corners = ?", 4, 9)
+
+    circuits.should have(2).circuits
+    circuits.first.name.should be == 'Estoril'
+    circuits.last.name.should be == 'Lemans'
   end
 
 end
