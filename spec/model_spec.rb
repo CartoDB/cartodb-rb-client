@@ -198,6 +198,15 @@ describe 'CartoDB model' do
     losail_circuit.length.should be == '1243m'
   end
 
+  it "should destroy a previously created record" do
+    losail_circuit = MotoGPCircuit.create new_losail_circuit_attributes
+
+     expect {
+      losail_circuit.destroy
+    }.to change{@cartodb.records('moto_gp_circuit').total_rows}.by(-1)
+
+  end
+
   it "should return all records paginated" do
     create_random_circuits(20)
 

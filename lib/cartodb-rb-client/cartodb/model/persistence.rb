@@ -25,6 +25,12 @@ module CartoDB
         end
       end
 
+      def destroy
+        unless new_record?
+          delete_row
+        end
+      end
+
       def new_record?
         cartodb_id.nil? || cartodb_id <= 0
       end
@@ -44,6 +50,11 @@ module CartoDB
         connection.update_row table_name, cartodb_id, row
       end
       private :update_row
+
+      def delete_row
+        connection.delete_row table_name, cartodb_id
+      end
+      private :delete_row
 
     end
   end
