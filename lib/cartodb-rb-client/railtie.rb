@@ -11,16 +11,18 @@ module CartoDB
 
     initializer "cartoDB_railtie.configure_rails_initialization" do |app|
 
-      CartoDB::Settings = YAML.load_file(Rails.root.join('config/cartodb_config.yml'))[Rails.env.to_s]
-      CartoDB::Connection = CartoDB::Client::Connection.new
+      if File.exists?(Rails.root.join('config/cartodb_config.yml'))
+        CartoDB::Settings = YAML.load_file(Rails.root.join('config/cartodb_config.yml'))[Rails.env.to_s]
+        CartoDB::Connection = CartoDB::Client::Connection.new
 
-      app.middleware.use OmniAuth::Builder do
-        provider :cartodb, CartoDB::Settings['host'], CartoDB::Settings['oauth_key'], CartoDB::Settings['oauth_secret']
-      end
+        app.middleware.use OmniAuth::Builder do
+          provider :cartodb, CartoDB::Settings['host'], CartoDB::Settings['oauth_key'], CartoDB::Settings['oauth_secret']
+        end
 
-      app.middleware.use RailsWarden::Manager do |manager|
-        manager.default_strategies :cartodb_oauth
-        manager.failure_app = SessionsController if SessionsController
+        app.middleware.use RailsWarden::Manager do |manager|
+          manager.default_strategies :cartodb_oauth
+          manager.failure_app = SessionsController if SessionsController
+        end
       end
 
     end
