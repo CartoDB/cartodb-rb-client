@@ -11,19 +11,46 @@ module CartoDB
 
     initializer "cartoDB_railtie.configure_rails_initialization" do |app|
 
-      if File.exists?(Rails.root.join('config/cartodb_config.yml'))
-        CartoDB::Settings = YAML.load_file(Rails.root.join('config/cartodb_config.yml'))[Rails.env.to_s]
-        CartoDB::Connection = CartoDB::Client::Connection.new
+      CartoDB::Init.start app
 
-        app.middleware.use OmniAuth::Builder do
-          provider :cartodb, CartoDB::Settings['host'], CartoDB::Settings['oauth_key'], CartoDB::Settings['oauth_secret']
+    end
+
+  end
+
+  class Init
+
+    class << self
+
+      def start(rails_app, cartodb_settings = nil)
+        if cartodb_settings.blank?
+          config_path = Rails.root.join('config/cartodb_config.yml')
+          cartodb_settings = YAML.load_file(config_path)[Rails.env.to_s] if File.exists?(config_path)
         end
 
-        app.middleware.use RailsWarden::Manager do |manager|
+        return if CartoDB.const_defined?('Settings') || cartodb_settings.blank?
+
+        CartoDB.const_set('Settings', cartodb_settings)
+        CartoDB.const_set('Connection', CartoDB::Client::Connection.new) unless CartoDB.const_defined?('Connection')
+
+        init_omniaouth rails_app
+        init_warden rails_app
+
+      end
+
+      def init_omniaouth(rails_app)
+        rails_app.middleware.use OmniAuth::Builder do
+          provider :cartodb, CartoDB::Settings['host'], CartoDB::Settings['oauth_key'], CartoDB::Settings['oauth_secret']
+        end
+      end
+      private :init_omniaouth
+
+      def init_warden(rails_app)
+        rails_app.middleware.use RailsWarden::Manager do |manager|
           manager.default_strategies :cartodb_oauth
           manager.failure_app = SessionsController if SessionsController
         end
       end
+      private :init_warden
 
     end
 
