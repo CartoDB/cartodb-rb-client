@@ -1,4 +1,6 @@
+# coding: UTF-8
 require 'spec_helper'
+require 'tempfile'
 
 describe 'CartoDB client' do
 
@@ -25,6 +27,43 @@ describe 'CartoDB client' do
     table.schema.should include(["field2", "number"])
     table.schema.should include(["field3", "date"])
     table.schema.should include(["field4", "boolean"])
+  end
+
+  it "should create a table from a csv file" do
+    table = @cartodb.create_table 'whs_sites', File.open("#{File.dirname(__FILE__)}/support/whs_features.csv", 'r')
+
+    table.should_not be_nil
+    table[:id].should be > 0
+    table = @cartodb.table 'whs_sites'
+    table.schema.should have(23).items
+
+    records = @cartodb.records 'whs_sites', :rows_per_page => 1000
+    records.should_not be_nil
+    records.rows.should have(911).whs_sites
+    records.rows.first.cartodb_id.should be == 1
+    records.rows.first.title.should be == "Aflaj Irrigation Systems of Oman"
+    records.rows.first.latitude.should be > 0
+    records.rows.first.longitude.should be > 0
+    records.rows.first.description.should match /A qanāt \(from Arabic: قناة‎\) \(Iran, Syria and Jordan\) is a water management system/
+    records.rows.first.region.should be == "Dakhiliya, Sharqiya and Batinah Regions"
+    records.rows.first.type.should be == "cultural"
+    records.rows.first.endangered_reason.should be_nil
+    records.rows.first.edited_region.should be == "Dakhiliya, Sharqiya and Batinah Regions"
+    records.rows.first.endangered_year.should be_nil
+    records.rows.first.external_links.should match /\[The Origin and Spread of Qanats in the Old World\|http:\/\/www\.jstor\.org\/stable\/986162\]/
+    records.rows.first.wikipedia_link.should be == "http://en.wikipedia.org/wiki/Qanat"
+    records.rows.first.comments.should be_nil
+    records.rows.first.criteria.should be == "[v]"
+    records.rows.first.iso_code.should be == "OM"
+    records.rows.first.size.should be == 23
+    records.rows.first.name.should be == "Aflaj Irrigation Systems of Oman"
+    records.rows.first.country.should be == "Oman"
+    records.rows.first.whs_site_id.should be == 1207
+    records.rows.first.date_of_inscription.should be == "2006"
+    records.rows.first.whs_source_page.should be == "http://whc.unesco.org/en/list/1207"
+    records.rows.first.created_at.should_not be_nil
+    records.rows.first.updated_at.should_not be_nil
+
   end
 
   it "should add and remove colums in a previously created table" do
