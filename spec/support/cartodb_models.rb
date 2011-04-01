@@ -1,5 +1,3 @@
-require 'cartodb-rb-client/cartodb/model'
-
 class MotoGPCircuit < CartoDB::Model::Base
   field :length
   field :width
