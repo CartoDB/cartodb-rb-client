@@ -23,6 +23,12 @@ describe 'CartoDB model' do
     model.cartodb_table_exists?.should be_true
   end
 
+  it "should create a table with custom name if specified" do
+    model = CustomTableName.new
+
+    model.table_name.should be == 'my_table_with_custom_name'
+  end
+
   it "should contain an array of columns" do
     model = MotoGPCircuit.new
 

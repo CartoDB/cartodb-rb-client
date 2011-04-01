@@ -9,7 +9,6 @@ module CartoDB
 
       def initialize(attributes = {})
         self.class.cartodb_table = nil
-        self.class.table_name    = nil
         @attributes              = attributes
         self.class.send(:update_cartodb_schema) unless schema_synchronized?
       end
