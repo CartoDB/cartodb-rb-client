@@ -4,7 +4,7 @@ require 'spec_helper'
 describe 'CartoDB client' do
 
   it "should create a table and get its table definition" do
-    table = @cartodb.create_table 'cartodb_spec', [
+    table = CartoDB::Connection.create_table 'cartodb_spec', [
                                     {:name => 'field1', :type => 'text'},
                                     {:name => 'field2', :type => 'number'},
                                     {:name => 'field3', :type => 'date'},
@@ -13,7 +13,7 @@ describe 'CartoDB client' do
 
     table.should_not be_nil
     table[:id].should be > 0
-    table = @cartodb.table 'cartodb_spec'
+    table = CartoDB::Connection.table 'cartodb_spec'
     table.schema.should have(11).items
     table.schema.should include(["cartodb_id", "number"])
     table.schema.should include(["name", "string"])
@@ -29,14 +29,14 @@ describe 'CartoDB client' do
   end
 
   it "should create a table from a csv file" do
-    table = @cartodb.create_table 'whs_sites', File.open("#{File.dirname(__FILE__)}/support/whs_features.csv", 'r')
+    table = CartoDB::Connection.create_table 'whs_sites', File.open("#{File.dirname(__FILE__)}/support/whs_features.csv", 'r')
 
     table.should_not be_nil
     table[:id].should be > 0
-    table = @cartodb.table 'whs_sites'
+    table = CartoDB::Connection.table 'whs_sites'
     table.schema.should have(23).items
 
-    records = @cartodb.records 'whs_sites', :rows_per_page => 1000
+    records = CartoDB::Connection.records 'whs_sites', :rows_per_page => 1000
     records.should_not be_nil
     records.rows.should have(911).whs_sites
     records.rows.first.cartodb_id.should be == 1
@@ -66,56 +66,56 @@ describe 'CartoDB client' do
   end
 
   it "should add and remove colums in a previously created table" do
-    @cartodb.create_table 'cartodb_spec'
-    @cartodb.add_column 'cartodb_spec', 'field1', 'text'
-    @cartodb.add_column 'cartodb_spec', 'field2', 'number'
-    @cartodb.add_column 'cartodb_spec', 'field3', 'date'
+    CartoDB::Connection.create_table 'cartodb_spec'
+    CartoDB::Connection.add_column 'cartodb_spec', 'field1', 'text'
+    CartoDB::Connection.add_column 'cartodb_spec', 'field2', 'number'
+    CartoDB::Connection.add_column 'cartodb_spec', 'field3', 'date'
 
-    table = @cartodb.table 'cartodb_spec'
+    table = CartoDB::Connection.table 'cartodb_spec'
     table.schema.should have(10).items
     table.schema.should include(["field1", "string"])
     table.schema.should include(["field2", "number"])
     table.schema.should include(["field3", "date"])
 
-    @cartodb.drop_column 'cartodb_spec', 'field3'
-    table = @cartodb.table 'cartodb_spec'
+    CartoDB::Connection.drop_column 'cartodb_spec', 'field3'
+    table = CartoDB::Connection.table 'cartodb_spec'
     table.schema.should have(9).items
     table.schema.should_not include(["field3", "date"])
   end
 
   it "should change a previously created column" do
-    @cartodb.create_table 'cartodb_spec', [{:name => 'field1', :type => 'text'}]
-    @cartodb.change_column 'cartodb_spec', "field1", "changed_field", "number"
-    table = @cartodb.table 'cartodb_spec'
+    CartoDB::Connection.create_table 'cartodb_spec', [{:name => 'field1', :type => 'text'}]
+    CartoDB::Connection.change_column 'cartodb_spec', "field1", "changed_field", "number"
+    table = CartoDB::Connection.table 'cartodb_spec'
     table.schema.should_not include(["field1", "string"])
     table.schema.should include(["changed_field", "number"])
   end
 
   it "should return user's table list" do
-    table_1 = @cartodb.create_table 'table #1'
-    table_2 = @cartodb.create_table 'table #2'
+    table_1 = CartoDB::Connection.create_table 'table #1'
+    table_2 = CartoDB::Connection.create_table 'table #2'
 
-    tables_list = @cartodb.tables
+    tables_list = CartoDB::Connection.tables
     tables_list.should have(2).items
     tables_list.map(&:id).should include(table_1[:id])
     tables_list.map(&:id).should include(table_2[:id])
   end
 
   it "should drop a table" do
-    table_1 = @cartodb.create_table 'table #1'
-    table_2 = @cartodb.create_table 'table #2'
-    table_3 = @cartodb.create_table 'table #3'
+    table_1 = CartoDB::Connection.create_table 'table #1'
+    table_2 = CartoDB::Connection.create_table 'table #2'
+    table_3 = CartoDB::Connection.create_table 'table #3'
 
-    @cartodb.drop_table 'table_2'
+    CartoDB::Connection.drop_table 'table_2'
 
-    tables_list = @cartodb.tables
+    tables_list = CartoDB::Connection.tables
     tables_list.should have(2).items
     tables_list.map(&:id).should include(table_1[:id])
     tables_list.map(&:id).should include(table_3[:id])
   end
 
   it "should insert a row in a table" do
-    table = @cartodb.create_table 'table #1', [
+    table = CartoDB::Connection.create_table 'table #1', [
                                     {:name => 'field1', :type => 'text'},
                                     {:name => 'field2', :type => 'number'},
                                     {:name => 'field3', :type => 'date'},
@@ -124,7 +124,7 @@ describe 'CartoDB client' do
 
     today = Time.now
 
-    inserted_row = @cartodb.insert_row 'table_1', {
+    inserted_row = CartoDB::Connection.insert_row 'table_1', {
       'name'        => 'cartoset',
       'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       'latitude'    => 40.423012,
@@ -135,7 +135,7 @@ describe 'CartoDB client' do
       'field4'      => true
     }
 
-    record = @cartodb.row 'table_1', inserted_row.id
+    record = CartoDB::Connection.row 'table_1', inserted_row.id
 
     record.name.should == 'cartoset'
     record.latitude.should == 40.423012
@@ -148,7 +148,7 @@ describe 'CartoDB client' do
   end
 
   it "should update a row in a table" do
-    table = @cartodb.create_table 'table #1', [
+    table = CartoDB::Connection.create_table 'table #1', [
                                     {:name => 'field1', :type => 'text'},
                                     {:name => 'field2', :type => 'number'},
                                     {:name => 'field3', :type => 'date'},
@@ -157,7 +157,7 @@ describe 'CartoDB client' do
 
     today = Time.now
 
-    record = @cartodb.insert_row 'table_1', {
+    record = CartoDB::Connection.insert_row 'table_1', {
       'name'        => 'cartoset',
       'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       'latitude'    => 40.423012,
@@ -168,7 +168,7 @@ describe 'CartoDB client' do
       'field4'      => true
     }
 
-    @cartodb.update_row 'table_1', record.id, {
+    CartoDB::Connection.update_row 'table_1', record.id, {
       'name'        => 'updated_row',
       'description' => 'Eu capto illum, iustum, brevitas, lobortis torqueo importunus, capio sudo. Genitus importunus amet iaceo, abluo obruo consequat, virtus eros, aliquip iustum nisl duis zelus. Ymo augue nobis exerci letatio sed.',
       'latitude'    => 40.415113,
@@ -179,7 +179,7 @@ describe 'CartoDB client' do
       'field4'      => false
     }
 
-    record = @cartodb.row 'table_1', record.id
+    record = CartoDB::Connection.row 'table_1', record.id
 
     record.name.should        == 'updated_row'
     record.latitude.should    == 40.415113
@@ -192,7 +192,7 @@ describe 'CartoDB client' do
   end
 
   it "should delete a table's row" do
-    table = @cartodb.create_table 'table #1', [
+    table = CartoDB::Connection.create_table 'table #1', [
                                     {:name => 'field1', :type => 'text'},
                                     {:name => 'field2', :type => 'number'},
                                     {:name => 'field3', :type => 'date'},
@@ -201,7 +201,7 @@ describe 'CartoDB client' do
 
     today = Time.now
 
-    record = @cartodb.insert_row 'table_1', {
+    record = CartoDB::Connection.insert_row 'table_1', {
       'name'        => 'cartoset',
       'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       'latitude'    => 40.423012,
@@ -212,9 +212,9 @@ describe 'CartoDB client' do
       'field4'      => true
     }
 
-    @cartodb.delete_row 'table_1', record.id
+    CartoDB::Connection.delete_row 'table_1', record.id
 
-    records = @cartodb.records 'table_1'
+    records = CartoDB::Connection.records 'table_1'
 
     records.name.should be == 'table_1'
     records.total_rows.should == 0
@@ -222,10 +222,10 @@ describe 'CartoDB client' do
   end
 
   it "should execute a select query and return results" do
-    table = @cartodb.create_table 'table #1'
+    table = CartoDB::Connection.create_table 'table #1'
 
     50.times do
-      @cartodb.insert_row 'table_1', {
+      CartoDB::Connection.insert_row 'table_1', {
         'name'        => String.random(15),
         'description' => String.random(200),
         'latitude'    => rand(90),
@@ -233,7 +233,7 @@ describe 'CartoDB client' do
       }
     end
 
-    results = @cartodb.query("SELECT * FROM table_1")
+    results = CartoDB::Connection.query("SELECT * FROM table_1")
     results.should_not be_nil
     results.time.should be > 0
     results.total_rows.should == 50
@@ -249,14 +249,14 @@ describe 'CartoDB client' do
   end
 
   it "should get a table by its name" do
-    created_table = @cartodb.create_table 'table_with_name'
+    created_table = CartoDB::Connection.create_table 'table_with_name'
 
-    table = @cartodb.table 'table_with_name'
+    table = CartoDB::Connection.table 'table_with_name'
     table.should_not be_nil
     table[:id].should be == created_table[:id]
   end
 
   it "should return nil when requesting a table which does not exists" do
-    expect{@cartodb.table('non_existing_table')}.to raise_error(CartoDB::Client::Error, /404 - Not found/)
+    expect{CartoDB::Connection.table('non_existing_table')}.to raise_error(CartoDB::Client::Error, /404 - Not found/)
   end
 end

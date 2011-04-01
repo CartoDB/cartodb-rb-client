@@ -9,5 +9,8 @@ class MotoGPCircuit < CartoDB::Model::Base
 end
 
 class StandardModel < CartoDB::Model::Base
+end
 
+class CustomTableName < CartoDB::Model::Base
+  cartodb_table_name 'my_table_with_custom_name'
 end

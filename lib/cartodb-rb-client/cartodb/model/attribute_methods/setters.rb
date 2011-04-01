@@ -8,8 +8,8 @@ module CartoDB
 
         module ClassMethods
 
-          def table_name=(name)
-            @table_name = name
+          def cartodb_table_name(table_name)
+            @table_name = table_name
           end
 
           def cartodb_table=(table)
