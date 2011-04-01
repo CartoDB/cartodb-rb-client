@@ -98,6 +98,16 @@ describe 'CartoDB model' do
     columns.should include({:name => 'longest_straight', :type => 'string'})
     columns.should include({:name => 'constructed',      :type => 'date'})
     columns.should include({:name => 'modified',         :type => 'date'})
+
+    columns = StandardModel.data_columns
+    columns.should_not include({:name => 'cartodb_id',       :type => 'number'})
+    columns.should_not include({:name => 'created_at',       :type => 'date'})
+    columns.should_not include({:name => 'updated_at',       :type => 'date'})
+    columns.should include({:name => 'name',             :type => 'string'})
+    columns.should include({:name => 'description',      :type => 'string'})
+    columns.should include({:name => 'latitude',         :type => 'number'})
+    columns.should include({:name => 'longitude',        :type => 'number'})
+
   end
 
   it "should initialize attributes of the model without persisting them into cartodb using the `new` method" do
