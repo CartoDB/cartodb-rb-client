@@ -2,7 +2,7 @@ module CartoDB
   module Model
     module AttributeMethods
       module Getters
-        attr_reader :table, :columns, :attributes
+        attr_reader :table, :attributes
 
         def self.included(base)
           base.extend(ClassMethods)
@@ -19,11 +19,20 @@ module CartoDB
           end
 
           def cartodb_table
-            @cartodb_table ||= connection.table table_name
+            @cartodb_table ||= begin
+              connection.table table_name
+            rescue CartoDB::Client::Error
+              nil
+            end
           end
 
           def columns
-            @columns || []
+            update_cartodb_schema unless schema_synchronized?
+            @columns
+          end
+
+          def data_columns
+            columns.reject{|c| %w(cartodb_id created_at updated_at).include?(c[:name])}.compact
           end
 
         end
@@ -46,6 +55,10 @@ module CartoDB
           else
             super
           end
+        end
+
+        def columns
+          self.class.columns
         end
 
         def column_names

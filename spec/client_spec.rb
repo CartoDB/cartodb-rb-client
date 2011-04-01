@@ -1,6 +1,5 @@
 # coding: UTF-8
 require 'spec_helper'
-require 'tempfile'
 
 describe 'CartoDB client' do
 
