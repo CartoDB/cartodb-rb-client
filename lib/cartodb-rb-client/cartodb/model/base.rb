@@ -11,7 +11,7 @@ module CartoDB
         self.class.cartodb_table = nil
         self.class.table_name    = nil
         @attributes              = attributes
-        update_cartodb_schema
+        self.class.send(:update_cartodb_schema) unless schema_synchronized?
       end
 
     end

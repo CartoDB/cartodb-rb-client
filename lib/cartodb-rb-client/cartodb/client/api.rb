@@ -6,7 +6,7 @@ module CartoDB
 
       def create_table(table_name = nil, schema_or_file = nil)
         schema = schema_or_file if schema_or_file && schema_or_file.is_a?(Array)
-        file   = schema_or_file if schema_or_file && (schema_or_file.is_a?(File) || schema_or_file.is_a?(Tempfile))
+        file   = schema_or_file if schema_or_file && schema_or_file.is_a?(File)
 
         params = {:name => table_name}
         params[:file] = file if file

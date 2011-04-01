@@ -45,7 +45,7 @@ describe 'CartoDB model' do
   end
 
   it "should add more columns if the table previously exists and doesn't have all model columns" do
-    table = @cartodb.create_table 'moto_gp_circuit'
+    table = CartoDB::Connection.create_table 'moto_gp_circuit'
     table.schema.should include(["cartodb_id", "number"])
     table.schema.should include(["name", "string"])
     table.schema.should include(["latitude", "number", "latitude"])
@@ -82,11 +82,30 @@ describe 'CartoDB model' do
 
   end
 
+  it "should return only data columns" do
+    columns = MotoGPCircuit.data_columns
+    columns.should_not include({:name => 'cartodb_id',       :type => 'number'})
+    columns.should_not include({:name => 'created_at',       :type => 'date'})
+    columns.should_not include({:name => 'updated_at',       :type => 'date'})
+    columns.should include({:name => 'name',             :type => 'string'})
+    columns.should include({:name => 'description',      :type => 'string'})
+    columns.should include({:name => 'latitude',         :type => 'number'})
+    columns.should include({:name => 'longitude',        :type => 'number'})
+    columns.should include({:name => 'length',           :type => 'string'})
+    columns.should include({:name => 'width',            :type => 'string'})
+    columns.should include({:name => 'left_corners',     :type => 'number'})
+    columns.should include({:name => 'right_corners',    :type => 'number'})
+    columns.should include({:name => 'longest_straight', :type => 'string'})
+    columns.should include({:name => 'constructed',      :type => 'date'})
+    columns.should include({:name => 'modified',         :type => 'date'})
+  end
+
   it "should initialize attributes of the model without persisting them into cartodb using the `new` method" do
+
     losail_circuit = new_circuit
 
-    # expects{ @cartodb.records 'moto_gp_circuit' }.to raise_error(CartoDB::Client:Error, /404 - Not found/)
-    records = @cartodb.records 'moto_gp_circuit'
+    # expects{ CartoDB::Connection.records 'moto_gp_circuit' }.to raise_error(CartoDB::Client:Error, /404 - Not found/)
+    records = CartoDB::Connection.records 'moto_gp_circuit'
     records.total_rows.should == 0
     records.rows.should be_empty
 
@@ -108,9 +127,9 @@ describe 'CartoDB model' do
 
      expect {
       losail_circuit.save.should be_true
-    }.to change{@cartodb.records('moto_gp_circuit').total_rows}.from(0).to(1)
+    }.to change{CartoDB::Connection.records('moto_gp_circuit').total_rows}.from(0).to(1)
 
-    record = @cartodb.row 'moto_gp_circuit', losail_circuit.cartodb_id
+    record = CartoDB::Connection.row 'moto_gp_circuit', losail_circuit.cartodb_id
     record[:cartodb_id].should             be == 1
     record[:name].should             be == 'Losail Circuit'
     record[:description].should      match /The fabulous Losail International Circuit lies/
@@ -141,7 +160,7 @@ describe 'CartoDB model' do
   it "should persist into cartodb using the static create method" do
     losail_circuit = MotoGPCircuit.create new_losail_circuit_attributes
 
-    record = @cartodb.row 'moto_gp_circuit', losail_circuit.cartodb_id
+    record = CartoDB::Connection.row 'moto_gp_circuit', losail_circuit.cartodb_id
     record[:cartodb_id].should             be == 1
     record[:name].should             be == 'Losail Circuit'
     record[:description].should      match /The fabulous Losail International Circuit lies/
@@ -180,10 +199,10 @@ describe 'CartoDB model' do
 
      expect {
       losail_circuit.save
-    }.to change{@cartodb.records('moto_gp_circuit').total_rows}.by(0)
+    }.to change{CartoDB::Connection.records('moto_gp_circuit').total_rows}.by(0)
 
 
-    record = @cartodb.row 'moto_gp_circuit', losail_circuit.cartodb_id
+    record = CartoDB::Connection.row 'moto_gp_circuit', losail_circuit.cartodb_id
     record[:cartodb_id].should       be == 1
     record[:name].should             be == 'Prueba'
     record[:description].should      match /Lorem ipsum dolor sit amet, consectetur adipisicing elit/
@@ -203,7 +222,7 @@ describe 'CartoDB model' do
 
      expect {
       losail_circuit.destroy
-    }.to change{@cartodb.records('moto_gp_circuit').total_rows}.by(-1)
+    }.to change{CartoDB::Connection.records('moto_gp_circuit').total_rows}.by(-1)
 
   end
 
