@@ -23,7 +23,7 @@ module CartoDB
           end
 
           def columns
-            @columns
+            @columns || []
           end
 
         end
