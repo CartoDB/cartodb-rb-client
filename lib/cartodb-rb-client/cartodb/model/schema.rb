@@ -28,9 +28,9 @@ module CartoDB
             :name => name.to_s,
             :type =>  CARTODB_TYPES[options[:type]] || 'string'
           }
-          return if @model_columns.include?(column)
+          return if model_columns.include?(column)
 
-          @model_columns << column
+          model_columns << column
           update_cartodb_schema
         end
         private :field
@@ -40,7 +40,7 @@ module CartoDB
           if cartodb_table_exists?
             table = cartodb_table
           else
-            table = connection.create_table table_name, @model_columns
+            table = connection.create_table table_name, model_columns
           end
           read_metadata table
           create_missing_columns
@@ -60,7 +60,7 @@ module CartoDB
 
         def create_missing_columns
 
-          missing_columns = @model_columns - @columns
+          missing_columns = model_columns - @columns
           return unless missing_columns && missing_columns.any?
 
           missing_columns.each do |column|

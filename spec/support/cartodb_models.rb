@@ -7,3 +7,7 @@ class MotoGPCircuit < CartoDB::Model::Base
   field :constructed,   :type => Date
   field :modified,      :type => Date
 end
+
+class StandardModel < CartoDB::Model::Base
+
+end

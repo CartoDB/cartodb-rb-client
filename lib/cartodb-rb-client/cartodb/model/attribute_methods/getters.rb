@@ -35,6 +35,11 @@ module CartoDB
             columns.reject{|c| %w(cartodb_id created_at updated_at).include?(c[:name])}.compact
           end
 
+          def model_columns
+            @model_columns || []
+          end
+          private :model_columns
+
         end
 
         def connection
