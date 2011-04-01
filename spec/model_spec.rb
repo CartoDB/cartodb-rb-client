@@ -321,13 +321,13 @@ describe 'CartoDB model' do
     new_circuit(:name => 'Lemans',               :left_corners => 4, :right_corners => 9).save
     new_circuit(:name => 'Circuit de Catalunya', :left_corners => 5, :right_corners => 8).save
 
-    circuits = MotoGPCircuit.where(:left_corners => 4, :right_corners => 9)
+    circuits = MotoGPCircuit.where(:left_corners => 4).where(:right_corners => 9)
 
     circuits.should have(2).circuits
     circuits.first.name.should be == 'Estoril'
     circuits.last.name.should be == 'Lemans'
 
-    circuits = MotoGPCircuit.where("left_corners = ? AND right_corners = ?", 4, 9)
+    circuits = MotoGPCircuit.where("left_corners = ?", 4).where("right_corners = ?", 9)
 
     circuits.should have(2).circuits
     circuits.first.name.should be == 'Estoril'
