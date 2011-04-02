@@ -54,7 +54,7 @@ describe 'CartoDB client' do
     records.rows.first.comments.should be_nil
     records.rows.first.criteria.should be == "[v]"
     records.rows.first.iso_code.should be == "OM"
-    records.rows.first.size.should be == 23
+    records.rows.first.size.should be == 14560000.0
     records.rows.first.name.should be == "Aflaj Irrigation Systems of Oman"
     records.rows.first.country.should be == "Oman"
     records.rows.first.whs_site_id.should be == 1207
@@ -258,5 +258,31 @@ describe 'CartoDB client' do
 
   it "should return nil when requesting a table which does not exists" do
     expect{CartoDB::Connection.table('non_existing_table')}.to raise_error(CartoDB::Client::Error, /404 - Not found/)
+  end
+
+  it "should paginate records" do
+    table = CartoDB::Connection.create_table 'table #1'
+
+    50.times do
+      CartoDB::Connection.insert_row 'table_1', {
+        'name'        => String.random(15),
+        'description' => String.random(200),
+        'latitude'    => rand(90),
+        'longitude'   => rand(180)
+      }
+    end
+
+    records = CartoDB::Connection.records 'table_1', :page => 0, :rows_per_page => 20
+    records.total_rows.should be == 50
+    records.rows.should have(20).records
+    records.rows.first.cartodb_id.should be == 1
+    records.rows.last.cartodb_id.should be == 20
+
+    records = CartoDB::Connection.records 'table_1', :page => 1, :rows_per_page => 20
+    records.total_rows.should be == 50
+    records.rows.should have(20).records
+    records.rows.first.cartodb_id.should be == 21
+    records.rows.last.cartodb_id.should be == 40
+
   end
 end

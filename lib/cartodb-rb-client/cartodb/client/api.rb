@@ -129,8 +129,15 @@ module CartoDB
         request.handled_response
       end
 
-      def query(query)
-        request = cartodb_request '', :params => {:sql => query} do |response|
+      def query(query, options = {})
+        params = {:sql => query}
+
+        if options && options.any?
+          params[:page]          = options[:page]          if options[:page]
+          params[:rows_per_page] = options[:rows_per_page] if options[:rows_per_page]
+        end
+
+        request = cartodb_request '', :params => params do |response|
           return Utils.parse_json(response)
         end
 

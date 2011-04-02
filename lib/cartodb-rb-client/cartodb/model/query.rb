@@ -50,10 +50,6 @@ module CartoDB
           end
         end
 
-        def count=(ammount)
-          @count = ammount
-        end
-
         def build_select
           columns = cartodb_table.schema.map{|c| {:name => c[0], :type => c[1]}}
           select = "SELECT #{columns.map{|c| c[:name]}.join(', ')}"
