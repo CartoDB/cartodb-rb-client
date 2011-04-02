@@ -28,20 +28,12 @@ module CartoDB
         end
 
       end
+      alias all to_a
 
       def length
         to_a.length
       end
       alias size length
-
-      def all
-        @records = connection.records(table_name) || []
-        if @records.any? && @records.rows
-          @records.rows.map{|r| @model.new(r)}
-        else
-          []
-        end
-      end
 
       def where(attributes = nil, *rest)
         @records = nil
