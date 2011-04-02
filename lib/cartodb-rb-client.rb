@@ -2,7 +2,7 @@ require 'ostruct'
 require 'oauth'
 require 'typhoeus'
 require 'mime/types'
-require 'json'
+require 'json/pure'
 require 'active_support/core_ext/hash/slice'
 
 require 'cartodb-rb-client/cartodb'

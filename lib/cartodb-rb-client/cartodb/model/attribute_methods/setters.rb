@@ -27,8 +27,8 @@ module CartoDB
         end
 
         def method_missing(name, *args, &block)
-          if args.count == 1 && block.nil? && name.to_s.ends_with?('=') && column_names.include?(name[0..-2].to_s)
-            attributes[name[0..-2].to_sym] = args.first
+          if args.count == 1 && block.nil? && name.to_s.ends_with?('=') && column_names.include?(name.to_s[0..-2])
+            attributes[name.to_s[0..-2].to_sym] = args.first
           else
             super
           end

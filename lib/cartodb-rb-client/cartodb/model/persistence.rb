@@ -36,17 +36,15 @@ module CartoDB
       end
 
       def create_row
-        # only the columns defined in the model are valid to create
-        row = attributes.symbolize_keys.reject{|key,value| INVALID_COLUMNS.include?(key)}.select{|key,value| column_names.include?(key.to_s) }
-        record_count = count
+        # only the columns defined in the model are allowed to be inserted
+        row = attributes.symbolize_keys.reject{|key,value| INVALID_COLUMNS.include?(key) || !column_names.include?(key.to_s) }
         inserted_record = connection.insert_row table_name, row
-        @count = record_count + 1
         self.cartodb_id = inserted_record.id
       end
       private :create_row
 
       def update_row
-        row = attributes.select{|key,value| column_names.include?(key.to_s) }
+        row = attributes.reject{|key,value| !column_names.include?(key.to_s) }
         connection.update_row table_name, cartodb_id, row
       end
       private :update_row
