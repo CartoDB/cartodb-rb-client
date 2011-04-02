@@ -78,11 +78,17 @@ describe 'CartoDB model scopes' do
     circuits.should have(2).circuits
     circuits.first.name.should be == 'Estoril'
     circuits.last.name.should be == 'Lemans'
+    circuits.all.should have(2).circuits
+    circuits.all.first.name.should be == 'Estoril'
+    circuits.all.last.name.should be == 'Lemans'
 
     circuits = MotoGPCircuit.where("left_corners = ?", 4).where("right_corners = ?", 9)
 
     circuits.should have(2).circuits
     circuits.first.name.should be == 'Estoril'
     circuits.last.name.should be == 'Lemans'
+    circuits.all.should have(2).circuits
+    circuits.all.first.name.should be == 'Estoril'
+    circuits.all.last.name.should be == 'Lemans'
   end
 end
