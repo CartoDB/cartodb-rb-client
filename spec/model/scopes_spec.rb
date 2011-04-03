@@ -6,7 +6,7 @@ describe 'CartoDB model scopes' do
 
     circuits = MotoGPCircuit.all
 
-    circuits.should have(10).circuits
+    circuits.should have(20).circuits
     circuits.first.should be_a_kind_of(MotoGPCircuit)
     circuits.first.cartodb_id.should be == 1
     circuits.first.name.should be == 'circuit #1'
@@ -18,8 +18,8 @@ describe 'CartoDB model scopes' do
     circuits.first.left_corners.should be == 6
     circuits.first.right_corners.should be == 10
     circuits.first.longest_straight.should be == '1068m'
-    circuits.first.constructed.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
-    circuits.first.modified.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    circuits.first.constructed.should be == "2004-01-01T00:00:00+01:00"
+    circuits.first.modified.should be == "2004-01-01T00:00:00+01:00"
   end
 
   it "should count all records" do
@@ -47,8 +47,8 @@ describe 'CartoDB model scopes' do
     circuit.left_corners.should be == 6
     circuit.right_corners.should be == 10
     circuit.longest_straight.should be == '1068m'
-    circuit.constructed.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
-    circuit.modified.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    circuit.constructed.should be == "2004-01-01 00:00:00"
+    circuit.modified.should be == "2004-01-01 00:00:00"
 
     same_circuit = MotoGPCircuit.find(1)
 
@@ -62,8 +62,8 @@ describe 'CartoDB model scopes' do
     same_circuit.left_corners.should be == 6
     same_circuit.right_corners.should be == 10
     same_circuit.longest_straight.should be == '1068m'
-    same_circuit.constructed.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
-    same_circuit.modified.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    same_circuit.constructed.should be == "2004-01-01 00:00:00"
+    same_circuit.modified.should be == "2004-01-01 00:00:00"
   end
 
   it "should search records by certain filters" do
