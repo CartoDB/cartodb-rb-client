@@ -1,8 +1,8 @@
 module CartoDB
   module Model
     class Base
-      include CartoDB::Model::AttributeMethods::Getters
-      include CartoDB::Model::AttributeMethods::Setters
+      include CartoDB::Model::Getters
+      include CartoDB::Model::Setters
       include CartoDB::Model::Geo
       include CartoDB::Model::Schema
       include CartoDB::Model::Persistence
