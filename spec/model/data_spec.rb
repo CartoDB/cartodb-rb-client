@@ -42,8 +42,8 @@ describe 'CartoDB model data methods' do
     record[:left_corners].should     be == 6
     record[:right_corners].should    be == 10
     record[:longest_straight].should be == '1068m'
-    record[:constructed].should      be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
-    record[:modified].should         be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    record[:constructed].should      be == "2004-01-01 00:00:00"
+    record[:modified].should         be == "2004-01-01 00:00:00"
 
     losail_circuit.cartodb_id.should be == 1
     losail_circuit.name.should be == 'Losail Circuit'
@@ -73,8 +73,8 @@ describe 'CartoDB model data methods' do
     record[:left_corners].should     be == 6
     record[:right_corners].should    be == 10
     record[:longest_straight].should be == '1068m'
-    record[:constructed].should      be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
-    record[:modified].should         be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    record[:constructed].should      be == "2004-01-01 00:00:00"
+    record[:modified].should         be == "2004-01-01 00:00:00"
 
     losail_circuit.cartodb_id.should be == 1
     losail_circuit.name.should be == 'Losail Circuit'
