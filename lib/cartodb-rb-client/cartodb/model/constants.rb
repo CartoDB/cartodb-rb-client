@@ -21,6 +21,8 @@ module CartoDB
 
       RGEO_FACTORY = ::RGeo::Geographic.simple_mercator_factory().freeze
 
+      DEFAULT_ROWS_PER_PAGE = 10.freeze
+
     end
   end
 end

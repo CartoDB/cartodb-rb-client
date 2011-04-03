@@ -7,6 +7,7 @@ module CartoDB
       end
 
       module ClassMethods
+
         def all
           scope = Scope.new(self)
           scope.all
@@ -38,6 +39,11 @@ module CartoDB
         def per_page(ammount)
           scope = Scope.new(self)
           scope.page(page_number)
+        end
+
+        def order(order_clause)
+          scope = Scope.new(self)
+          scope.order(order_clause)
         end
 
       end

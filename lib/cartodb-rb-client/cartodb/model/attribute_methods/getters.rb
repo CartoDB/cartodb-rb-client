@@ -35,10 +35,6 @@ module CartoDB
             columns.reject{|c| %w(cartodb_id created_at updated_at).include?(c[:name])}.compact
           end
 
-          def rows_per_page
-            @rows_per_page || 10
-          end
-
           def model_columns
             @model_columns || []
           end

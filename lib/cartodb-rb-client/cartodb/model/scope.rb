@@ -2,12 +2,14 @@ module CartoDB
   module Model
     class Scope
       extend Forwardable
+      include CartoDB::Model::Constants
 
       def_delegators :@model, :connection, :table_name, :cartodb_table
 
       def initialize(model)
-        @model   = model
-        @records = nil
+        @model         = model
+        @records       = nil
+        @rows_per_page = nil
       end
 
       def to_a
@@ -31,6 +33,7 @@ module CartoDB
         to_a.length
       end
       alias size length
+      alias count length
 
       def where(attributes = nil, *rest)
         @records = nil
@@ -53,7 +56,14 @@ module CartoDB
       end
 
       def per_page(ammount)
-        self.rows_per_page = ammount
+        @rows_per_page = ammount
+
+        self
+      end
+
+      def order(order_clause)
+        @order_clauses ||= []
+        @order_clauses << order_clause
 
         self
       end
@@ -61,9 +71,6 @@ module CartoDB
       def method_missing(method, *args, &block)
         if Array.method_defined?(method)
           to_a.send(method, *args, &block)
-        elsif Base.method_defined?(method)
-          puts method
-          @model.send(method, *args, &block)
         else
           super
         end
@@ -79,9 +86,10 @@ module CartoDB
         select     = build_select
         from       = build_from
         where      = build_where
+        order      = build_order
         pagination = build_pagination
 
-        sql = "#{select} #{from} #{where} #{pagination}"
+        sql = "#{select} #{from} #{where} #{order} #{pagination}"
       end
       alias to_sql build_sql
 
@@ -107,6 +115,11 @@ module CartoDB
       end
       private :build_pagination
 
+      def build_order
+        order = "ORDER BY #{order_clauses.join(', ')}" unless order_clauses.nil? || order_clauses.empty?
+      end
+      private :build_order
+
       def create_filters(attributes, values)
         case attributes
         when Hash
@@ -124,14 +137,14 @@ module CartoDB
       private :current_page
 
       def rows_per_page
-        @model.rows_per_page
+        @rows_per_page || DEFAULT_ROWS_PER_PAGE
       end
       private :rows_per_page
 
-      def rows_per_page=(ammount)
-        @model.rows_per_page = ammount
+      def order_clauses
+        @order_clauses || []
       end
-      private :rows_per_page=
+      private :order_clauses
 
     end
   end

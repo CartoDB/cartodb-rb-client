@@ -33,7 +33,7 @@ describe 'CartoDB model scopes' do
   end
 
   it "should find a record by its id" do
-    create_random_circuit
+    create_random_circuits(20)
 
     circuit = MotoGPCircuit.where(:cartodb_id => 1)
 
@@ -118,6 +118,16 @@ describe 'CartoDB model scopes' do
     circuits.should have(20).circuits
     circuits.first.cartodb_id.should be == 1
     circuits.last.cartodb_id.should be == 20
-
   end
+
+  it "should order results" do
+    create_random_circuits(20)
+
+    circuits = MotoGPCircuit.order('CARTODB_ID DESC')
+
+    circuits.should have(10).circuits
+    circuits.first.cartodb_id.should be == 20
+    circuits.last.cartodb_id.should be == 11
+  end
+
 end
