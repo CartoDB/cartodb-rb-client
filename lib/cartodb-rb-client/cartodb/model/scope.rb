@@ -9,6 +9,7 @@ module CartoDB
       def initialize(model)
         @model         = model
         @records       = nil
+        @custom_fields = nil
         @rows_per_page = nil
       end
 
@@ -34,6 +35,17 @@ module CartoDB
       end
       alias size length
       alias count length
+
+      def select(*fields)
+        case fields
+        when String
+          @custom_fields = fields
+        when Array
+          @custom_fields = fields.join(', ')
+        end
+
+        self
+      end
 
       def where(attributes = nil, *rest)
         @records = nil
@@ -94,8 +106,8 @@ module CartoDB
       alias to_sql build_sql
 
       def build_select
-        columns = cartodb_table.schema.map{|c| {:name => c[0], :type => c[1]}}
-        select = "SELECT #{columns.map{|c| c[:name]}.join(', ')}"
+        columns = @custom_fields || cartodb_table.schema.map{|c| c[0]}.join(', ')
+        select = "SELECT #{columns}"
       end
       private :build_select
 

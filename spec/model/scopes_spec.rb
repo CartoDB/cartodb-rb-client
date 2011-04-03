@@ -130,4 +130,41 @@ describe 'CartoDB model scopes' do
     circuits.last.cartodb_id.should be == 11
   end
 
+  it "should allow to select the specified fiels" do
+    create_random_circuits(20)
+
+    circuits = MotoGPCircuit.select('cartodb_id, name').where('cartodb_id <= 10')
+
+    circuits.should have(10).circuits
+    circuits.first.cartodb_id.should be == 1
+    circuits.first.name.should be == 'circuit #1'
+    circuits.first.description.should be_nil
+    circuits.first.latitude.should be_nil
+    circuits.first.longitude.should be_nil
+    circuits.first.length.should be_nil
+    circuits.first.width.should be_nil
+    circuits.first.left_corners.should be_nil
+    circuits.first.right_corners.should be_nil
+    circuits.first.longest_straight.should be_nil
+    circuits.first.constructed.should be_nil
+    circuits.first.modified.should be_nil
+
+    circuits = MotoGPCircuit.select(:cartodb_id, :name).where('cartodb_id <= 10')
+
+    circuits.should have(10).circuits
+    circuits.first.cartodb_id.should be == 1
+    circuits.first.name.should be == 'circuit #1'
+    circuits.first.description.should be_nil
+    circuits.first.latitude.should be_nil
+    circuits.first.longitude.should be_nil
+    circuits.first.length.should be_nil
+    circuits.first.width.should be_nil
+    circuits.first.left_corners.should be_nil
+    circuits.first.right_corners.should be_nil
+    circuits.first.longest_straight.should be_nil
+    circuits.first.constructed.should be_nil
+    circuits.first.modified.should be_nil
+
+  end
+
 end

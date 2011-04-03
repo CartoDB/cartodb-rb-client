@@ -8,6 +8,11 @@ module CartoDB
 
       module ClassMethods
 
+        def select(*fields)
+          scope = Scope.new(self)
+          scope.select(fields)
+        end
+
         def all
           scope = Scope.new(self)
           scope.all
