@@ -6,7 +6,7 @@ describe 'CartoDB model scopes' do
 
     circuits = MotoGPCircuit.all
 
-    circuits.should have(20).circuits
+    circuits.should have(10).circuits
     circuits.first.should be_a_kind_of(MotoGPCircuit)
     circuits.first.cartodb_id.should be == 1
     circuits.first.name.should be == 'circuit #1'
@@ -90,5 +90,34 @@ describe 'CartoDB model scopes' do
     circuits.all.should have(2).circuits
     circuits.all.first.name.should be == 'Estoril'
     circuits.all.last.name.should be == 'Lemans'
+  end
+
+  it "should paginate results" do
+    create_random_circuits(20)
+
+    circuits = MotoGPCircuit.page(1)
+
+    circuits.should have(10).circuits
+    circuits.first.cartodb_id.should be == 1
+    circuits.last.cartodb_id.should be == 10
+
+    circuits = MotoGPCircuit.page(2)
+
+    circuits.should have(10).circuits
+    circuits.first.cartodb_id.should be == 11
+    circuits.last.cartodb_id.should be == 20
+
+    circuits = MotoGPCircuit.page(1).per_page(20)
+
+    circuits.should have(20).circuits
+    circuits.first.cartodb_id.should be == 1
+    circuits.last.cartodb_id.should be == 20
+
+    circuits = MotoGPCircuit.where('CARTODB_ID > 0').page(1).per_page(20)
+
+    circuits.should have(20).circuits
+    circuits.first.cartodb_id.should be == 1
+    circuits.last.cartodb_id.should be == 20
+
   end
 end

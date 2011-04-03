@@ -30,6 +30,16 @@ module CartoDB
           end
         end
 
+        def page(page_number)
+          scope = Scope.new(self)
+          scope.page(page_number)
+        end
+
+        def per_page(ammount)
+          scope = Scope.new(self)
+          scope.page(page_number)
+        end
+
       end
 
       def count
