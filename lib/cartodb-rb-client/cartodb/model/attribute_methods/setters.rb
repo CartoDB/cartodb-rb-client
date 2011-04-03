@@ -20,6 +20,10 @@ module CartoDB
             @columns = columns
           end
 
+          def rows_per_page=(number_of_rows)
+            @rows_per_page = number_of_rows
+          end
+
         end
 
         def cartodb_table=(table)
