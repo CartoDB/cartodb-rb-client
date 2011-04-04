@@ -17,7 +17,7 @@ Setup
 
 	or if you are using bundler, put this line in your Gemfile:
 
-		gem 'cartodb-rb-client0'
+		gem 'cartodb-rb-client'
 
 2. Log into http://cartodb.com, get your OAUTH credentials and put them in a YAML file:
 
