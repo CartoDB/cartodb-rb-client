@@ -120,12 +120,7 @@ module CartoDB
       end
 
       def records(table_name, options = {})
-        params = {}
-        if options && options.any?
-          params[:rows_per_page] = options[:rows_per_page] if options[:rows_per_page]
-        end
-
-        request = cartodb_request "tables/#{table_name}/records", :params => params do |response|
+        request = cartodb_request "tables/#{table_name}/records", :params => options.slice(:rows_per_page, :page) do |response|
           return Utils.parse_json(response)
         end
 

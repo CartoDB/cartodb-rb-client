@@ -262,6 +262,22 @@ describe 'CartoDB model' do
     circuits.first.constructed.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
     circuits.first.modified.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
   end
+  
+  it "should allow pagination when fetching records" do
+    create_random_circuits(5)
+
+    circuits = CartoDB::Connection.records('moto_gp_circuit', :rows_per_page => 2, :page => 0)
+
+    circuits[:rows].size.should == 2
+    circuits[:rows][0].name.should == "circuit #1"
+    circuits[:rows][1].name.should == "circuit #2"
+
+    circuits = CartoDB::Connection.records('moto_gp_circuit', :rows_per_page => 2, :page => 1)
+
+    circuits[:rows].size.should == 2
+    circuits[:rows][0].name.should == "circuit #3"
+    circuits[:rows][1].name.should == "circuit #4"
+  end
 
   it "should count all records" do
     create_random_circuits(20)
