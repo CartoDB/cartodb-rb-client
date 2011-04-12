@@ -33,12 +33,11 @@ describe 'CartoDB model' do
     model = MotoGPCircuit.new
 
     model.columns.should_not be_nil
-    model.columns.should have(14).items
+    model.columns.should have(13).items
     model.columns.should include({:name => 'cartodb_id',       :type => 'number'})
     model.columns.should include({:name => 'name',             :type => 'string'})
     model.columns.should include({:name => 'description',      :type => 'string'})
-    model.columns.should include({:name => 'latitude',         :type => 'number'})
-    model.columns.should include({:name => 'longitude',        :type => 'number'})
+    model.columns.should include({:name => 'the_geom',         :type => 'geometry', :geometry_type=>"point"})
     model.columns.should include({:name => 'created_at',       :type => 'date'})
     model.columns.should include({:name => 'updated_at',       :type => 'date'})
     model.columns.should include({:name => 'length',           :type => 'string'})
@@ -54,8 +53,7 @@ describe 'CartoDB model' do
     table = CartoDB::Connection.create_table 'moto_gp_circuit'
     table.schema.should include(["cartodb_id", "number"])
     table.schema.should include(["name", "string"])
-    table.schema.should include(["latitude", "number", "latitude"])
-    table.schema.should include(["longitude", "number", "longitude"])
+    table.schema.should include(["the_geom", "geometry", "geometry", "point"])
     table.schema.should include(["description", "string"])
     table.schema.should include(["created_at", "date"])
     table.schema.should include(["updated_at", "date"])
@@ -70,12 +68,11 @@ describe 'CartoDB model' do
     model = MotoGPCircuit.new
 
     model.columns.should_not be_nil
-    model.columns.should have(14).items
+    model.columns.should have(13).items
     model.columns.should include({:name => 'cartodb_id',       :type => 'number'})
     model.columns.should include({:name => 'name',             :type => 'string'})
     model.columns.should include({:name => 'description',      :type => 'string'})
-    model.columns.should include({:name => 'latitude',         :type => 'number'})
-    model.columns.should include({:name => 'longitude',        :type => 'number'})
+    model.columns.should include({:name => 'the_geom',         :type => 'geometry', :geometry_type=>"point"})
     model.columns.should include({:name => 'created_at',       :type => 'date'})
     model.columns.should include({:name => 'updated_at',       :type => 'date'})
     model.columns.should include({:name => 'length',           :type => 'string'})
@@ -95,8 +92,7 @@ describe 'CartoDB model' do
     columns.should_not include({:name => 'updated_at',       :type => 'date'})
     columns.should include({:name => 'name',             :type => 'string'})
     columns.should include({:name => 'description',      :type => 'string'})
-    columns.should include({:name => 'latitude',         :type => 'number'})
-    columns.should include({:name => 'longitude',        :type => 'number'})
+    columns.should include({:name => 'the_geom',         :type => 'geometry', :geometry_type=>"point"})
     columns.should include({:name => 'length',           :type => 'string'})
     columns.should include({:name => 'width',            :type => 'string'})
     columns.should include({:name => 'left_corners',     :type => 'number'})
@@ -111,13 +107,11 @@ describe 'CartoDB model' do
     columns.should_not include({:name => 'updated_at',       :type => 'date'})
     columns.should include({:name => 'name',             :type => 'string'})
     columns.should include({:name => 'description',      :type => 'string'})
-    columns.should include({:name => 'latitude',         :type => 'number'})
-    columns.should include({:name => 'longitude',        :type => 'number'})
+    columns.should include({:name => 'the_geom',         :type => 'geometry', :geometry_type=>"point"})
 
   end
 
   it "should initialize attributes of the model without persisting them into cartodb using the `new` method" do
-
     losail_circuit = new_circuit
 
     # expects{ CartoDB::Connection.records 'moto_gp_circuit' }.to raise_error(CartoDB::Client:Error, /404 - Not found/)
@@ -146,18 +140,17 @@ describe 'CartoDB model' do
     }.to change{CartoDB::Connection.records('moto_gp_circuit').total_rows}.from(0).to(1)
 
     record = CartoDB::Connection.row 'moto_gp_circuit', losail_circuit.cartodb_id
-    record[:cartodb_id].should             be == 1
+    record[:cartodb_id].should       be == 1
     record[:name].should             be == 'Losail Circuit'
     record[:description].should      match /The fabulous Losail International Circuit lies/
-    record[:latitude].should         be == 25.488840
-    record[:longitude].should        be == 51.453352
+    record[:the_geom].should         be == RgeoFactory.point(51.453352, 25.488840)
     record[:length].should           be == '5380m'
     record[:width].should            be == '12m'
     record[:left_corners].should     be == 6
     record[:right_corners].should    be == 10
     record[:longest_straight].should be == '1068m'
-    record[:constructed].should      be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
-    record[:modified].should         be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    record[:constructed].to_s.should be == '2004-01-01T00:00:00+01:00'
+    record[:modified].to_s.should    be == '2004-01-01T00:00:00+01:00'
 
     losail_circuit.cartodb_id.should be == 1
     losail_circuit.name.should be == 'Losail Circuit'
@@ -180,15 +173,14 @@ describe 'CartoDB model' do
     record[:cartodb_id].should             be == 1
     record[:name].should             be == 'Losail Circuit'
     record[:description].should      match /The fabulous Losail International Circuit lies/
-    record[:latitude].should         be == 25.488840
-    record[:longitude].should        be == 51.453352
+    record[:the_geom].should         be == RgeoFactory.point(51.453352, 25.488840)
     record[:length].should           be == '5380m'
     record[:width].should            be == '12m'
     record[:left_corners].should     be == 6
     record[:right_corners].should    be == 10
     record[:longest_straight].should be == '1068m'
-    record[:constructed].should      be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
-    record[:modified].should         be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    record[:constructed].to_s.should be == '2004-01-01T00:00:00+01:00'
+    record[:modified].to_s.should    be == '2004-01-01T00:00:00+01:00'
 
     losail_circuit.cartodb_id.should be == 1
     losail_circuit.name.should be == 'Losail Circuit'
@@ -222,8 +214,7 @@ describe 'CartoDB model' do
     record[:cartodb_id].should       be == 1
     record[:name].should             be == 'Prueba'
     record[:description].should      match /Lorem ipsum dolor sit amet, consectetur adipisicing elit/
-    record[:latitude].should         be == 40.582394
-    record[:longitude].should        be == -3.994131
+    record[:the_geom].should         be == RgeoFactory.point(-3.994131, 40.582394)
     record[:length].should           be == '1243m'
 
     losail_circuit.name.should be == 'Prueba'
@@ -259,8 +250,8 @@ describe 'CartoDB model' do
     circuits.first.left_corners.should be == 6
     circuits.first.right_corners.should be == 10
     circuits.first.longest_straight.should be == '1068m'
-    circuits.first.constructed.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
-    circuits.first.modified.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    circuits.first.constructed.to_s.should be == '2004-01-01T00:00:00+01:00'
+    circuits.first.modified.to_s.should be == '2004-01-01T00:00:00+01:00'
   end
   
   it "should allow pagination when fetching records" do
@@ -304,8 +295,8 @@ describe 'CartoDB model' do
     circuit.left_corners.should be == 6
     circuit.right_corners.should be == 10
     circuit.longest_straight.should be == '1068m'
-    circuit.constructed.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
-    circuit.modified.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    circuit.constructed.to_s.should be == '2004-01-01T00:00:00+01:00'
+    circuit.modified.to_s.should be == '2004-01-01T00:00:00+01:00'
 
     same_circuit = MotoGPCircuit.find(1)
 
@@ -319,8 +310,8 @@ describe 'CartoDB model' do
     same_circuit.left_corners.should be == 6
     same_circuit.right_corners.should be == 10
     same_circuit.longest_straight.should be == '1068m'
-    same_circuit.constructed.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
-    same_circuit.modified.should be == Date.new(2004, 1, 1).strftime("%Y-%m-%d %H:%M:%S")
+    same_circuit.constructed.to_s.should be == '2004-01-01T00:00:00+01:00'
+    same_circuit.modified.to_s.should be == '2004-01-01T00:00:00+01:00'
   end
 
   it "should search records by certain filters" do

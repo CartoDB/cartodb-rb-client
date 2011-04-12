@@ -14,11 +14,10 @@ describe 'CartoDB client' do
     table.should_not be_nil
     table[:id].should be > 0
     table = CartoDB::Connection.table 'cartodb_spec'
-    table.schema.should have(11).items
+    table.schema.should have(10).items
     table.schema.should include(["cartodb_id", "number"])
     table.schema.should include(["name", "string"])
-    table.schema.should include(["latitude", "number", "latitude"])
-    table.schema.should include(["longitude", "number", "longitude"])
+    table.schema.should include(["the_geom", "geometry", "geometry", "point"])
     table.schema.should include(["description", "string"])
     table.schema.should include(["created_at", "date"])
     table.schema.should include(["updated_at", "date"])
@@ -39,27 +38,28 @@ describe 'CartoDB client' do
     records = CartoDB::Connection.records 'whs_sites', :rows_per_page => 1000
     records.should_not be_nil
     records.rows.should have(911).whs_sites
-    records.rows.first.cartodb_id.should be == 1
-    records.rows.first.title.should be == "Aflaj Irrigation Systems of Oman"
+
+    records.rows.first.cartodb_id.should be > 0
+    records.rows.first.title.should be == "Late Baroque Towns of the Val di Noto (South-Eastern Sicily)"
     records.rows.first.latitude.should be > 0
     records.rows.first.longitude.should be > 0
-    records.rows.first.description.should match /A qanāt \(from Arabic: قناة‎\) \(Iran, Syria and Jordan\) is a water management system/
-    records.rows.first.region.should be == "Dakhiliya, Sharqiya and Batinah Regions"
+    records.rows.first.description.should match /Val di Noto \(English: Vallum of Noto\) is a geographical area of south east Sicily/
+    records.rows.first.region.should be == "Provinces of Catania, Ragusa, and Syracuse, Sicily"
     records.rows.first.type.should be == "cultural"
     records.rows.first.endangered_reason.should be_nil
-    records.rows.first.edited_region.should be == "Dakhiliya, Sharqiya and Batinah Regions"
+    records.rows.first.edited_region.should be == "Provinces of Catania, Ragusa, and Syracuse, Sicily"
     records.rows.first.endangered_year.should be_nil
-    records.rows.first.external_links.should match /\[The Origin and Spread of Qanats in the Old World\|http:\/\/www\.jstor\.org\/stable\/986162\]/
-    records.rows.first.wikipedia_link.should be == "http://en.wikipedia.org/wiki/Qanat"
+    records.rows.first.external_links.should be_empty
+    records.rows.first.wikipedia_link.should be == "http://en.wikipedia.org/wiki/Val_di_Noto"
     records.rows.first.comments.should be_nil
-    records.rows.first.criteria.should be == "[v]"
-    records.rows.first.iso_code.should be == "OM"
-    records.rows.first.size.should be == 14560000.0
-    records.rows.first.name.should be == "Aflaj Irrigation Systems of Oman"
-    records.rows.first.country.should be == "Oman"
-    records.rows.first.whs_site_id.should be == 1207
-    records.rows.first.date_of_inscription.should be == "2006"
-    records.rows.first.whs_source_page.should be == "http://whc.unesco.org/en/list/1207"
+    records.rows.first.criteria.should be == "[i],[ii],[iv],[v]"
+    records.rows.first.iso_code.should be == "IT"
+    records.rows.first.size.should be == 1130000.0
+    records.rows.first.name.should be == "Late Baroque Towns of the Val di Noto (South-Eastern Sicily)"
+    records.rows.first.country.should be == "Italy"
+    records.rows.first.whs_site_id.should be == 1024
+    records.rows.first.date_of_inscription.should be == "2002"
+    records.rows.first.whs_source_page.should be == "http://whc.unesco.org/en/list/1024"
     records.rows.first.created_at.should_not be_nil
     records.rows.first.updated_at.should_not be_nil
 
@@ -72,14 +72,14 @@ describe 'CartoDB client' do
     CartoDB::Connection.add_column 'cartodb_spec', 'field3', 'date'
 
     table = CartoDB::Connection.table 'cartodb_spec'
-    table.schema.should have(10).items
+    table.schema.should have(9).items
     table.schema.should include(["field1", "string"])
     table.schema.should include(["field2", "number"])
     table.schema.should include(["field3", "date"])
 
     CartoDB::Connection.drop_column 'cartodb_spec', 'field3'
     table = CartoDB::Connection.table 'cartodb_spec'
-    table.schema.should have(9).items
+    table.schema.should have(8).items
     table.schema.should_not include(["field3", "date"])
   end
 
@@ -122,13 +122,12 @@ describe 'CartoDB client' do
                                     {:name => 'field4', :type => 'boolean'}
                                   ]
 
-    today = Time.now
+    today = DateTime.now
 
     inserted_row = CartoDB::Connection.insert_row 'table_1', {
       'name'        => 'cartoset',
       'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      'latitude'    => 40.423012,
-      'longitude'   => -3.699732,
+      'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(-3.699732, 40.423012)),
       'field1'      => 'lorem',
       'field2'      => 100.99,
       'field3'      => today,
@@ -143,7 +142,7 @@ describe 'CartoDB client' do
     record.description.should == 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     record.field1.should == 'lorem'
     record.field2.should == 100.99
-    record.field3.should == today.strftime("%Y-%m-%d %H:%M:%S")
+    record.field3.to_s.should == today.to_s
     record.field4.should == true
   end
 
@@ -155,13 +154,12 @@ describe 'CartoDB client' do
                                     {:name => 'field4', :type => 'boolean'}
                                   ]
 
-    today = Time.now
+    today = DateTime.now
 
     record = CartoDB::Connection.insert_row 'table_1', {
       'name'        => 'cartoset',
       'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      'latitude'    => 40.423012,
-      'longitude'   => -3.699732,
+      'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(-3.699732, 40.423012)),
       'field1'      => 'lorem',
       'field2'      => 100.99,
       'field3'      => today,
@@ -171,11 +169,10 @@ describe 'CartoDB client' do
     CartoDB::Connection.update_row 'table_1', record.id, {
       'name'        => 'updated_row',
       'description' => 'Eu capto illum, iustum, brevitas, lobortis torqueo importunus, capio sudo. Genitus importunus amet iaceo, abluo obruo consequat, virtus eros, aliquip iustum nisl duis zelus. Ymo augue nobis exerci letatio sed.',
-      'latitude'    => 40.415113,
-      'longitude'   => -3.699871,
+      'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(-3.699871, 40.415113)),
       'field1'      => 'illum',
       'field2'      => -83.24,
-      'field3'      => today + 84600,
+      'field3'      => today + 1,
       'field4'      => false
     }
 
@@ -187,7 +184,7 @@ describe 'CartoDB client' do
     record.description.should == 'Eu capto illum, iustum, brevitas, lobortis torqueo importunus, capio sudo. Genitus importunus amet iaceo, abluo obruo consequat, virtus eros, aliquip iustum nisl duis zelus. Ymo augue nobis exerci letatio sed.'
     record.field1.should      == 'illum'
     record.field2.should      == -83.24
-    record.field3.should      == (today + 84600).strftime("%Y-%m-%d %H:%M:%S")
+    record.field3.to_s.should == (today + 1).to_s
     record.field4.should      == false
   end
 
@@ -204,8 +201,7 @@ describe 'CartoDB client' do
     record = CartoDB::Connection.insert_row 'table_1', {
       'name'        => 'cartoset',
       'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      'latitude'    => 40.423012,
-      'longitude'   => -3.699732,
+      'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(-3.699732, 40.423012)),
       'field1'      => 'lorem',
       'field2'      => 100.99,
       'field3'      => today,
@@ -228,8 +224,7 @@ describe 'CartoDB client' do
       CartoDB::Connection.insert_row 'table_1', {
         'name'        => String.random(15),
         'description' => String.random(200),
-        'latitude'    => rand(90),
-        'longitude'   => rand(180)
+        'the_geom' => RGeo::GeoJSON.encode(RgeoFactory.point(rand(180), rand(90)))
       }
     end
 
@@ -267,8 +262,7 @@ describe 'CartoDB client' do
       CartoDB::Connection.insert_row 'table_1', {
         'name'        => String.random(15),
         'description' => String.random(200),
-        'latitude'    => rand(90),
-        'longitude'   => rand(180)
+        'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(rand(180), rand(90)))
       }
     end
 

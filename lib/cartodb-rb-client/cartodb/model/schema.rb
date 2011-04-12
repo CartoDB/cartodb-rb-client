@@ -44,6 +44,7 @@ module CartoDB
           end
           read_metadata table
           create_missing_columns
+          create_column_accessors
           @columns_synchronized = true
         end
         private :update_cartodb_schema
@@ -54,7 +55,7 @@ module CartoDB
         private :read_metadata
 
         def extract_columns(table)
-          @columns = table.schema.map{|c| {:name => c[0], :type => c[1]}}
+          @columns = table.schema.map{|c| c[0].eql?('the_geom') ? {:name => c[0], :type => c[1], :geometry_type => c[3]} : {:name => c[0], :type => c[1]}}
         end
         private :extract_columns
 
@@ -71,6 +72,27 @@ module CartoDB
           read_metadata self.cartodb_table
         end
         private :create_missing_columns
+
+        def create_column_accessors
+          @columns.each do |c|
+            column_name = c[:name]
+
+            setup_geometry_column(c) and next if column_name.eql?(GEOMETRY_COLUMN)
+
+            # unless self.methods.include?(column_name)
+              self.send :define_method, column_name do
+                self.attributes[column_name.to_sym]
+              end
+            # end
+
+            # unless self.methods.include?("#{column_name}=")
+              self.send :define_method, "#{column_name}=" do |value|
+                self.attributes[column_name.to_sym] = value
+              end
+            # end
+          end
+        end
+        private :create_column_accessors
 
       end
 

@@ -17,6 +17,10 @@ module CartoDB
         :id
       ].freeze
 
+      GEOMETRY_COLUMN = 'the_geom'.freeze
+
+      RGEO_FACTORY = ::RGeo::Geographic.simple_mercator_factory().freeze
+
     end
   end
 end
