@@ -255,6 +255,10 @@ describe 'CartoDB client' do
     expect{CartoDB::Connection.table('non_existing_table')}.to raise_error(CartoDB::Client::Error, /404 - Not found/)
   end
 
+  it "should return errors on invalid queries" do
+    expect{results = CartoDB::Connection.query("SELECT 1 FROM non_existing_table")}.to raise_error(CartoDB::Client::Error, /relation "non_existing_table" does not exist/)
+  end
+
   it "should paginate records" do
     table = CartoDB::Connection.create_table 'table #1'
 
