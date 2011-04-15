@@ -32,18 +32,18 @@ describe 'CartoDB model data methods' do
     }.to change{CartoDB::Connection.records('moto_gp_circuit').total_rows}.from(0).to(1)
 
     record = CartoDB::Connection.row 'moto_gp_circuit', losail_circuit.cartodb_id
-    record[:cartodb_id].should             be == 1
-    record[:name].should             be == 'Losail Circuit'
-    record[:description].should      match /The fabulous Losail International Circuit lies/
-    record[:latitude].should         be == 25.488840
-    record[:longitude].should        be == 51.453352
-    record[:length].should           be == '5380m'
-    record[:width].should            be == '12m'
-    record[:left_corners].should     be == 6
-    record[:right_corners].should    be == 10
-    record[:longest_straight].should be == '1068m'
-    record[:constructed].should      be == "2004-01-01 00:00:00"
-    record[:modified].should         be == "2004-01-01 00:00:00"
+    record.cartodb_id.should             be == 1
+    record.name.should             be == 'Losail Circuit'
+    record.description.should      match /The fabulous Losail International Circuit lies/
+    record.latitude.should         be == 25.488840
+    record.longitude.should        be == 51.453352
+    record.length.should           be == '5380m'
+    record.width.should            be == '12m'
+    record.left_corners.should     be == 6
+    record.right_corners.should    be == 10
+    record.longest_straight.should be == '1068m'
+    record.constructed.to_s.should be == "2004-01-01T00:00:00+01:00"
+    record.modified.to_s.should    be == "2004-01-01T00:00:00+01:00"
 
     losail_circuit.cartodb_id.should be == 1
     losail_circuit.name.should be == 'Losail Circuit'
@@ -63,18 +63,18 @@ describe 'CartoDB model data methods' do
     losail_circuit = MotoGPCircuit.create new_losail_circuit_attributes
 
     record = CartoDB::Connection.row 'moto_gp_circuit', losail_circuit.cartodb_id
-    record[:cartodb_id].should             be == 1
-    record[:name].should             be == 'Losail Circuit'
-    record[:description].should      match /The fabulous Losail International Circuit lies/
-    record[:latitude].should         be == 25.488840
-    record[:longitude].should        be == 51.453352
-    record[:length].should           be == '5380m'
-    record[:width].should            be == '12m'
-    record[:left_corners].should     be == 6
-    record[:right_corners].should    be == 10
-    record[:longest_straight].should be == '1068m'
-    record[:constructed].should      be == "2004-01-01 00:00:00"
-    record[:modified].should         be == "2004-01-01 00:00:00"
+    record.cartodb_id.should             be == 1
+    record.name.should             be == 'Losail Circuit'
+    record.description.should      match /The fabulous Losail International Circuit lies/
+    record.latitude.should         be == 25.488840
+    record.longitude.should        be == 51.453352
+    record.length.should           be == '5380m'
+    record.width.should            be == '12m'
+    record.left_corners.should     be == 6
+    record.right_corners.should    be == 10
+    record.longest_straight.should be == '1068m'
+    record.constructed.to_s.should be == "2004-01-01T00:00:00+01:00"
+    record.modified.to_s.should    be == "2004-01-01T00:00:00+01:00"
 
     losail_circuit.cartodb_id.should be == 1
     losail_circuit.name.should be == 'Losail Circuit'
@@ -105,12 +105,12 @@ describe 'CartoDB model data methods' do
 
 
     record = CartoDB::Connection.row 'moto_gp_circuit', losail_circuit.cartodb_id
-    record[:cartodb_id].should       be == 1
-    record[:name].should             be == 'Prueba'
-    record[:description].should      match /Lorem ipsum dolor sit amet, consectetur adipisicing elit/
-    record[:latitude].should         be == 40.582394
-    record[:longitude].should        be == -3.994131
-    record[:length].should           be == '1243m'
+    record.cartodb_id.should       be == 1
+    record.name.should             be == 'Prueba'
+    record.description.should      match /Lorem ipsum dolor sit amet, consectetur adipisicing elit/
+    record.latitude.should         be == 40.582394
+    record.longitude.should        be == -3.994131
+    record.length.should           be == '1243m'
 
     losail_circuit.name.should be == 'Prueba'
     losail_circuit.description.should match /Lorem ipsum dolor sit amet, consectetur adipisicing elit/

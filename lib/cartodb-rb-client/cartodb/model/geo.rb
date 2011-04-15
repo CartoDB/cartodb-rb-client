@@ -11,13 +11,14 @@ module CartoDB
         include CartoDB::Model::Constants
 
         def setup_geometry_column(geometry_column)
+          geometry_name = geometry_column[:name].to_sym
 
           self.send :define_method, :the_geom do
-            self.attributes[:the_geom]
+            self.attributes[geometry_name]
           end
 
           self.send :define_method, :the_geom= do |the_geom|
-            self.attributes[:the_geom] = the_geom
+            self.attributes[geometry_name] = the_geom
           end
 
           case geometry_column[:geometry_type]
@@ -28,7 +29,6 @@ module CartoDB
         private :setup_geometry_column
 
         def setup_point_geometry
-
           self.send :define_method, :latitude do
             self.the_geom ? self.the_geom.y : nil
           end

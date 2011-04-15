@@ -76,8 +76,9 @@ module CartoDB
         def create_column_accessors
           @columns.each do |c|
             column_name = c[:name]
+            column_type = c[:type]
 
-            setup_geometry_column(c) and next if column_name.eql?(GEOMETRY_COLUMN)
+            setup_geometry_column(c) and next if column_name.eql?(GEOMETRY_COLUMN) || column_type.eql?('geometry')
 
             # unless self.methods.include?(column_name)
               self.send :define_method, column_name do
