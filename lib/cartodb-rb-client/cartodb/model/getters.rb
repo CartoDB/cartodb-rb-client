@@ -53,16 +53,20 @@ module CartoDB
         self.class.cartodb_table
       end
 
-      def method_missing(name, *args, &block)
-        if args.empty? && block.nil? && column_names.include?(name.to_s)
-          attributes[name]
-        else
-          super
-        end
-      end
+      # def method_missing(name, *args, &block)
+      #   if args.empty? && block.nil? && column_names.include?(name.to_s)
+      #     attributes[name]
+      #   else
+      #     super
+      #   end
+      # end
 
       def columns
         self.class.columns
+      end
+
+      def attributes
+        @attributes ||= {}
       end
 
       def column_names
