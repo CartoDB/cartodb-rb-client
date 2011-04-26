@@ -26,7 +26,7 @@ module CartoDB
           @model_columns ||= []
           column = {
             :name => name.to_s,
-            :type =>  CARTODB_TYPES[options[:type]] || 'string'
+            :type =>  CARTODB_TYPES[options[:type]] || options[:type]
           }
           return if model_columns.include?(column)
 
