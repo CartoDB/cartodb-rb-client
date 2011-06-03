@@ -5,7 +5,7 @@ module CartodbHelpers
 
     tables_list = CartoDB::Connection.tables || []
 
-    tables_list.each do |table|
+    tables_list.tables.each do |table|
       CartoDB::Connection.drop_table(table.name) if table && table.name
     end
   end

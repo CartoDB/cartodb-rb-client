@@ -60,8 +60,8 @@ module CartoDB
         private :extract_columns
 
         def create_missing_columns
-
-          missing_columns = model_columns - @columns
+          table_column_names = @columns.map{|c| c[:name]}
+          missing_columns = model_columns.reject{|c| table_column_names.include?(c[:name])}
           return unless missing_columns && missing_columns.any?
 
           missing_columns.each do |column|

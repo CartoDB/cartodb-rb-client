@@ -110,4 +110,9 @@ describe 'CartoDB model metadata methods' do
     columns.should include({:name => 'the_geom',         :type => 'geometry', :geometry_type => 'point'})
   end
 
+  it "should create model with custom data types columns" do
+    columns = CustomDataTypeColumnModel.data_columns
+    columns.should include({:name => 'test', :type => 'number'})
+  end
+
 end

@@ -4,27 +4,28 @@ module CartoDB
 
       VERSION      = 'v1'.freeze
 
-      def create_table(table_name = nil, schema_or_file = nil)
+      def create_table(table_name = nil, schema_or_file = nil, the_geom_type = 'Point')
         schema = schema_or_file if schema_or_file && schema_or_file.is_a?(Array)
         file   = schema_or_file if schema_or_file && schema_or_file.is_a?(File)
 
         params = {:name => table_name}
         params[:file] = file if file
-        request = cartodb_request 'tables', :post, :params => params do |response|
-          created_table = Utils.parse_json(response)
-          table_name      = created_table.name if created_table
-
-          if table_name
-            if schema && schema.is_a?(Array)
-              schema.each do |column|
-                cartodb_request "tables/#{table_name}/columns", :post, :params => column
-              end
-              execute_queue
-              return table table_name
-            else
-              return created_table
-            end
-          end
+        params[:schema] = schema.map{|s| "#{s[:name]} #{s[:type]}"}.join(', ') if schema
+        request = cartodb_request 'tables', :post, :params => params, :the_geom_type => the_geom_type do |response|
+          return Utils.parse_json(response)
+          # table_name      = created_table.name if created_table
+          #
+          # if table_name
+          #   if schema && schema.is_a?(Array)
+          #     schema.each do |column|
+          #       cartodb_request "tables/#{table_name}/columns", :post, :params => column
+          #     end
+          #     execute_queue
+          #     return table table_name
+          #   else
+          #     return created_table
+          #   end
+          # end
         end
 
         execute_queue

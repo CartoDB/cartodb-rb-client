@@ -6,7 +6,7 @@ describe 'CartoDB client' do
   it "should create a table and get its table definition" do
     table = CartoDB::Connection.create_table 'cartodb_spec', [
                                     {:name => 'field1', :type => 'text'},
-                                    {:name => 'field2', :type => 'number'},
+                                    {:name => 'field2', :type => 'numeric'},
                                     {:name => 'field3', :type => 'date'},
                                     {:name => 'field4', :type => 'boolean'}
                                   ]
@@ -14,11 +14,8 @@ describe 'CartoDB client' do
     table.should_not be_nil
     table[:id].should be > 0
     table = CartoDB::Connection.table 'cartodb_spec'
-    table.schema.should have(10).items
+    table.schema.should have(7).items
     table.schema.should include(["cartodb_id", "number"])
-    table.schema.should include(["name", "string"])
-    table.schema.should include(["the_geom", "geometry", "geometry", "point"])
-    table.schema.should include(["description", "string"])
     table.schema.should include(["created_at", "date"])
     table.schema.should include(["updated_at", "date"])
     table.schema.should include(["field1", "string"])
@@ -97,8 +94,8 @@ describe 'CartoDB client' do
 
     tables_list = CartoDB::Connection.tables
     tables_list.should have(2).items
-    tables_list.map(&:id).should include(table_1[:id])
-    tables_list.map(&:id).should include(table_2[:id])
+    tables_list.tables.map(&:id).should include(table_1[:id])
+    tables_list.tables.map(&:id).should include(table_2[:id])
   end
 
   it "should drop a table" do
@@ -110,14 +107,14 @@ describe 'CartoDB client' do
 
     tables_list = CartoDB::Connection.tables
     tables_list.should have(2).items
-    tables_list.map(&:id).should include(table_1[:id])
-    tables_list.map(&:id).should include(table_3[:id])
+    tables_list.tables.map(&:id).should include(table_1[:id])
+    tables_list.tables.map(&:id).should include(table_3[:id])
   end
 
   it "should insert a row in a table" do
     table = CartoDB::Connection.create_table 'table #1', [
                                     {:name => 'field1', :type => 'text'},
-                                    {:name => 'field2', :type => 'number'},
+                                    {:name => 'field2', :type => 'numeric'},
                                     {:name => 'field3', :type => 'date'},
                                     {:name => 'field4', :type => 'boolean'}
                                   ]
@@ -125,9 +122,6 @@ describe 'CartoDB client' do
     today = DateTime.now
 
     inserted_row = CartoDB::Connection.insert_row 'table_1', {
-      'name'        => 'cartoset',
-      'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(-3.699732, 40.423012)),
       'field1'      => 'lorem',
       'field2'      => 100.99,
       'field3'      => today,
@@ -135,11 +129,6 @@ describe 'CartoDB client' do
     }
 
     record = CartoDB::Connection.row 'table_1', inserted_row.id
-
-    record.name.should == 'cartoset'
-    record.latitude.should == 40.423012
-    record.longitude.should == -3.699732
-    record.description.should == 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     record.field1.should == 'lorem'
     record.field2.should == 100.99
     record.field3.to_s.should == today.to_s
@@ -149,7 +138,7 @@ describe 'CartoDB client' do
   it "should update a row in a table" do
     table = CartoDB::Connection.create_table 'table #1', [
                                     {:name => 'field1', :type => 'text'},
-                                    {:name => 'field2', :type => 'number'},
+                                    {:name => 'field2', :type => 'numeric'},
                                     {:name => 'field3', :type => 'date'},
                                     {:name => 'field4', :type => 'boolean'}
                                   ]
@@ -157,9 +146,6 @@ describe 'CartoDB client' do
     today = DateTime.now
 
     record = CartoDB::Connection.insert_row 'table_1', {
-      'name'        => 'cartoset',
-      'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(-3.699732, 40.423012)),
       'field1'      => 'lorem',
       'field2'      => 100.99,
       'field3'      => today,
@@ -167,9 +153,6 @@ describe 'CartoDB client' do
     }
 
     CartoDB::Connection.update_row 'table_1', record.id, {
-      'name'        => 'updated_row',
-      'description' => 'Eu capto illum, iustum, brevitas, lobortis torqueo importunus, capio sudo. Genitus importunus amet iaceo, abluo obruo consequat, virtus eros, aliquip iustum nisl duis zelus. Ymo augue nobis exerci letatio sed.',
-      'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(-3.699871, 40.415113)),
       'field1'      => 'illum',
       'field2'      => -83.24,
       'field3'      => today + 1,
@@ -178,10 +161,6 @@ describe 'CartoDB client' do
 
     record = CartoDB::Connection.row 'table_1', record.id
 
-    record.name.should        == 'updated_row'
-    record.latitude.should    == 40.415113
-    record.longitude.should   == -3.699871
-    record.description.should == 'Eu capto illum, iustum, brevitas, lobortis torqueo importunus, capio sudo. Genitus importunus amet iaceo, abluo obruo consequat, virtus eros, aliquip iustum nisl duis zelus. Ymo augue nobis exerci letatio sed.'
     record.field1.should      == 'illum'
     record.field2.should      == -83.24
     record.field3.to_s.should == (today + 1).to_s
@@ -191,7 +170,7 @@ describe 'CartoDB client' do
   it "should delete a table's row" do
     table = CartoDB::Connection.create_table 'table #1', [
                                     {:name => 'field1', :type => 'text'},
-                                    {:name => 'field2', :type => 'number'},
+                                    {:name => 'field2', :type => 'numeric'},
                                     {:name => 'field3', :type => 'date'},
                                     {:name => 'field4', :type => 'boolean'}
                                   ]
@@ -199,9 +178,6 @@ describe 'CartoDB client' do
     today = Time.now
 
     record = CartoDB::Connection.insert_row 'table_1', {
-      'name'        => 'cartoset',
-      'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(-3.699732, 40.423012)),
       'field1'      => 'lorem',
       'field2'      => 100.99,
       'field3'      => today,

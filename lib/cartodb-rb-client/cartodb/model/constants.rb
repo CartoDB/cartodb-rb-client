@@ -1,15 +1,17 @@
 module CartoDB
   module Model
     module Constants
+      include RGeo::Feature
 
       CARTODB_TYPES = {
-        String     => 'string',
-        Integer    => 'number',
-        Numeric    => 'number',
+        String     => 'varchar',
+        Integer    => 'numeric',
+        Numeric    => 'numeric',
         Date       => 'date',
         DateTime   => 'date',
         TrueClass  => 'boolean',
-        FalseClass => 'boolean'
+        FalseClass => 'boolean',
+        Point      => 'geometry'
       }.freeze
 
       INVALID_COLUMNS = [
