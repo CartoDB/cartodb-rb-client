@@ -9,12 +9,13 @@ module CartoDB
                         500 => 'Server error'
                       }
 
-      def initialize(uri, method = nil, http_response = nil)
+      def initialize(uri = nil, method = nil, http_response = nil, error_message = nil)
         @uri            = uri
         @method         = method
         @error_messages = ['undefined CartoDB error']
         @status_code    = 400
-        @error_messages = [uri] if method == nil && http_response == nil
+        @error_messages = [uri] if method == nil && http_response == nil && error_message == nil
+        @error_messages = [error_message] if error_message
 
         if http_response
           @status_code = http_response.code

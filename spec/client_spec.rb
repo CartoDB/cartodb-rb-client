@@ -4,6 +4,21 @@ require 'spec_helper'
 describe 'CartoDB client' do
 
   it "should create a table and get its table definition" do
+
+    table = CartoDB::Connection.create_table 'cartodb_spec'
+
+    table.should_not be_nil
+    table = CartoDB::Connection.table 'cartodb_spec'
+    table.schema.should have(6).items
+    table.schema.should include(["cartodb_id", "number"])
+    table.schema.should include(["created_at", "date"])
+    table.schema.should include(["updated_at", "date"])
+    table.schema.should include(["name", "string"])
+    table.schema.should include(["description", "string"])
+    table.schema.should include(["the_geom", "geometry", "geometry", "point"])
+  end
+
+  it "should create a table forcing the schema and get its table definition" do
     table = CartoDB::Connection.create_table 'cartodb_spec', [
                                     {:name => 'field1', :type => 'text'},
                                     {:name => 'field2', :type => 'numeric'},
@@ -12,7 +27,6 @@ describe 'CartoDB client' do
                                   ]
 
     table.should_not be_nil
-    table[:id].should be > 0
     table = CartoDB::Connection.table 'cartodb_spec'
     table.schema.should have(7).items
     table.schema.should include(["cartodb_id", "number"])
@@ -24,48 +38,48 @@ describe 'CartoDB client' do
     table.schema.should include(["field4", "boolean"])
   end
 
-  it "should create a table from a csv file" do
-    table = CartoDB::Connection.create_table 'whs_sites', File.open("#{File.dirname(__FILE__)}/support/whs_features.csv", 'r')
-
-    table.should_not be_nil
-    table[:id].should be > 0
-    table = CartoDB::Connection.table 'whs_sites'
-    table.schema.should have(23).items
-
-    records = CartoDB::Connection.records 'whs_sites', :rows_per_page => 1000
-    records.should_not be_nil
-    records.rows.should have(911).whs_sites
-
-    records.rows.first.cartodb_id.should be > 0
-    records.rows.first.title.should be == "Late Baroque Towns of the Val di Noto (South-Eastern Sicily)"
-    records.rows.first.latitude.should be > 0
-    records.rows.first.longitude.should be > 0
-    records.rows.first.description.should match /Val di Noto \(English: Vallum of Noto\) is a geographical area of south east Sicily/
-    records.rows.first.region.should be == "Provinces of Catania, Ragusa, and Syracuse, Sicily"
-    records.rows.first.type.should be == "cultural"
-    records.rows.first.endangered_reason.should be_nil
-    records.rows.first.edited_region.should be == "Provinces of Catania, Ragusa, and Syracuse, Sicily"
-    records.rows.first.endangered_year.should be_nil
-    records.rows.first.external_links.should be_empty
-    records.rows.first.wikipedia_link.should be == "http://en.wikipedia.org/wiki/Val_di_Noto"
-    records.rows.first.comments.should be_nil
-    records.rows.first.criteria.should be == "[i],[ii],[iv],[v]"
-    records.rows.first.iso_code.should be == "IT"
-    records.rows.first.size.should be == 1130000.0
-    records.rows.first.name.should be == "Late Baroque Towns of the Val di Noto (South-Eastern Sicily)"
-    records.rows.first.country.should be == "Italy"
-    records.rows.first.whs_site_id.should be == 1024
-    records.rows.first.date_of_inscription.should be == "2002"
-    records.rows.first.whs_source_page.should be == "http://whc.unesco.org/en/list/1024"
-    records.rows.first.created_at.should_not be_nil
-    records.rows.first.updated_at.should_not be_nil
-
-  end
+  # it "should create a table from a csv file" do
+  #   table = CartoDB::Connection.create_table 'whs_sites', File.open("#{File.dirname(__FILE__)}/support/whs_features.csv", 'r')
+  #
+  #   table.should_not be_nil
+  #   table[:id].should be > 0
+  #   table = CartoDB::Connection.table 'whs_sites'
+  #   table.schema.should have(23).items
+  #
+  #   records = CartoDB::Connection.records 'whs_sites', :rows_per_page => 1000
+  #   records.should_not be_nil
+  #   records.rows.should have(911).whs_sites
+  #
+  #   records.rows.first.cartodb_id.should be > 0
+  #   records.rows.first.title.should be == "Late Baroque Towns of the Val di Noto (South-Eastern Sicily)"
+  #   records.rows.first.latitude.should be > 0
+  #   records.rows.first.longitude.should be > 0
+  #   records.rows.first.description.should match /Val di Noto \(English: Vallum of Noto\) is a geographical area of south east Sicily/
+  #   records.rows.first.region.should be == "Provinces of Catania, Ragusa, and Syracuse, Sicily"
+  #   records.rows.first.type.should be == "cultural"
+  #   records.rows.first.endangered_reason.should be_nil
+  #   records.rows.first.edited_region.should be == "Provinces of Catania, Ragusa, and Syracuse, Sicily"
+  #   records.rows.first.endangered_year.should be_nil
+  #   records.rows.first.external_links.should be_empty
+  #   records.rows.first.wikipedia_link.should be == "http://en.wikipedia.org/wiki/Val_di_Noto"
+  #   records.rows.first.comments.should be_nil
+  #   records.rows.first.criteria.should be == "[i],[ii],[iv],[v]"
+  #   records.rows.first.iso_code.should be == "IT"
+  #   records.rows.first.size.should be == 1130000.0
+  #   records.rows.first.name.should be == "Late Baroque Towns of the Val di Noto (South-Eastern Sicily)"
+  #   records.rows.first.country.should be == "Italy"
+  #   records.rows.first.whs_site_id.should be == 1024
+  #   records.rows.first.date_of_inscription.should be == "2002"
+  #   records.rows.first.whs_source_page.should be == "http://whc.unesco.org/en/list/1024"
+  #   records.rows.first.created_at.should_not be_nil
+  #   records.rows.first.updated_at.should_not be_nil
+  #
+  # end
 
   it "should add and remove colums in a previously created table" do
     CartoDB::Connection.create_table 'cartodb_spec'
     CartoDB::Connection.add_column 'cartodb_spec', 'field1', 'text'
-    CartoDB::Connection.add_column 'cartodb_spec', 'field2', 'number'
+    CartoDB::Connection.add_column 'cartodb_spec', 'field2', 'numeric'
     CartoDB::Connection.add_column 'cartodb_spec', 'field3', 'date'
 
     table = CartoDB::Connection.table 'cartodb_spec'
@@ -82,7 +96,7 @@ describe 'CartoDB client' do
 
   it "should change a previously created column" do
     CartoDB::Connection.create_table 'cartodb_spec', [{:name => 'field1', :type => 'text'}]
-    CartoDB::Connection.change_column 'cartodb_spec', "field1", "changed_field", "number"
+    CartoDB::Connection.change_column 'cartodb_spec', "field1", "changed_field", "numeric"
     table = CartoDB::Connection.table 'cartodb_spec'
     table.schema.should_not include(["field1", "string"])
     table.schema.should include(["changed_field", "number"])
@@ -93,9 +107,9 @@ describe 'CartoDB client' do
     table_2 = CartoDB::Connection.create_table 'table #2'
 
     tables_list = CartoDB::Connection.tables
-    tables_list.should have(2).items
-    tables_list.tables.map(&:id).should include(table_1[:id])
-    tables_list.tables.map(&:id).should include(table_2[:id])
+    tables_list.tables.should have(2).items
+    tables_list.tables.map(&:name).should include(table_1.name)
+    tables_list.tables.map(&:name).should include(table_2.name)
   end
 
   it "should drop a table" do
@@ -106,9 +120,9 @@ describe 'CartoDB client' do
     CartoDB::Connection.drop_table 'table_2'
 
     tables_list = CartoDB::Connection.tables
-    tables_list.should have(2).items
-    tables_list.tables.map(&:id).should include(table_1[:id])
-    tables_list.tables.map(&:id).should include(table_3[:id])
+    tables_list.tables.should have(2).items
+    tables_list.tables.map(&:name).should include(table_1.name)
+    tables_list.tables.map(&:name).should include(table_3.name)
   end
 
   it "should insert a row in a table" do
@@ -200,7 +214,7 @@ describe 'CartoDB client' do
       CartoDB::Connection.insert_row 'table_1', {
         'name'        => String.random(15),
         'description' => String.random(200),
-        'the_geom' => RGeo::GeoJSON.encode(RgeoFactory.point(rand(180), rand(90)))
+        'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(rand(180), rand(90)))
       }
     end
 
@@ -224,11 +238,11 @@ describe 'CartoDB client' do
 
     table = CartoDB::Connection.table 'table_with_name'
     table.should_not be_nil
-    table[:id].should be == created_table[:id]
+    table.name.should be == created_table.name
   end
 
   it "should return nil when requesting a table which does not exists" do
-    expect{CartoDB::Connection.table('non_existing_table')}.to raise_error(CartoDB::Client::Error, /404 - Not found/)
+    expect{CartoDB::Connection.table('non_existing_table')}.to raise_error(CartoDB::Client::Error)
   end
 
   it "should return errors on invalid queries" do
