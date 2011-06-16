@@ -15,7 +15,7 @@ module CartoDB
 
         def cartodb_table_exists?
           begin
-            cartodb_table && cartodb_table[:id] > 0 && cartodb_table.name.eql?(table_name)
+            cartodb_table && cartodb_table.name.eql?(table_name)
           rescue CartoDB::Client::Error => e
             e.status_code != 404
           end
@@ -77,7 +77,6 @@ module CartoDB
           @columns.each do |c|
             column_name = c[:name]
             column_type = c[:type]
-
             setup_geometry_column(c) and next if column_name.eql?(GEOMETRY_COLUMN) || column_type.eql?('geometry')
 
             # unless self.methods.include?(column_name)

@@ -11,6 +11,8 @@ module CartoDB
         include CartoDB::Model::Constants
 
         def setup_geometry_column(geometry_column)
+          return if geometry_column[:geometry_type].nil?
+
           geometry_name = geometry_column[:name].to_sym
 
           self.send :define_method, :the_geom do
@@ -21,8 +23,8 @@ module CartoDB
             self.attributes[geometry_name] = the_geom
           end
 
-          case geometry_column[:geometry_type]
-          when 'point'
+          case geometry_column[:geometry_type].upcase
+          when 'POINT'
             setup_point_geometry
           end
         end
@@ -56,7 +58,6 @@ module CartoDB
 
       def prepare_geo_attributes(attributes)
         return if attributes.nil?
-
         longitude = attributes.delete(:longitude)
         latitude = attributes.delete(:latitude)
         if latitude && longitude

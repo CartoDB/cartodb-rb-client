@@ -4,7 +4,7 @@ module CartoDB
       include RGeo::Feature
 
       CARTODB_TYPES = {
-        String     => 'varchar',
+        String     => 'text',
         Integer    => 'numeric',
         Numeric    => 'numeric',
         Date       => 'date',
