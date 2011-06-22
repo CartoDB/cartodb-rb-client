@@ -30,7 +30,7 @@ module CartoDB
         def count
           begin
             results = connection.query "SELECT COUNT(CARTODB_ID) FROM #{table_name}"
-            results.rows.first[:count]
+            results.rows.first[:count].try(:to_i)
           rescue Exception => e
             0
           end

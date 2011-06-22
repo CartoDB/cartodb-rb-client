@@ -26,7 +26,6 @@ module CartoDB
           end
 
           def format_value(value)
-
             case value
             when ::String
               "'#{value}'"
@@ -34,7 +33,7 @@ module CartoDB
               "'#{value}'"
             when ::Hash
               geo_json = RGeo::GeoJSON.decode(value).try(:as_text)
-              geo_json.nil?? "'#{value.to_json}'" : "'#{geo_json}'"
+              geo_json.nil?? "'#{value.to_json}'" : "setsrid(geometry('#{geo_json}'), 4326)"
             else
               value
             end
@@ -68,12 +67,17 @@ module CartoDB
             schema = []
             schema << {:name => 'name',        :type => 'text'} if schema.select{|c| c[:name].eql?('name')}.empty?
             schema << {:name => 'description', :type => 'text'} if schema.select{|c| c[:name].eql?('description')}.empty?
-            create_the_geom = "SELECT AddGeometryColumn('public', '#{table_name}', 'the_geom', 4326, 'POINT', 1)"
+            create_the_geom = "SELECT AddGeometryColumn('public', '#{table_name}', 'the_geom', 4326, 'POINT', 2)"
           end
 
           schema << {:name => 'cartodb_id',  :type => 'serial',    :extra => 'NOT NULL'}                                                                 if schema.select{|c| c[:name].eql?('cartodb_id')}.empty?
           schema << {:name => 'created_at',  :type => 'timestamp', :extra => 'without time zone DEFAULT current_timestamp::timestamp without time zone'} if schema.select{|c| c[:name].eql?('created_at')}.empty?
           schema << {:name => 'updated_at',  :type => 'timestamp', :extra => 'without time zone DEFAULT current_timestamp::timestamp without time zone'} if schema.select{|c| c[:name].eql?('updated_at')}.empty?
+          if schema.any? && schema.select{|c| c[:name].downcase.match(/geo/)}.any?
+            the_geom_field = schema.select{|c| c[:name].downcase.match(/geo/)}.first
+            create_the_geom = "SELECT AddGeometryColumn('public', '#{table_name}', 'the_geom', 4326, '#{the_geom_field[:geometry_type].upcase}', 2)"
+            schema.reject!{|c| c[:name].downcase.match(/geo/)}
+          end
 
           @pg.query(<<-SQL
             CREATE TABLE #{table_name}
@@ -142,7 +146,7 @@ module CartoDB
             FROM information_schema.tables tables
             INNER JOIN information_schema.columns columns ON columns.table_name = tables.table_name
             LEFT OUTER JOIN public.geometry_columns geo_cols ON geo_cols.f_table_schema = columns.table_schema AND geo_cols.f_table_name = columns.table_name AND geo_cols.f_geometry_column = columns.column_name
-            WHERE tables.table_schema = 'public' AND tables.table_name not IN ('spatial_ref_sys', 'geometry_columns', 'geography_columns') AND tables.table_name = '#{table_name}'
+            WHERE tables.table_schema = 'public' AND tables.table_name not IN ('spatial_ref_sys', 'geometry_columns', 'geography_columns') AND tables.table_name ilike '#{table_name}'
           SQL
           )
 
@@ -150,7 +154,7 @@ module CartoDB
             non_existing_table = @pg.query(<<-SQL
               SELECT tables.table_name
               FROM information_schema.tables tables
-              WHERE tables.table_schema = 'public' AND tables.table_name not IN ('spatial_ref_sys', 'geometry_columns', 'geography_columns') AND tables.table_name = '#{table_name}'
+              WHERE tables.table_schema = 'public' AND tables.table_name not IN ('spatial_ref_sys', 'geometry_columns', 'geography_columns') AND tables.table_name ilike '#{table_name}'
             SQL
             )
             raise CartoDB::Client::Error.new if non_existing_table.to_a.empty?
@@ -174,20 +178,20 @@ module CartoDB
         end
 
         def row(table_name, row_id)
-          results = @pg.query(<<-SQL
+          results = query(<<-SQL
             SELECT #{table_name}.cartodb_id as id, #{table_name}.*
             FROM #{table_name}
             WHERE cartodb_id = #{row_id};
           SQL
           )
 
-          CartoDB::Types::Metadata.from_hash(results.first) if results.any?
+          results.rows.first
         end
 
         def insert_row(table_name, row)
           row = CartoDB::Client::Connection::PostgreSQL.prepare_data(row)
 
-          results = @pg.query(<<-SQL
+          results = query(<<-SQL
             INSERT INTO #{table_name}
             (#{row.keys.join(',')})
             VALUES (#{row.values.join(',')});
@@ -197,12 +201,14 @@ module CartoDB
             WHERE cartodb_id = currval('public.#{table_name}_cartodb_id_seq');
           SQL
           )
-          CartoDB::Types::Metadata.from_hash(results.first) if results.any?
+
+          results.rows.first
         end
 
         def update_row(table_name, row_id, row)
           row = CartoDB::Client::Connection::PostgreSQL.prepare_data(row)
-          results = @pg.query(<<-SQL
+
+          results = query(<<-SQL
             UPDATE #{table_name}
             SET (#{row.keys.join(',')})
             = (#{row.values.join(',')})
@@ -212,7 +218,8 @@ module CartoDB
             WHERE cartodb_id = currval('public.#{table_name}_cartodb_id_seq');
           SQL
           )
-          CartoDB::Types::Metadata.from_hash(results.first) if results.any?
+
+          results.rows.first
         end
 
         def delete_row(table_name, row_id)
@@ -224,22 +231,31 @@ module CartoDB
         end
 
         def records(table_name, options = {})
-          result = @pg.query(<<-SQL
+          sql = <<-SQL
             SELECT #{table_name}.cartodb_id AS id, #{table_name}.*
             FROM #{table_name}
           SQL
-          )
-          CartoDB::Types::Metadata.from_hash({
-            :name       => table_name,
-            :total_rows => result.cmd_tuples,
-            :rows       => result
-          })
+
+          results = query(sql, options)
+
+          results[:name] = table_name
+          results
         end
 
         def query(sql, options = {})
+          sql = sql.strip if sql
+
+          if sql.include?('*')
+            table_name = sql.match(/select(.*)\s((\w+\.)?\*)(.*)from\s+(\w*)[^;]*;?/im)[5]
+            schema = table(table_name).schema if table_name
+
+            sql.gsub!(/^select(.*)\s((\w+\.)?\*)(.*)from/im) do |matches|
+              %Q{SELECT #{$1.strip} #{schema.map{|c| "#{$3}#{c[0]}"}.join(', ')} #{$4.strip} FROM}
+            end
+          end
           if sql.include?('the_geom')
-            sql.gsub!(/^select([^\(]+\s*)(the_geom)(\s*[^\(]+)from/i) do |matches|
-              "SELECT #{$1.strip} ST_AsGeoJSON(the_geom) as the_geom#{$3.strip} FROM"
+            sql.gsub!(/^select(.*)\s((\w+\.)?the_geom)(.*)from/im) do |matches|
+              "SELECT #{$1.strip} ST_AsGeoJSON(#{$3}the_geom) as the_geom#{$4.strip} FROM"
             end
           end
 

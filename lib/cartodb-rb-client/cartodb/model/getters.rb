@@ -18,7 +18,7 @@ module CartoDB
         end
 
         def cartodb_table
-          @cartodb_table ||= begin
+          @cartodb_table = begin
             connection.table table_name
           rescue CartoDB::Client::Error
             nil
