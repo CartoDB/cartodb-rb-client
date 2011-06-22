@@ -30,7 +30,6 @@ describe 'CartoDB model data methods' do
      expect {
       losail_circuit.save.should be_true
     }.to change{CartoDB::Connection.records('moto_gp_circuit').total_rows}.from(0).to(1)
-
     record = CartoDB::Connection.row 'moto_gp_circuit', losail_circuit.cartodb_id
     record.cartodb_id.should             be == 1
     record.name.should             be == 'Losail Circuit'
@@ -42,8 +41,8 @@ describe 'CartoDB model data methods' do
     record.left_corners.should     be == 6
     record.right_corners.should    be == 10
     record.longest_straight.should be == '1068m'
-    record.constructed.to_s.should be == "2004-01-01T00:00:00+01:00"
-    record.modified.to_s.should    be == "2004-01-01T00:00:00+01:00"
+    record.constructed.should be == Date.new(2004, 1, 1)
+    record.modified.should    be == Date.new(2004, 1, 1)
 
     losail_circuit.cartodb_id.should be == 1
     losail_circuit.name.should be == 'Losail Circuit'
@@ -73,8 +72,8 @@ describe 'CartoDB model data methods' do
     record.left_corners.should     be == 6
     record.right_corners.should    be == 10
     record.longest_straight.should be == '1068m'
-    record.constructed.to_s.should be == "2004-01-01T00:00:00+01:00"
-    record.modified.to_s.should    be == "2004-01-01T00:00:00+01:00"
+    record.constructed.should be == Date.new(2004, 1, 1)
+    record.modified.should    be == Date.new(2004, 1, 1)
 
     losail_circuit.cartodb_id.should be == 1
     losail_circuit.name.should be == 'Losail Circuit'

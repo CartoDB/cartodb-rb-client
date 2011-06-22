@@ -28,6 +28,7 @@ module CartoDB
             :name => name.to_s,
             :type =>  CARTODB_TYPES[options[:type]] || options[:type]
           }
+          column[:geometry_type] = options[:type].name.split('::').last.downcase if column[:type].eql?('geometry')
           return if model_columns.include?(column)
 
           model_columns << column
@@ -97,7 +98,7 @@ module CartoDB
       end
 
       def schema_synchronized?
-        self.class.schema_synchronized?
+        self.class.schema_synchronized? && cartodb_table_exists?
       end
 
       def cartodb_table_exists?

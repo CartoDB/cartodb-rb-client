@@ -145,7 +145,7 @@ describe 'CartoDB client' do
     record = CartoDB::Connection.row 'table_1', inserted_row.id
     record.field1.should == 'lorem'
     record.field2.should == 100.99
-    record.field3.to_s.should == today.to_s
+    record.field3.to_date.should == today.to_date
     record.field4.should == true
   end
 
@@ -177,7 +177,7 @@ describe 'CartoDB client' do
 
     record.field1.should      == 'illum'
     record.field2.should      == -83.24
-    record.field3.to_s.should == (today + 1).to_s
+    record.field3.to_date.should == (today + 1).to_date
     record.field4.should      == false
   end
 

@@ -14,6 +14,8 @@ module CartoDB
       end
 
       def []=(key, value)
+
+        value = cast_value(value)
         self.class.send :define_method, "#{key}" do
           self[key.to_sym]
         end
@@ -67,6 +69,19 @@ module CartoDB
         end
       end
       private :_date?
+
+      def cast_value(value)
+        return nil   if value.nil?
+        return true  if value.eql?('t')
+        return false if value.eql?('f')
+
+        return Float(value) rescue
+        return Integer(value) rescue
+        return DateTime.strptime(value, '%Y-%m-%d') rescue
+        return DateTime.strptime(value, '%d-%m-%Y') rescue
+
+        value
+      end
 
     end
   end
