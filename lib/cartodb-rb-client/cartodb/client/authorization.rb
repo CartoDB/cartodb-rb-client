@@ -18,6 +18,8 @@ module CartoDB
 
         request.headers.merge!({"Authorization" => oauth_helper(request, request_uri).header})
 
+        request.params[:oauth_token] = oauth_params[:token].params['oauth_token']
+
         request
       end
       private :signed_request

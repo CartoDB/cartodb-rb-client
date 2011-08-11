@@ -1,10 +1,9 @@
 #############################
 # CartoDB Local Instance
 #############################
-host: 'http://api.localhost.lan:3000'
-oauth_key: '2fAR7e9u9eKSvwOTPIo1uGdEhugg2kvKiIuYw6gy'
-oauth_secret: 'EUPeFY2Mu0n9j7d66Y1IhfmeVzrMN4W4QpwKMUEu'
-api_key: '8523ab8065a69338d5006c34310dc8d2c0179ebb'
+host: https://whs.cartodb.com
+oauth_key: Yu6NoImrTU9jCyvDrR0SYfURbIvyLvZEu7gXisED
+oauth_secret: bgntchDURNj5kYZFVfwbZrdnpXLTZZDrPvQ45f8E
 
 #############################
 # CartoDB Production Instance
