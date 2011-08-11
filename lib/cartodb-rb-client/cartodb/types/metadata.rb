@@ -75,13 +75,13 @@ module CartoDB
         return true  if value.eql?('t')
         return false if value.eql?('f')
 
-        return Float(value) rescue
-        return Integer(value) rescue
+        value.match('.') ? Float(value) : Integer(value) rescue
         return DateTime.strptime(value, '%Y-%m-%d') rescue
         return DateTime.strptime(value, '%d-%m-%Y') rescue
 
         value
       end
+      private :cast_value
 
     end
   end
