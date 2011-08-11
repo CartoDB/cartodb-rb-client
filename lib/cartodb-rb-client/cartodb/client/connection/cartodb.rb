@@ -134,7 +134,7 @@ module CartoDB
             params[:rows_per_page] = options[:rows_per_page] if options[:rows_per_page]
           end
 
-          request = cartodb_request '', :post, :params => params do |response|
+          request = cartodb_request '', :params => params do |response|
             return Utils.parse_json(response)
           end
 
@@ -150,7 +150,7 @@ module CartoDB
             method = :get
           end
 
-          uri = "/#{VERSION}/#{uri}"
+          uri = "/api/#{VERSION}/#{uri}"
           url = generate_url uri
 
           headers                  = {}
