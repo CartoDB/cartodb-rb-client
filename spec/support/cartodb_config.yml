@@ -1,9 +1,9 @@
 #############################
 # CartoDB Local Instance
 #############################
-host: https://whs.cartodb.com
-oauth_key: Yu6NoImrTU9jCyvDrR0SYfURbIvyLvZEu7gXisED
-oauth_secret: bgntchDURNj5kYZFVfwbZrdnpXLTZZDrPvQ45f8E
+host: https://cartodb-rb-client.cartodb.com
+oauth_key: 0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF
+oauth_secret: gE01QAOqvfTYuH9QcOZmToGtiLy8j99njENTazie
 
 #############################
 # CartoDB Production Instance
