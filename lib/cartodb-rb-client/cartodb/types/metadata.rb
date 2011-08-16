@@ -40,23 +40,28 @@ module CartoDB
         end
       end
 
-      def _geometry_features(geo_json)
+      def _geometry_features(the_geom)
 
         begin
-          the_geom = RGeo::GeoJSON.decode(geo_json, :json_parser => :json, :geo_factory => ::RGeo::Geographic.simple_mercator_factory())
-          case the_geom
-          when RGeo::Feature::Point
-            self.class.send :define_method, :latitude do
-              self.the_geom ? self.the_geom.y : nil
-            end
-
-            self.class.send :define_method, :longitude do
-              self.the_geom ? self.the_geom.x : nil
-            end
+          the_geom = RGeo::WKRep::WKBParser.new(RGeo::Geographic.spherical_factory(:srid => 4326), :support_ewkb => true).parse(the_geom)
+        rescue
+          begin
+            the_geom = RGeo::GeoJSON.decode(the_geom, :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326))
+          rescue
           end
-        rescue Exception => e
-          puts e
         end
+
+        case the_geom
+        when RGeo::Feature::Point || RGeo::Geographic::SphericalPointImpl
+          self.class.send :define_method, :latitude do
+            self.the_geom ? self.the_geom.y : nil
+          end
+
+          self.class.send :define_method, :longitude do
+            self.the_geom ? self.the_geom.x : nil
+          end
+        end
+
         the_geom
       end
       private :_geometry_features

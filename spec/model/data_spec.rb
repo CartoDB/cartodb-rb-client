@@ -27,7 +27,7 @@ describe 'CartoDB model data methods' do
   it "should persist into cartodb using the save method" do
     losail_circuit = new_circuit
 
-     expect {
+    expect {
       losail_circuit.save.should be_true
     }.to change{CartoDB::Connection.records('moto_gp_circuit').total_rows}.from(0).to(1)
     record = CartoDB::Connection.row 'moto_gp_circuit', losail_circuit.cartodb_id
@@ -108,13 +108,13 @@ describe 'CartoDB model data methods' do
     record.name.should             be == 'Prueba'
     record.description.should      match /Lorem ipsum dolor sit amet, consectetur adipisicing elit/
     record.latitude.should         be == 40.582394
-    record.longitude.should        be == -3.994131
+    record.longitude.should        be == -3.9941309999999817
     record.length.should           be == '1243m'
 
     losail_circuit.name.should be == 'Prueba'
     losail_circuit.description.should match /Lorem ipsum dolor sit amet, consectetur adipisicing elit/
     losail_circuit.latitude.should be == 40.582394
-    losail_circuit.longitude.should be == -3.994131
+    losail_circuit.longitude.should be == -3.9941309999999817
     losail_circuit.length.should be == '1243m'
   end
 

@@ -41,7 +41,7 @@ module CartoDB
 
       def custom_error(http_response)
         json = Utils.parse_json(http_response)
-        json[:errors] if json
+        json[:error] if json
       end
 
       def standard_error
