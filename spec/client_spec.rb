@@ -217,7 +217,7 @@ describe 'CartoDB client' do
         'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(rand(180), rand(90)))
       }
     end
-debugger
+
     results = CartoDB::Connection.query("SELECT * FROM table_1")
     results.should_not be_nil
     results.time.should be > 0
@@ -274,17 +274,4 @@ debugger
 
   end
 
-  it "should return download links for a cartodb table" do
-    CartoDB::Connection.create_table 'cereal', File.open("#{File.dirname(__FILE__)}/support/shp/cereal.zip", 'r')
-
-    shp_download = CartoDB::Connection.download_link_for_table 'cereal', :shp
-
-    shp_download.format.should be == 'shp'
-    shp_download.link.should match /\/v1\/tables\/cereal.zip/
-
-    shp_download = CartoDB::Connection.download_link_for_table 'cereal', :csv
-
-    shp_download.format.should be == 'csv'
-    shp_download.link.should match /\/v1\/tables\/cereal.zip/
-  end
 end

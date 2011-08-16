@@ -21,7 +21,7 @@ module CartoDB
 
       GEOMETRY_COLUMN = 'the_geom'.freeze
 
-      RGEO_FACTORY = ::RGeo::Geographic.simple_mercator_factory().freeze
+      RGEO_FACTORY = ::RGeo::Geographic.spherical_factory(:srid => 4326)
 
       DEFAULT_ROWS_PER_PAGE = 10.freeze
 

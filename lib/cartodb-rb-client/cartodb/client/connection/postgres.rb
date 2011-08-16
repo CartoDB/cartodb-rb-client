@@ -31,9 +31,6 @@ module CartoDB
               "'#{value}'"
             when ::Date, ::DateTime, ::Time
               "'#{value}'"
-            when ::Hash
-              geo_json = RGeo::GeoJSON.decode(value).try(:as_text)
-              geo_json.nil?? "'#{value.to_json}'" : "setsrid(geometry('#{geo_json}'), 4326)"
             else
               value
             end
@@ -251,11 +248,6 @@ module CartoDB
 
             sql.gsub!(/^select(.*)\s((\w+\.)?\*)(.*)from/im) do |matches|
               %Q{SELECT #{$1.strip} #{schema.map{|c| "#{$3}#{c[0]}"}.join(', ')} #{$4.strip} FROM}
-            end
-          end
-          if sql.include?('the_geom')
-            sql.gsub!(/^select(.*)\s((\w+\.)?the_geom)(.*)from/im) do |matches|
-              "SELECT #{$1.strip} ST_AsGeoJSON(#{$3}the_geom) as the_geom#{$4.strip} FROM"
             end
           end
 
