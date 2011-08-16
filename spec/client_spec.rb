@@ -217,7 +217,7 @@ describe 'CartoDB client' do
         'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(rand(180), rand(90)))
       }
     end
-
+debugger
     results = CartoDB::Connection.query("SELECT * FROM table_1")
     results.should_not be_nil
     results.time.should be > 0

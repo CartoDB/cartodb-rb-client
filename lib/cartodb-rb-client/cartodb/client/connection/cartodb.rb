@@ -127,6 +127,23 @@ module CartoDB
         end
 
         def query(sql, options = {})
+          sql = sql.strip if sql
+
+          if sql.include?('*')
+            table_name = sql.match(/select(.*)\s((\w+\.)?\*)(.*)from\s+(\w*)[^;]*;?/im)[5]
+            schema = table(table_name).schema if table_name
+
+            sql.gsub!(/^select(.*)\s((\w+\.)?\*)(.*)from/im) do |matches|
+              %Q{SELECT #{$1.strip} #{schema.map{|c| "#{$3}#{c[0]}"}.join(', ')} #{$4.strip} FROM}
+            end
+          end
+
+          if sql.include?('the_geom')
+            sql.gsub!(/^select(.*)\s((\w+\.)?the_geom)(.*)from/im) do |matches|
+              "SELECT #{$1.strip} ST_AsGeoJSON(#{$3}the_geom) as the_geom#{$4.strip} FROM"
+            end
+          end
+
           params = {:sql => sql}
 
           if options && options.any?
