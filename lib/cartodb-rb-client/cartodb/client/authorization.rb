@@ -18,8 +18,6 @@ module CartoDB
 
         request.headers.merge!({"Authorization" => oauth_helper(request, request_uri).header})
 
-        request.params[:oauth_token] = oauth_params[:token].params['oauth_token']
-
         request
       end
       private :signed_request
@@ -27,23 +25,25 @@ module CartoDB
       def access_token
         return @access_token if @access_token
 
-        # Set a new request_token
-        request_token = oauth_consumer.get_request_token
+        access_token_url = oauth_consumer.access_token_url
 
-        response = Typhoeus::Request.get(request_token.authorize_url,
-          'authorize'                    => '1',
-          'oauth_token'                  => request_token.token,
-          :disable_ssl_peer_verification => !settings['ssl_peer_verification'],
-          :verbose                       => settings['debug']
+        request = Typhoeus::Request.new(access_token_url,
+          :method => :post,
+          :params => {:x_auth_mode => :client_auth, :x_auth_username => 'cartodb-rb-client@vizzuality.com', :x_auth_password => 'vizzualejo'}
         )
 
-        url = URI.parse(response.headers_hash['Location'])
+        helper = OAuth::Client::Helper.new(request, {:consumer => oauth_consumer, :request_uri => access_token_url})
 
-        # get the verifier from the url
-        verifier = url.query.split('&').select{ |q| q =~ /^oauth_verifier/}.first.split('=')[1]
+        request.headers.merge!({"Authorization" => helper.header})
 
+        @hydra.queue request
+        @hydra.run
+
+        values = request.response.body.split('&').inject({}) { |h,v| h[v.split("=")[0]] = v.split("=")[1]; h }
+
+        @access_token = OAuth::AccessToken.new(oauth_consumer, values["oauth_token"], values["oauth_token_secret"])
         # Get an access token with the verifier
-        @access_token = request_token.get_access_token(:oauth_verifier => verifier)
+        # @access_token = request_token.get_access_token(:oauth_verifier => verifier)
       end
       private :access_token
 
