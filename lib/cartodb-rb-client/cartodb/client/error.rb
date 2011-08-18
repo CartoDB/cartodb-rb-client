@@ -20,6 +20,7 @@ module CartoDB
         if http_response
           @status_code = http_response.code
           @error_messages = custom_error(http_response) || standard_error
+          @body = http_response.body
         end
 
       end
@@ -28,6 +29,7 @@ module CartoDB
         message = <<-EOF
           #{http_error_message_header}
           #{format_error_messages}
+          #{@body}
         EOF
         message.strip
       end

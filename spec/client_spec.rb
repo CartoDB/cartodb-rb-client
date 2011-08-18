@@ -214,7 +214,7 @@ describe 'CartoDB client' do
       CartoDB::Connection.insert_row 'table_1', {
         'name'        => String.random(15),
         'description' => String.random(200),
-        'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(rand(180), rand(90)))
+        'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(rand(180), rand(90))).to_json
       }
     end
 
