@@ -6,15 +6,8 @@ module CartoDB
 
       def signed_request(request_uri, arguments)
         arguments[:disable_ssl_peer_verification] = true
-        if settings['api_key']
-          arguments[:params] = {}.merge!(arguments[:params])
-          arguments[:params][:api_key] = settings['api_key']
 
-          request = Typhoeus::Request.new(request_uri, arguments)
-          return request
-        end
-
-        request = Typhoeus::Request.new(request_uri, arguments)
+        request = Typhoeus::Request.new(request_uri, params_hash_values_as_json(arguments))
 
         request.headers.merge!({"Authorization" => oauth_helper(request, request_uri).header})
 
@@ -29,7 +22,7 @@ module CartoDB
 
         request = Typhoeus::Request.new(access_token_url,
           :method => :post,
-          :params => {:x_auth_mode => :client_auth, :x_auth_username => 'cartodb-rb-client@vizzuality.com', :x_auth_password => 'vizzualejo'}
+          :params => {:x_auth_mode => :client_auth, :x_auth_username => CartoDB::Settings['username'], :x_auth_password => CartoDB::Settings['password']}
         )
 
         helper = OAuth::Client::Helper.new(request, {:consumer => oauth_consumer, :request_uri => access_token_url})
@@ -61,6 +54,19 @@ module CartoDB
         OAuth::Client::Helper.new(request, oauth_params.merge(:request_uri => request_uri))
       end
       private :oauth_helper
+
+      def params_hash_values_as_json(arguments)
+        params = arguments[:params]
+        params.each do |key,value|
+          case value
+          when Hash
+            params[key] = value.to_json
+          end
+        end
+        arguments[:params] = params
+        arguments
+      end
+      private :params_hash_values_as_json
     end
   end
 end

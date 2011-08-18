@@ -2,6 +2,8 @@
 # CartoDB Local Instance
 #############################
 host: https://cartodb-rb-client.cartodb.com
+username: cartodb-rb-client@vizzuality.com
+password: vizzualejo
 oauth_key: 0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF
 oauth_secret: gE01QAOqvfTYuH9QcOZmToGtiLy8j99njENTazie
 
