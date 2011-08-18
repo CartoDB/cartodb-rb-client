@@ -16,27 +16,7 @@ module CartoDB
       private :signed_request
 
       def access_token
-        return @access_token if @access_token
-
-        access_token_url = oauth_consumer.access_token_url
-
-        request = Typhoeus::Request.new(access_token_url,
-          :method => :post,
-          :params => {:x_auth_mode => :client_auth, :x_auth_username => CartoDB::Settings['username'], :x_auth_password => CartoDB::Settings['password']}
-        )
-
-        helper = OAuth::Client::Helper.new(request, {:consumer => oauth_consumer, :request_uri => access_token_url})
-
-        request.headers.merge!({"Authorization" => helper.header})
-
-        @hydra.queue request
-        @hydra.run
-
-        values = request.response.body.split('&').inject({}) { |h,v| h[v.split("=")[0]] = v.split("=")[1]; h }
-
-        @access_token = OAuth::AccessToken.new(oauth_consumer, values["oauth_token"], values["oauth_token_secret"])
-        # Get an access token with the verifier
-        # @access_token = request_token.get_access_token(:oauth_verifier => verifier)
+        @access_token ||= OAuth::AccessToken.new(oauth_consumer, CartoDB::Settings['oauth_access_token'], CartoDB::Settings['oauth_access_token_secret'])
       end
       private :access_token
 

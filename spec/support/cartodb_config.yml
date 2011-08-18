@@ -1,19 +1,11 @@
 #############################
-# CartoDB Local Instance
+# CartoDB Credentials
 #############################
 host: https://cartodb-rb-client.cartodb.com
-username: cartodb-rb-client@vizzuality.com
-password: vizzualejo
 oauth_key: 0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF
 oauth_secret: gE01QAOqvfTYuH9QcOZmToGtiLy8j99njENTazie
-
-#############################
-# CartoDB Production Instance
-#############################
-# host: 'https://api.cartodb.com'
-# oauth_key: 'bIVtTrUCl2DBYS5AZkty8OAOqn7EdvU3YFMGHbZt'
-# oauth_secret: 'nbt5H35vxX35W47b1sWkiMzQi1QRD5E9U4cHwvgu'
-# api_key: '9d6992e1b019278c50eb07edccf39139f6bc0a99'
+oauth_access_token: QLcGdmRFgVq2kybk5I97Wc4zj855LgoqUUub4QYr
+oauth_access_token_secret: zHizyBxrUsTn2tu03C9Lkx4KFtPcbjvnPT3kQjQ7
 
 # cache_timeout: 60
 # debug: true
