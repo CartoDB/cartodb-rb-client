@@ -27,7 +27,7 @@ module CartoDB
           cartodb_settings = YAML.load_file(config_path)[Rails.env.to_s] if File.exists?(config_path)
         end
 
-        return if CartoDB.const_defined?('Settings') || cartodb_settings.blank?
+        return if cartodb_settings.blank?
 
         if CartoDB.const_defined?('Settings')
           CartoDB::Settings.merge!(cartodb_settings)
