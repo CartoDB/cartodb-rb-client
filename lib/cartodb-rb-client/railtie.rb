@@ -29,7 +29,12 @@ module CartoDB
 
         return if CartoDB.const_defined?('Settings') || cartodb_settings.blank?
 
-        CartoDB.const_set('Settings', cartodb_settings)
+        if CartoDB.const_defined?('Settings')
+          CartoDB::Settings.merge!(cartodb_settings)
+        else
+          CartoDB.const_set('Settings', cartodb_settings)
+        end
+
         CartoDB.const_set('Connection', CartoDB::Client::Connection::Base.new) unless CartoDB.const_defined?('Connection')
 
         init_omniaouth rails_app
