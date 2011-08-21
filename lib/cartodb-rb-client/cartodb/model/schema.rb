@@ -43,6 +43,7 @@ module CartoDB
           else
             table = connection.create_table table_name, model_columns
           end
+
           read_metadata table
           create_missing_columns
           create_column_accessors

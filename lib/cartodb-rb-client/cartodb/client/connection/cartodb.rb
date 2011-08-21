@@ -5,6 +5,7 @@ module CartoDB
         include OAuth::RequestProxy::Typhoeus
         include CartoDB::Client::Authorization
         include CartoDB::Client::Utils
+        include CartoDB::Helpers::SqlHelper
 
         VERSION = 'v1'.freeze
 
@@ -95,25 +96,46 @@ module CartoDB
         end
 
         def insert_row(table_name, row)
-          cartodb_request "tables/#{table_name}/records", :post, :params => row do |response|
-            return Utils.parse_json(response)
-          end
+          row = prepare_data(row)
 
-          execute_queue
+          results = query(<<-SQL
+            INSERT INTO #{table_name}
+            (#{row.keys.join(',')})
+            VALUES (#{row.values.join(',')});
 
-          request.handled_response
+            SELECT #{table_name}.cartodb_id as id, #{table_name}.*
+            FROM #{table_name}
+            WHERE cartodb_id = currval('public.#{table_name}_cartodb_id_seq');
+          SQL
+          )
+
+          results.rows.first
         end
 
         def update_row(table_name, row_id, row)
-          cartodb_request "tables/#{table_name}/records/#{row_id}", :put, :params => row
+          row = prepare_data(row)
 
-          execute_queue
+          results = query(<<-SQL
+            UPDATE #{table_name}
+            SET (#{row.keys.join(',')})
+            = (#{row.values.join(',')})
+            WHERE cartodb_id = #{row_id};
+            SELECT #{table_name}.cartodb_id as id, #{table_name}.*
+            FROM #{table_name}
+            WHERE cartodb_id = currval('public.#{table_name}_cartodb_id_seq');
+          SQL
+          )
+
+          results.rows.first
+
         end
 
         def delete_row(table_name, row_id)
-          cartodb_request "tables/#{table_name}/records/#{row_id}", :delete
-
-          execute_queue
+          query(<<-SQL
+            DELETE FROM #{table_name}
+            WHERE cartodb_id = #{row_id}
+          SQL
+          )
         end
 
         def records(table_name, options = {})

@@ -7,7 +7,7 @@ module CartoDB
       def signed_request(request_uri, arguments)
         arguments[:disable_ssl_peer_verification] = true
 
-        request = Typhoeus::Request.new(request_uri, params_hash_values_as_json(arguments))
+        request = Typhoeus::Request.new(request_uri, arguments)
 
         request.headers.merge!({"Authorization" => oauth_helper(request, request_uri).header})
 
@@ -35,18 +35,6 @@ module CartoDB
       end
       private :oauth_helper
 
-      def params_hash_values_as_json(arguments)
-        params = arguments[:params]
-        params.each do |key,value|
-          case value
-          when Hash
-            params[key] = value.to_json
-          end
-        end
-        arguments[:params] = params
-        arguments
-      end
-      private :params_hash_values_as_json
     end
   end
 end

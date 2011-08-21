@@ -2,6 +2,8 @@ module CartoDB
   module Client
     module Connection
       class PostgreSQL
+        include CartoDB::Helpers::SqlHelper
+
         DATA_TYPES_TRANSLATION_TABLE = {
           'int4'      => 'number',
           'numeric'   => 'number',
@@ -15,27 +17,6 @@ module CartoDB
 
         def initialize(connection_settings)
           @pg = connect_to_postgres(connection_settings)
-        end
-
-        class << self
-          def prepare_data(hash)
-            hash.each do |key, value|
-              hash[key] = format_value(value)
-            end
-            hash
-          end
-
-          def format_value(value)
-            case value
-            when ::String
-              "'#{value}'"
-            when ::Date, ::DateTime, ::Time
-              "'#{value}'"
-            else
-              value
-            end
-          end
-          private :format_value
         end
 
         def connect_to_postgres(settings)
@@ -186,7 +167,7 @@ module CartoDB
         end
 
         def insert_row(table_name, row)
-          row = CartoDB::Client::Connection::PostgreSQL.prepare_data(row)
+          row = prepare_data(row)
 
           results = query(<<-SQL
             INSERT INTO #{table_name}
@@ -203,7 +184,7 @@ module CartoDB
         end
 
         def update_row(table_name, row_id, row)
-          row = CartoDB::Client::Connection::PostgreSQL.prepare_data(row)
+          row = prepare_data(row)
 
           results = query(<<-SQL
             UPDATE #{table_name}
