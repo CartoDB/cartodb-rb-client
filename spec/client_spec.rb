@@ -210,27 +210,28 @@ describe 'CartoDB client' do
   it "should execute a select query and return results" do
     table = CartoDB::Connection.create_table 'table #1'
 
-    50.times do
-      CartoDB::Connection.insert_row 'table_1', {
+    10.times do
+      row = CartoDB::Connection.insert_row 'table_1', {
         'name'        => String.random(15),
         'description' => String.random(200),
-        'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(rand(180), rand(90))).to_json
+        'the_geom'    => RgeoFactory.point(-3.69962, 40.42222)
       }
-    end
 
+    end
     results = CartoDB::Connection.query("SELECT * FROM table_1")
     results.should_not be_nil
     results.time.should be > 0
-    results.total_rows.should == 50
-    results.rows.should have(50).items
-    random_row = results.rows.sample
-    random_row.cartodb_id.should be > 0
-    random_row.name.should_not be_empty
-    random_row.latitude.should be > 0
-    random_row.longitude.should be > 0
-    random_row.description.should_not be_empty
-    random_row.created_at.should_not be_nil
-    random_row.updated_at.should_not be_nil
+    results.total_rows.should == 10
+    results.rows.should have(10).items
+    results.rows.each do |row|
+      row.cartodb_id.should be > 0
+      row.name.should_not be_empty
+      row.latitude.should be == 40.42222
+      row.longitude.should be == -3.6996199999999817
+      row.description.should_not be_empty
+      row.created_at.should_not be_nil
+      row.updated_at.should_not be_nil
+    end
   end
 
   it "should get a table by its name" do
@@ -256,7 +257,7 @@ describe 'CartoDB client' do
       CartoDB::Connection.insert_row 'table_1', {
         'name'        => String.random(15),
         'description' => String.random(200),
-        'the_geom'    => RGeo::GeoJSON.encode(RgeoFactory.point(rand(180), rand(90)))
+        'the_geom'    => RgeoFactory.point(rand(180), rand(90))
       }
     end
 

@@ -68,15 +68,6 @@ module CartoDB
       end
       private :prepare_geo_attributes
 
-      def from_geo_json
-        RGeo::GeoJSON.decode(the_geom, :json_parser => :json, :geo_factory => RGEO_FACTORY)
-      end
-      private :from_geo_json
-
-      def to_geo_json
-        RGeo::GeoJSON.encode(the_geom)
-      end
-      private :to_geo_json
     end
   end
 end

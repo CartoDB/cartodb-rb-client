@@ -54,14 +54,12 @@ module CartoDB
       def attributes_for_insert
         # only the columns defined in the model are allowed to be inserted
         row = attributes.symbolize_keys.reject{|key,value| INVALID_COLUMNS.include?(key) || !column_names.include?(key.to_s) }
-        row[:the_geom] = to_geo_json if row.keys.include?(:the_geom)
         row
       end
       private :attributes_for_insert
 
       def attributes_for_update
         row = attributes.reject{|key,value| !column_names.include?(key.to_s) }
-        row[:the_geom] = to_geo_json if row.keys.include?(:the_geom)
         row
       end
       private :attributes_for_update

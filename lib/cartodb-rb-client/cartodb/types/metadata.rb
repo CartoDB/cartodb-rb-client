@@ -14,8 +14,14 @@ module CartoDB
       end
 
       def []=(key, value)
+        if key.to_s.eql?('the_geom')
+          value = _geometry_features(value)
+        else
+          value = cast_value(value)
 
-        value = cast_value(value)
+          value = _date?(value)
+        end
+
         self.class.send :define_method, "#{key}" do
           self[key.to_sym]
         end
@@ -23,10 +29,6 @@ module CartoDB
         self.class.send :define_method, "#{key}=" do |value|
           self[key.to_sym] = value
         end
-
-        value = _date?(value) unless key.to_s.eql?('the_geom')
-
-        value = _geometry_features(value) if key.to_s.eql?('the_geom')
 
         super(key, value)
       end

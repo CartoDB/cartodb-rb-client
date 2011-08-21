@@ -6,7 +6,6 @@ describe 'CartoDB model data methods' do
 
     losail_circuit = new_circuit
 
-    # expects{ CartoDB::Connection.records 'moto_gp_circuit' }.to raise_error(CartoDB::Client:Error, /404 - Not found/)
     records = CartoDB::Connection.records 'moto_gp_circuit'
     records.total_rows.should == 0
     records.rows.should be_empty
@@ -30,6 +29,7 @@ describe 'CartoDB model data methods' do
     expect {
       losail_circuit.save.should be_true
     }.to change{CartoDB::Connection.records('moto_gp_circuit').total_rows}.from(0).to(1)
+
     record = CartoDB::Connection.row 'moto_gp_circuit', losail_circuit.cartodb_id
     record.cartodb_id.should             be == 1
     record.name.should             be == 'Losail Circuit'
