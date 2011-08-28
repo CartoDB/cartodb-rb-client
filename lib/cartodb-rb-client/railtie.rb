@@ -52,7 +52,7 @@ module CartoDB
       def init_warden(rails_app)
         rails_app.middleware.use RailsWarden::Manager do |manager|
           manager.default_strategies :cartodb_oauth
-          manager.failure_app = SessionsController if SessionsController
+          manager.failure_app = SessionsController if defined?(SessionsController)
         end
       end
       private :init_warden
