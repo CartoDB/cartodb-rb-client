@@ -17,9 +17,7 @@ module CartoDB
         if key.to_s.eql?('the_geom')
           value = _geometry_features(value)
         else
-          value = cast_value(value)
-
-          value = _date?(value)
+          value = cast_value(value) unless CartoDB::Settings[:type_casting] == false
         end
 
         self.class.send :define_method, "#{key}" do
@@ -68,21 +66,17 @@ module CartoDB
       end
       private :_geometry_features
 
-      def _date?(value)
-        begin
-          value = DateTime.strptime(value)
-        rescue
-          value
-        end
-      end
-      private :_date?
-
       def cast_value(value)
         return nil   if value.nil?
         return true  if value.eql?('t')
         return false if value.eql?('f')
 
-        value.match('.') ? Float(value) : Integer(value) rescue
+        begin
+          value = Float(value)
+          return value == value.floor ? value.to_i : value
+        rescue
+        end
+
         return DateTime.strptime(value, '%Y-%m-%d') rescue
         return DateTime.strptime(value, '%d-%m-%Y') rescue
 
