@@ -4,10 +4,10 @@
 host: https://cartodb-rb-client.cartodb.com
 oauth_key: 0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF
 oauth_secret: gE01QAOqvfTYuH9QcOZmToGtiLy8j99njENTazie
-oauth_access_token: QLcGdmRFgVq2kybk5I97Wc4zj855LgoqUUub4QYr
-oauth_access_token_secret: zHizyBxrUsTn2tu03C9Lkx4KFtPcbjvnPT3kQjQ7
-# username: cartodb-rb-client
-# password: cartodb-rb-client
+# oauth_access_token: QLcGdmRFgVq2kybk5I97Wc4zj855LgoqUUub4QYr
+# oauth_access_token_secret: zHizyBxrUsTn2tu03C9Lkx4KFtPcbjvnPT3kQjQ7
+username: cartodb-rb-client
+password: cartodb-rb-client
 
 # cache_timeout: 60
 # debug: true
