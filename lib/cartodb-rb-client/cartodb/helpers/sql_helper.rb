@@ -17,6 +17,8 @@ module CartoDB
           "'#{value}'"
         when RGeo::Feature::Geometry
           "'#{RGeo::WKRep::WKBGenerator.new(:type_format => :ewkb, :emit_ewkb_srid => true, :hex_format => true).generate(value)}'"
+        when NilClass
+          'NULL'
         else
           value
         end
