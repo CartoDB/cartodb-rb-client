@@ -1,4 +1,3 @@
-
 cartoDB Ruby Client
 ===================
 
@@ -16,9 +15,9 @@ Setup
 
         gem install cartodb-rb-client
 
-  or if you are using bundler, put this line in your Gemfile:
+    or if you are using bundler, put this line in your Gemfile:
 
-            gem 'cartodb-rb-client'
+        gem 'cartodb-rb-client'
 
 2. Log into http://cartodb.com, get your OAUTH credentials and put them in a YAML file:
 
@@ -322,5 +321,4 @@ More info
 ---------
 
 You can also check the oficial [cartoDB Documentation](http://developers.cartodb.com/) if you want more info about the cartoDB API.
-
 
