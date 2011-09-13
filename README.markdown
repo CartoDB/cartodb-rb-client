@@ -18,7 +18,7 @@ Setup
 
   or if you are using bundler, put this line in your Gemfile:
 
-        gem 'cartodb-rb-client'
+            gem 'cartodb-rb-client'
 
 2. Log into http://cartodb.com, get your OAUTH credentials and put them in a YAML file:
 
@@ -220,7 +220,7 @@ Result:
      :updated_at => Tue, 13 Sep 2011 00:00:00 +0000,
      :created_at => Tue, 13 Sep 2011 00:00:00 +0000,
      :cartodb_id => 1,
-     :field1 => "cartoDB is\nawesome!"}
+     :field1 => "cartoDB is awesome!"}
 
 
 ####9. Insert row.
@@ -244,7 +244,7 @@ Results:
      :updated_at => Tue, 13 Sep 2011 00:00:00 +0000,
      :created_at => Tue, 13 Sep 2011 00:00:00 +0000,
      :cartodb_id => 1,
-     :field1 => "cartoDB is\nawesome!"}
+     :field1 => "cartoDB is awesome!"}
 
 ####10. Update row.
 
@@ -268,7 +268,7 @@ Result:
      :updated_at => Tue, 13 Sep 2011 00:00:00 +0000,
      :created_at => Tue, 13 Sep 2011 00:00:00 +0000,
      :cartodb_id => 1,
-     :field1 => "cartoDB is\n*really* awesome!"}
+     :field1 => "cartoDB is *really* awesome!"}
 
 ####11. Delete row.
 
