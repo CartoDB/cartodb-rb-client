@@ -151,12 +151,16 @@ module CartoDB
         def query(sql, options = {})
           params = {:q => sql}
 
+          uri = 'sql'
+          uri_params = []
+
           if options && options.any?
-            params[:page]          = options[:page]          if options[:page]
-            params[:rows_per_page] = options[:rows_per_page] if options[:rows_per_page]
+            uri_params << "page=#{options[:page]}"                   if options[:page]
+            uri_params << "rows_per_page=#{options[:rows_per_page]}" if options[:rows_per_page]
+            uri << "?#{uri_params.join('&')}" if uri_params.any?
           end
 
-          request = cartodb_request 'sql', :post, :params => params do |response|
+          request = cartodb_request uri, :post, :params => params do |response|
             return Utils.parse_json(response)
           end
 
