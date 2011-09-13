@@ -114,7 +114,7 @@ describe 'CartoDB model data methods' do
     losail_circuit.name.should be == 'Prueba'
     losail_circuit.description.should match /Lorem ipsum dolor sit amet, consectetur adipisicing elit/
     losail_circuit.latitude.should be == 40.582394
-    losail_circuit.longitude.should be == -3.9941309999999817
+    losail_circuit.longitude.should be == -3.994131
     losail_circuit.length.should be == '1243m'
   end
 
