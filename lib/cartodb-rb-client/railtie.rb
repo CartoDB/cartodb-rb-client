@@ -28,6 +28,7 @@ module CartoDB
         end
 
         init_warden rails_app
+        init_omniaouth rails_app
 
         return if cartodb_settings.blank?
 
@@ -39,14 +40,20 @@ module CartoDB
 
         CartoDB.const_set('Connection', CartoDB::Client::Connection::Base.new) unless CartoDB.const_defined?('Connection')
 
-        init_omniaouth rails_app
 
       end
 
       def init_omniaouth(rails_app)
         rails_app.middleware.use OmniAuth::Builder do
-          provider :cartodb, CartoDB::Settings['host'], CartoDB::Settings['oauth_key'], CartoDB::Settings['oauth_secret']
+          host = oauth_key = oauth_secret = nil
+          if CartoDB.const_defined?('Settings')
+            host = CartoDB::Settings['host']
+            oauth_key = CartoDB::Settings['oauth_key']
+            oauth_secret = CartoDB::Settings['oauth_secret']
+          end
+          provider :cartodb, host, oauth_key, oauth_secret
         end
+        init_warden rails_app
       end
       private :init_omniaouth
 
@@ -63,3 +70,4 @@ module CartoDB
   end
 
 end
+

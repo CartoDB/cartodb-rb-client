@@ -2,11 +2,23 @@ module OmniAuth
   module Strategies
     class Cartodb < OmniAuth::Strategies::OAuth
       def initialize(app, site, app_id, app_secret, options = {})
-        options[:site] = site
-        options[:authorize_path] = '/oauth/authorize'
-        options[:access_token_path] = '/oauth/access_token'
-        options[:callback_url] = '/auth/oauth/callback'
-        super(app, :cartodb, app_id, app_secret, options)
+        @cartodb_options = options
+        @cartodb_options[:site] = site
+        @cartodb_options[:authorize_path] = '/oauth/authorize'
+        @cartodb_options[:access_token_path] = '/oauth/access_token'
+        @cartodb_options[:callback_url] = '/auth/oauth/callback'
+        super(app, :cartodb, app_id, app_secret, @cartodb_options)
+      end
+      attr_accessor :cartodb_options
+
+      def consumer
+        if CartoDB::Settings.present?
+          if @consumer.key != CartoDB::Settings['oauth_key'] || @consumer.secret != CartoDB::Settings['oauth_secret']
+            @cartodb_options[:site] = CartoDB::Settings['host']
+            @consumer = ::OAuth::Consumer.new(CartoDB::Settings['oauth_key'], CartoDB::Settings['oauth_secret'], @cartodb_options)
+          end
+        end
+        super
       end
 
       def user_data
@@ -25,3 +37,4 @@ module OmniAuth
     end
   end
 end
+
