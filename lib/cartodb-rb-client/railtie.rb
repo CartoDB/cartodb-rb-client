@@ -11,37 +11,11 @@ module CartoDB
 
     initializer "cartoDB_railtie.configure_rails_initialization" do |app|
 
-      CartoDB::Init.start app
+      CartoDB::Init.start
+      init_warden app
+      init_omniaouth app
 
     end
-
-  end
-
-  class Init
-
-    class << self
-
-      def start(rails_app, cartodb_settings = nil)
-        if cartodb_settings.blank?
-          config_path = Rails.root.join('config/cartodb_config.yml')
-          cartodb_settings = YAML.load_file(config_path)[Rails.env.to_s] if File.exists?(config_path)
-        end
-
-        init_warden rails_app
-        init_omniaouth rails_app
-
-        return if cartodb_settings.blank?
-
-        if CartoDB.const_defined?('Settings')
-          CartoDB::Settings.merge!(cartodb_settings)
-        else
-          CartoDB.const_set('Settings', cartodb_settings)
-        end
-
-        CartoDB.const_set('Connection', CartoDB::Client::Connection::Base.new) unless CartoDB.const_defined?('Connection')
-
-
-      end
 
       def init_omniaouth(rails_app)
         rails_app.middleware.use OmniAuth::Builder do
@@ -65,9 +39,35 @@ module CartoDB
       end
       private :init_warden
 
+  end
+
+  class Init
+
+    class << self
+
+      def start(cartodb_settings = nil)
+        if cartodb_settings.blank?
+          config_path = Rails.root.join('config/cartodb_config.yml')
+          cartodb_settings = YAML.load_file(config_path)[Rails.env.to_s] if File.exists?(config_path)
+        end
+
+        return if cartodb_settings.blank?
+
+        if CartoDB.const_defined?('Settings')
+          CartoDB::Settings.merge!(cartodb_settings)
+        else
+          CartoDB.const_set('Settings', cartodb_settings)
+        end
+
+        CartoDB.const_set('Connection', CartoDB::Client::Connection::Base.new) unless CartoDB.const_defined?('Connection')
+
+
+      end
+
     end
 
   end
 
 end
+
 

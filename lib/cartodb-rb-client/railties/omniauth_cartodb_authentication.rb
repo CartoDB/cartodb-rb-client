@@ -22,7 +22,7 @@ module OmniAuth
       end
 
       def user_data
-        @user_data ||= MultiJson.decode(@access_token.get('/oauth/identity').body)
+        @user_data ||= MultiJson.decode(@access_token.get('/oauth/identity', { 'Accept'=>'application/json' }).body)
       end
 
       def auth_hash
@@ -37,4 +37,3 @@ module OmniAuth
     end
   end
 end
-
