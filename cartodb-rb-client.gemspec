@@ -7,11 +7,11 @@ Gem::Specification.new do |s|
   s.version     = Cartodb::Rb::Client::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Fernando Espinosa"]
-  s.email       = ["fer@ferdev.com"]
-  s.homepage    = %q{http://github.com/ferdev/cartodb-rb-client}
-  s.licenses    = ["MIT"]
-  s.summary     = %q{Ruby client for cartodb API}
-  s.description = %q{Allows quick and easy connection to cartodb API.}
+  s.email       = ["ferdev@vizzuality.com"]
+  s.homepage    = %q{http://github.com/vizzuality/cartodb-rb-client}
+  s.licenses    = ["BSD"]
+  s.summary     = %q{Ruby client for the cartoDB API}
+  s.description = %q{Allows quick and easy connection to the cartodb API.}
 
   s.rubyforge_project = "cartodb-rb-client"
 
