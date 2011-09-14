@@ -27,6 +27,8 @@ module CartoDB
           cartodb_settings = YAML.load_file(config_path)[Rails.env.to_s] if File.exists?(config_path)
         end
 
+        init_warden rails_app
+
         return if cartodb_settings.blank?
 
         if CartoDB.const_defined?('Settings')
@@ -38,7 +40,6 @@ module CartoDB
         CartoDB.const_set('Connection', CartoDB::Client::Connection::Base.new) unless CartoDB.const_defined?('Connection')
 
         init_omniaouth rails_app
-        init_warden rails_app
 
       end
 
