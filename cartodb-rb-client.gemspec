@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'warden',      '1.0.3'
   s.add_dependency 'mime-types',  '1.16'
   s.add_dependency 'rails_warden', '0.5.2'
-  s.add_dependency 'activesupport', '3.0.5'
+  s.add_dependency 'activesupport', '~> 3.0.10'
   s.add_dependency 'i18n', '0.5.0'
   s.add_dependency 'rgeo', '0.3.2'
   s.add_dependency 'rgeo-geojson', '0.2.1'
