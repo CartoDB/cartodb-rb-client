@@ -1,6 +1,6 @@
 require 'warden'
 require 'rails_warden'
-require 'omniauth'
+require 'omniauth/oauth'
 require 'multi_json'
 
 require 'cartodb-rb-client/railties/omniauth_cartodb_authentication'
