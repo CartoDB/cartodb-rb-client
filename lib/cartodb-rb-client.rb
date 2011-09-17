@@ -14,4 +14,5 @@ require 'json/ext'
 require 'cartodb-rb-client/cartodb'
 require 'cartodb-rb-client/railtie' if defined?(Rails)
 
+OpenSSL::SSL.send :remove_const, :VERIFY_PEER
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
