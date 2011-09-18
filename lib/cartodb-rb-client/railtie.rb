@@ -27,7 +27,6 @@ module CartoDB
           end
           provider :cartodb, host, oauth_key, oauth_secret
         end
-        init_warden rails_app
       end
       private :init_omniaouth
 
