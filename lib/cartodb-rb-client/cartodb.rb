@@ -1,3 +1,4 @@
+require 'cartodb-rb-client/cartodb/init'
 require 'cartodb-rb-client/cartodb/libs'
 require 'cartodb-rb-client/cartodb/helpers'
 require 'cartodb-rb-client/cartodb/client'
