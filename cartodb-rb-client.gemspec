@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
   s.summary     = %q{Ruby client for the cartoDB API}
   s.description = %q{Allows quick and easy connection to the cartodb API.}
 
+  s.required_rubygems_version = ">= 1.3.6"
+
   s.rubyforge_project = "cartodb-rb-client"
 
   s.files         = `git ls-files`.split("\n")
@@ -21,13 +23,10 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
   s.add_dependency 'typhoeus', '0.2.4'
-  s.add_dependency 'oa-core', '0.2.6'
-  s.add_dependency 'oa-oauth', '0.2.6'
-  s.add_dependency 'warden',      '1.0.3'
+  s.add_dependency 'oauth', '0.4.5'
   s.add_dependency 'mime-types',  '1.16'
-  s.add_dependency 'rails_warden', '0.5.2'
-  s.add_dependency 'activesupport', '>= 3.0', '<= 3.1'
-  s.add_dependency 'i18n', '>= 0.5', '<= 0.6'
+  s.add_dependency 'activesupport', '>= 3.0.0', '<= 3.1.0'
+  s.add_dependency 'i18n', '>= 0.5.0', '<= 0.6.0'
   s.add_dependency 'rgeo', '0.3.2'
   s.add_dependency 'rgeo-geojson', '0.2.1'
   s.add_dependency 'pg', '0.11.0' if postgresql_installed?
