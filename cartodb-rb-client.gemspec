@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
   s.summary     = %q{Ruby client for the cartoDB API}
   s.description = %q{Allows quick and easy connection to the cartodb API.}
 
+  s.required_rubygems_version = ">= 1.3.6"
+
   s.rubyforge_project = "cartodb-rb-client"
 
   s.files         = `git ls-files`.split("\n")
