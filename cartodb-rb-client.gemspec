@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'oauth', '0.4.5'
   s.add_dependency 'mime-types',  '1.16'
   s.add_dependency 'activesupport', '>= 3.0.0', '<= 3.1.0'
-  s.add_dependency 'i18n', '0.6.0'
+  s.add_dependency 'i18n', '>= 0.5.0', '<= 0.6.0'
   s.add_dependency 'rgeo', '0.3.2'
   s.add_dependency 'rgeo-geojson', '0.2.1'
   s.add_dependency 'pg', '0.11.0' if postgresql_installed?
