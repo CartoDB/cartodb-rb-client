@@ -3,3 +3,4 @@
 Gemfile.lock
 pkg/*
 bin/
+spec/support/cartodb_config.yml
