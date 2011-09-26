@@ -38,17 +38,11 @@ Setup
         username: 'YOUR_CARTODB_USERNAME'
         password: 'YOUR_CARTODB_PASSWORD'
 
-3. Setup your cartoDB connection object. To do so, load the YAML file and assign it to a CartoDB::Config object:
+3. Setup your cartoDB connection object:
 
-        CartoDB::Settings = YAML.load_file(Rails.root.join('config/cartodb_config.yml'))
-        CartoDB::Connection = CartoDB::Client::Connection.new
+        CartoDB::Init.start = YAML.load_file(Rails.root.join('config/cartodb_config.yml'))
 
 And that's it. Now you should be able to run querys against the cartoDB servers using the CartoDB::Connection object.
-
-Rails apps
-----------
-
-If you're developing a Rails app, you just need to add the cartodb\_config.yml file to your rails app config directory. And that's it. You can access cartoDB anywhere in your app's code using the CartoDB::Connection class.
 
 Using the cartoDB API
 -----------
@@ -178,7 +172,7 @@ Results:
      :name => "table_1",
      :privacy => "PRIVATE",
      :tags => "",
-     :schema => 
+     :schema =>
      [["cartodb_id", "number"],
       ["myfield", "boolean"],
       ["updated_at", "date"],
