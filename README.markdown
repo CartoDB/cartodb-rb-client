@@ -40,8 +40,8 @@ Setup
 
 3. Setup your cartoDB connection object:
 
-        CartoDB::Init.start = YAML.load_file(Rails.root.join('config/cartodb_config.yml'))
-
+        CartoDB::Init.start YAML.load_file(Rails.root.join('config/cartodb_config.yml'))
+        
 And that's it. Now you should be able to run querys against the cartoDB servers using the CartoDB::Connection object.
 
 Using the cartoDB API
