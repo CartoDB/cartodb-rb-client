@@ -44,6 +44,8 @@ Setup
         
 And that's it. Now you should be able to run querys against the cartoDB servers using the CartoDB::Connection object.
 
+Note: You have to use strings instead of symbols for the configuration hash keys.
+
 Using the cartoDB API
 -----------
 
