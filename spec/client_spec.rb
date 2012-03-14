@@ -20,11 +20,11 @@ describe 'CartoDB client' do
 
   it "should create a table forcing the schema and get its table definition" do
     table = CartoDB::Connection.create_table 'cartodb_spec', [
-                                    {:name => 'field1', :type => 'text'},
-                                    {:name => 'field2', :type => 'numeric'},
-                                    {:name => 'field3', :type => 'date'},
-                                    {:name => 'field4', :type => 'boolean'}
-                                  ]
+      {:name => 'field1', :type => 'text'},
+      {:name => 'field2', :type => 'numeric'},
+      {:name => 'field3', :type => 'date'},
+      {:name => 'field4', :type => 'boolean'}
+    ]
 
     table.should_not be_nil
     table = CartoDB::Connection.table 'cartodb_spec'
@@ -38,43 +38,54 @@ describe 'CartoDB client' do
     table.schema.should include(["field4", "boolean"])
   end
 
-  # it "should create a table from a csv file" do
-  #   table = CartoDB::Connection.create_table 'whs_sites', File.open("#{File.dirname(__FILE__)}/support/whs_features.csv", 'r')
-  #
-  #   table.should_not be_nil
-  #   table[:id].should be > 0
-  #   table = CartoDB::Connection.table 'whs_sites'
-  #   table.schema.should have(23).items
-  #
-  #   records = CartoDB::Connection.records 'whs_sites', :rows_per_page => 1000
-  #   records.should_not be_nil
-  #   records.rows.should have(911).whs_sites
-  #
-  #   records.rows.first.cartodb_id.should be > 0
-  #   records.rows.first.title.should be == "Late Baroque Towns of the Val di Noto (South-Eastern Sicily)"
-  #   records.rows.first.latitude.should be > 0
-  #   records.rows.first.longitude.should be > 0
-  #   records.rows.first.description.should match /Val di Noto \(English: Vallum of Noto\) is a geographical area of south east Sicily/
-  #   records.rows.first.region.should be == "Provinces of Catania, Ragusa, and Syracuse, Sicily"
-  #   records.rows.first.type.should be == "cultural"
-  #   records.rows.first.endangered_reason.should be_nil
-  #   records.rows.first.edited_region.should be == "Provinces of Catania, Ragusa, and Syracuse, Sicily"
-  #   records.rows.first.endangered_year.should be_nil
-  #   records.rows.first.external_links.should be_empty
-  #   records.rows.first.wikipedia_link.should be == "http://en.wikipedia.org/wiki/Val_di_Noto"
-  #   records.rows.first.comments.should be_nil
-  #   records.rows.first.criteria.should be == "[i],[ii],[iv],[v]"
-  #   records.rows.first.iso_code.should be == "IT"
-  #   records.rows.first.size.should be == 1130000.0
-  #   records.rows.first.name.should be == "Late Baroque Towns of the Val di Noto (South-Eastern Sicily)"
-  #   records.rows.first.country.should be == "Italy"
-  #   records.rows.first.whs_site_id.should be == 1024
-  #   records.rows.first.date_of_inscription.should be == "2002"
-  #   records.rows.first.whs_source_page.should be == "http://whc.unesco.org/en/list/1024"
-  #   records.rows.first.created_at.should_not be_nil
-  #   records.rows.first.updated_at.should_not be_nil
-  #
-  # end
+  it "should create a table from a csv file" do
+
+    table = CartoDB::Connection.create_table 'whs_sites', File.open("#{File.dirname(__FILE__)}/support/whs_features.csv", 'r')
+
+    table.should_not be_nil
+    table[:id].should be > 0
+    table = CartoDB::Connection.table table[:name]
+    table.schema.should have(24).items
+
+    records = CartoDB::Connection.records table[:name]
+    records.should_not be_nil
+    records.rows.should have(10).whs_sites
+
+    records.rows.first.cartodb_id.should be > 0
+    records.rows.first.title.should be == "Aflaj Irrigation Systems of Oman"
+    records.rows.first.latitude.should be > 0
+    records.rows.first.longitude.should be > 0
+    records.rows.first.description.should match /A qanāt \(from Arabic: قناة‎\) \(Iran, Syria and Jordan\) is a water management system used to provide/
+    records.rows.first.region.should be == "Dakhiliya, Sharqiya and Batinah Regions"
+    records.rows.first.type.should be == "cultural"
+    records.rows.first.endangered_reason.should be_empty
+    records.rows.first.edited_region.should be == "Dakhiliya, Sharqiya and Batinah Regions"
+    records.rows.first.endangered_year.should be_empty
+    records.rows.first.external_links.should_not be_empty
+    records.rows.first.wikipedia_link.should be == "http://en.wikipedia.org/wiki/Qanat"
+    records.rows.first.comments.should be_empty
+    records.rows.first.criteria.should be == "[v]"
+    records.rows.first.iso_code.should be == "OM"
+    records.rows.first.size.should be == 14560000.0
+    records.rows.first.name.should be == "Aflaj Irrigation Systems of Oman"
+    records.rows.first.country.should be == "Oman"
+    records.rows.first.whs_site_id.should be == 1207
+    records.rows.first.date_of_inscription.should be == 2006
+    records.rows.first.whs_source_page.should be == "http://whc.unesco.org/en/list/1207"
+    records.rows.first.created_at.should_not be_nil
+    records.rows.first.updated_at.should_not be_nil
+
+  end
+
+  it "should import any kind of data file" do
+    Dir["#{File.dirname(__FILE__)}/support/data/*"].each do |file|
+      table = CartoDB::Connection.create_table File.basename(file, '.*'), File.open(file, 'r')
+
+      table.should_not be_nil
+      table[:id].should be > 0
+      table[:name].should_not be_empty
+    end
+  end
 
   it "should add and remove colums in a previously created table" do
     CartoDB::Connection.create_table 'cartodb_spec'
@@ -127,11 +138,11 @@ describe 'CartoDB client' do
 
   it "should insert a row in a table" do
     table = CartoDB::Connection.create_table 'table #1', [
-                                    {:name => 'field1', :type => 'text'},
-                                    {:name => 'field2', :type => 'numeric'},
-                                    {:name => 'field3', :type => 'date'},
-                                    {:name => 'field4', :type => 'boolean'}
-                                  ]
+      {:name => 'field1', :type => 'text'},
+      {:name => 'field2', :type => 'numeric'},
+      {:name => 'field3', :type => 'date'},
+      {:name => 'field4', :type => 'boolean'}
+    ]
 
     today = DateTime.now
 
@@ -151,11 +162,11 @@ describe 'CartoDB client' do
 
   it "should update a row in a table" do
     table = CartoDB::Connection.create_table 'table #1', [
-                                    {:name => 'field1', :type => 'text'},
-                                    {:name => 'field2', :type => 'numeric'},
-                                    {:name => 'field3', :type => 'date'},
-                                    {:name => 'field4', :type => 'boolean'}
-                                  ]
+      {:name => 'field1', :type => 'text'},
+      {:name => 'field2', :type => 'numeric'},
+      {:name => 'field3', :type => 'date'},
+      {:name => 'field4', :type => 'boolean'}
+    ]
 
     today = DateTime.now
 
@@ -183,11 +194,11 @@ describe 'CartoDB client' do
 
   it "should delete a table's row" do
     table = CartoDB::Connection.create_table 'table #1', [
-                                    {:name => 'field1', :type => 'text'},
-                                    {:name => 'field2', :type => 'numeric'},
-                                    {:name => 'field3', :type => 'date'},
-                                    {:name => 'field4', :type => 'boolean'}
-                                  ]
+      {:name => 'field1', :type => 'text'},
+      {:name => 'field2', :type => 'numeric'},
+      {:name => 'field3', :type => 'date'},
+      {:name => 'field4', :type => 'boolean'}
+    ]
 
     today = Time.now
 

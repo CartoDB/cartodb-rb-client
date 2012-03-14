@@ -4,10 +4,14 @@ module CartoDB
   module Client
     module Authorization
 
+      CRLF = "\r\n"
+
       def signed_request(request_uri, arguments)
         arguments[:disable_ssl_peer_verification] = true
 
         request = Typhoeus::Request.new(request_uri, arguments)
+
+        request = as_multipart(request, arguments[:params]) if arguments[:multipart] == true
 
         request.headers.merge!({"Authorization" => oauth_helper(request, request_uri).header})
 
@@ -52,6 +56,30 @@ module CartoDB
         OAuth::Client::Helper.new(request, oauth_params.merge(:request_uri => request_uri))
       end
       private :oauth_helper
+
+      def as_multipart(request, params)
+
+        boundary = Time.now.to_i.to_s(16)
+        request.headers["Content-Type"] = "multipart/form-data; boundary=#{boundary}"
+        body = ""
+        params.each do |key,value|
+          esc_key = CGI.escape(key.to_s)
+          body << "--#{boundary}#{CRLF}"
+          if value.respond_to?(:read)
+            body << "Content-Disposition: form-data; name=\"#{esc_key}\"; filename=\"#{File.basename(value.path)}\"#{CRLF}"
+            body << "Content-Type: application/octet-stream#{CRLF*2}"
+            body << value.read.force_encoding('utf-8')
+          else
+            body << "Content-Disposition: form-data; name=\"#{esc_key}\"#{CRLF*2}#{value}"
+          end
+          body << CRLF
+        end
+        body << "--#{boundary}--#{CRLF*2}"
+        request.body = body
+        request.params = {}
+        request
+      end
+      private :as_multipart
 
     end
   end

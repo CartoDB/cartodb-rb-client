@@ -14,20 +14,44 @@ module CartoDB
         end
 
         def create_table(table_name = nil, schema_or_file = nil, the_geom_type = 'Point')
-          schema = schema_or_file if schema_or_file && schema_or_file.is_a?(Array)
-          file   = schema_or_file if schema_or_file && schema_or_file.is_a?(File)
 
-          params = {:name => table_name}
-          params[:file] = file if file
-          params[:schema] = schema.map{|s| "#{s[:name]} #{s[:type]}"}.join(', ') if schema
+          case schema_or_file
+          when Array
+            schema = schema_or_file if schema_or_file && schema_or_file.is_a?(Array)
+            params = {:name => table_name}
+            params[:schema] = schema.map{|s| "#{s[:name]} #{s[:type]}"}.join(', ') if schema
 
-          request = cartodb_request 'tables', :post, :params => params, :the_geom_type => the_geom_type do |response|
-            return Utils.parse_json(response)
+            request = cartodb_request 'tables', :post, :params => params, :the_geom_type => the_geom_type do |response|
+              return Utils.parse_json(response)
+            end
+
+            execute_queue
+
+            request.handled_response
+          when File
+            file = schema_or_file if schema_or_file && schema_or_file.is_a?(File)
+
+            request = cartodb_request nil, :post, :url => '/upload', :params => {:file => file}, :multipart => true do |response|
+              upload_response = Utils.parse_json(response)
+
+              params = {:name => table_name}
+              params[:url] = generate_url upload_response[:file_uri]
+
+              request = cartodb_request 'tables', :post, :params => params, :the_geom_type => the_geom_type do |response|
+                return Utils.parse_json(response)
+              end
+
+              execute_queue
+
+              request.handled_response
+            end
+
+            execute_queue
+
+            request.handled_response
+
           end
 
-          execute_queue
-
-          request.handled_response
         end
 
         def add_column(table_name, column_name, column_type)
@@ -178,6 +202,7 @@ module CartoDB
 
           uri = "/api/#{VERSION}/#{uri}"
           url = generate_url uri
+          url = generate_url(arguments[:url]) if arguments[:url]
 
           headers                  = {}
           headers['Accept']        = MIME::Types['application/json']
@@ -187,6 +212,7 @@ module CartoDB
             :method        => method,
             :headers       => headers,
             :params        => params,
+            :multipart     => arguments[:multipart],
             :cache_timeout => settings['cache_timeout'],
             :verbose       => settings['debug']
           )

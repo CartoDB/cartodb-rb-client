@@ -59,11 +59,11 @@ Arguments:
 
 - **table\_name**: table's name.
 
-- **schema**: list of fields the table will contain.
+- **schema_or_file**: this parameter can be a list of fields the table will contain, or a File class containing the data the table will contain. It supports all file types supported by cartoDB.
 
 - **the\_geom\_type**: Type of geometry the\_geom field will have. Currently we only support 'POINT', but we'll support more types soon.
 
-Example:
+Example 1:
 
     CartoDB::Connection.create_table 'table #1', [{:name => 'field1', :type => 'text'}], 'POINT'
 
@@ -76,6 +76,40 @@ Results:
       ["field1", "string"],
       ["updated_at", "date"],
       ["created_at", "date"]]}
+
+Example 2:
+
+    CartoDB::Connection.create_table 'whs_sites', File.open("#{File.dirname(__FILE__)}/support/whs_features.csv", 'r')
+
+Results:
+
+    {:id=>242,
+     :name=>"_20120314_21932_1fx2580whs_features",
+     :schema=>
+     [["cartodb_id", "number"],
+      ["the_geom", "geometry", "geometry", "point"],
+      ["comments", "string"],
+      ["country", "string"],
+      ["criteria", "string"],
+      ["date_of_inscription", "string"],
+      ["description", "string"],
+      ["edited_region", "string"],
+      ["endangered_reason", "string"],
+      ["endangered_year", "string"],
+      ["external_links", "string"],
+      ["iso_code", "string"],
+      ["latitude", "string"],
+      ["longitude", "string"],
+      ["name", "string"],
+      ["region", "string"],
+      ["size", "string"],
+      ["title", "string"],
+      ["type", "string"],
+      ["whs_site_id", "string"],
+      ["whs_source_page", "string"],
+      ["wikipedia_link", "string"],
+      ["created_at", "date"],
+      ["updated_at", "date"]]}
 
 ####2. Add column.
 
