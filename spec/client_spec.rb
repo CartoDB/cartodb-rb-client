@@ -87,6 +87,48 @@ describe 'CartoDB client' do
     end
   end
 
+  it "should create a table with POINT type geometry" do
+    table = CartoDB::Connection.create_table 'cartodb_spec', 'point'
+
+    table.should_not be_nil
+    table = CartoDB::Connection.table 'cartodb_spec'
+    table.schema.should have(6).items
+    table.schema.should include(["cartodb_id", "number"])
+    table.schema.should include(["created_at", "date"])
+    table.schema.should include(["updated_at", "date"])
+    table.schema.should include(["name", "string"])
+    table.schema.should include(["description", "string"])
+    table.schema.should include(["the_geom", "geometry", "geometry", "point"])
+  end
+
+  it "should create a table with MULTIPOLYGON type geometry" do
+    table = CartoDB::Connection.create_table 'cartodb_spec', 'multipolygon'
+
+    table.should_not be_nil
+    table = CartoDB::Connection.table 'cartodb_spec'
+    table.schema.should have(6).items
+    table.schema.should include(["cartodb_id", "number"])
+    table.schema.should include(["created_at", "date"])
+    table.schema.should include(["updated_at", "date"])
+    table.schema.should include(["name", "string"])
+    table.schema.should include(["description", "string"])
+    table.schema.should include(["the_geom", "geometry", "geometry", "multipolygon"])
+  end
+
+  it "should create a table with MULTILINESTRING type geometry" do
+    table = CartoDB::Connection.create_table 'cartodb_spec', 'multilinestring'
+
+    table.should_not be_nil
+    table = CartoDB::Connection.table 'cartodb_spec'
+    table.schema.should have(6).items
+    table.schema.should include(["cartodb_id", "number"])
+    table.schema.should include(["created_at", "date"])
+    table.schema.should include(["updated_at", "date"])
+    table.schema.should include(["name", "string"])
+    table.schema.should include(["description", "string"])
+    table.schema.should include(["the_geom", "geometry", "geometry", "multilinestring"])
+  end
+
   it "should add and remove colums in a previously created table" do
     CartoDB::Connection.create_table 'cartodb_spec'
     CartoDB::Connection.add_column 'cartodb_spec', 'field1', 'text'
