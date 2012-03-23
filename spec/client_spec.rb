@@ -188,18 +188,17 @@ describe 'CartoDB client' do
 
     today = DateTime.now
 
-    inserted_row = CartoDB::Connection.insert_row 'table_1', {
+    record = CartoDB::Connection.insert_row 'table_1', {
       'field1'      => 'lorem',
       'field2'      => 100.99,
       'field3'      => today,
       'field4'      => true
     }
 
-    record = CartoDB::Connection.row 'table_1', inserted_row.id
-    record.field1.should == 'lorem'
-    record.field2.should == 100.99
+    record.field1.should         == 'lorem'
+    record.field2.should         == 100.99
     record.field3.to_date.should == today.to_date
-    record.field4.should == true
+    record.field4.should         == true
   end
 
   it "should update a row in a table" do
@@ -219,14 +218,12 @@ describe 'CartoDB client' do
       'field4'      => true
     }
 
-    CartoDB::Connection.update_row 'table_1', record.id, {
+    record = CartoDB::Connection.update_row 'table_1', record.id, {
       'field1'      => 'illum',
       'field2'      => -83.24,
       'field3'      => today + 1,
       'field4'      => false
     }
-
-    record = CartoDB::Connection.row 'table_1', record.id
 
     record.field1.should      == 'illum'
     record.field2.should      == -83.24

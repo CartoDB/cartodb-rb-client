@@ -139,11 +139,8 @@ module CartoDB
           results = query(<<-SQL
             INSERT INTO #{table_name}
             (#{row.keys.join(',')})
-            VALUES (#{row.values.join(',')});
-
-            SELECT #{table_name}.cartodb_id as id, #{table_name}.*
-            FROM #{table_name}
-            WHERE cartodb_id = currval('public.#{table_name}_cartodb_id_seq');
+            VALUES (#{row.values.join(',')})
+            RETURNING cartodb_id as id, *;
           SQL
           )
 
@@ -157,10 +154,8 @@ module CartoDB
             UPDATE #{table_name}
             SET (#{row.keys.join(',')})
             = (#{row.values.join(',')})
-            WHERE cartodb_id = #{row_id};
-            SELECT #{table_name}.cartodb_id as id, #{table_name}.*
-            FROM #{table_name}
-            WHERE cartodb_id = currval('public.#{table_name}_cartodb_id_seq');
+            WHERE cartodb_id = #{row_id}
+            RETURNING cartodb_id as id, *;
           SQL
           )
 
