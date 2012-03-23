@@ -325,4 +325,16 @@ describe 'CartoDB client' do
 
   end
 
+  it 'should escape properly input data in insert queries' do
+
+    table = CartoDB::Connection.create_table 'table #1', 'multipolygon'
+    table.schema.should include(["the_geom", "geometry", "geometry", "multipolygon"])
+
+    record = CartoDB::Connection.insert_row 'table_1', {
+      'the_geom' => "ST_GeomFromText('MULTIPOLYGON(((95.67764648436992 59.894444919406,90.75577148436992 54.16886220825434,103.41202148436992 56.75874227547269,95.67764648436992 59.894444919406)))', 4326)"
+    }
+
+    record.id.should_not be_nil
+  end
+
 end

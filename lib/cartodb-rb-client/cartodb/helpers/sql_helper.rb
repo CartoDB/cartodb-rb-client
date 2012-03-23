@@ -5,15 +5,20 @@ module CartoDB
 
       def prepare_data(hash)
         hash.each do |key, value|
-          hash[key] = format_value(value)
+          hash[key] = format_value(key, value)
         end
         hash
       end
 
-      def format_value(value)
+      def format_value(key, value)
         case value
         when ::String
-          "'#{value}'"
+          #value = value.gsub(/\\/, '\&\&').gsub(/'/, "''")
+          if key.match(/geo/)
+            "#{value}"
+          else
+            "'#{value.gsub(/\\/, '\&\&').gsub(/'/, "''")}'"
+          end
         when ::Date, ::DateTime, ::Time
           "'#{value.to_time.utc}'"
         when RGeo::Feature::Geometry
