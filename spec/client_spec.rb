@@ -337,4 +337,12 @@ describe 'CartoDB client' do
     record.id.should_not be_nil
   end
 
+  it 'should allow reserved words in columns names' do
+    table = CartoDB::Connection.create_table 'table #1', [{:name => 'class', :type => 'text'}]
+    table.schema.should include(["class", "string"])
+
+    record = CartoDB::Connection.insert_row table.name, :class => 'wadus'
+    record.class_.should == 'wadus'
+  end
+
 end

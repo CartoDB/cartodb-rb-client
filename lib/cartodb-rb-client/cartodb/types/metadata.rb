@@ -2,6 +2,12 @@ module CartoDB
   module Types
     class Metadata < Hash
 
+      RESERVED_WORDS = %w(
+        alias and BEGIN begin break case class def defined? do else elsif END end
+        ensure false for if in module next nil not or redo rescue retry return self
+        super then true undef unless until when while yield
+      )
+
       class << self
         def from_hash(hash = {})
           metadata = self.new
@@ -14,6 +20,8 @@ module CartoDB
       end
 
       def []=(key, value)
+        key = :"#{key}_" if RESERVED_WORDS.include?(key.to_s)
+
         if key.to_s.eql?('the_geom')
           value = _geometry_features(value)
         else
