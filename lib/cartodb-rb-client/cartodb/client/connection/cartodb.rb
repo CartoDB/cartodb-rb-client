@@ -68,6 +68,20 @@ module CartoDB
 
         end
 
+        def rename_table(old_table_name, new_table_name)
+          request = cartodb_request "tables/#{old_table_name}",
+                                    :put,
+                                    :params => {
+                                      :name => new_table_name
+                                    } do |response|
+            return Utils.parse_json(response)
+          end
+
+          execute_queue
+
+          request.handled_response
+        end
+
         def add_column(table_name, column_name, column_type)
           cartodb_request "tables/#{table_name}/columns",
                           :post,

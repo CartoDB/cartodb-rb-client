@@ -34,6 +34,7 @@ module CartoDB
           self.send :define_method, :latitude do
             self.the_geom ? self.the_geom.y : nil
           end
+
           self.send :define_method, :longitude do
             self.the_geom ? self.the_geom.x : nil
           end

@@ -115,6 +115,15 @@ describe 'CartoDB client' do
     table.schema.should include(["the_geom", "geometry", "geometry", "multipolygon"])
   end
 
+  it "should rename an existing table" do
+    table = CartoDB::Connection.create_table 'cartodb_spec'
+
+    table.name.should be == 'cartodb_spec'
+
+    table = CartoDB::Connection.rename_table 'cartodb_spec', 'renamed_cartodb_spec'
+    table.name.should be == 'renamed_cartodb_spec'
+  end
+
   it "should create a table with MULTILINESTRING type geometry" do
     table = CartoDB::Connection.create_table 'cartodb_spec', 'multilinestring'
 
