@@ -9,5 +9,4 @@ group :development do
   gem "bundler", "> 1.0.0"
   gem 'ruby-debug', :platforms => :mri_18
   gem 'ruby-debug19', :require => 'ruby-debug', :platforms => :mri_19
-  gem 'paperclip'
 end
