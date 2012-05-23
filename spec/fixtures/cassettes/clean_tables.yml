@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - &70174619284940 !ruby/object:MIME::Type
+      - &70347547176260 !ruby/object:MIME::Type
         content_type: application/json
         raw_media_type: application
         raw_sub_type: json
@@ -26,9 +26,9 @@ http_interactions:
         obsolete: !!null 
         docs: !!null 
       Authorization:
-      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="UVyIbVWtjXQbMNgQPZk4jfcXuHLuMmpslcyK2j4A",
-        oauth_signature="OAjI0pLqb5pF7KFUkbj0VINcSKc%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1337787578", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="VEi9jwsh7M68W8emeqcxoZjaBtoeA4wLfNGy8qVj2s",
+        oauth_signature="Cz8LzmTlBslwlfEJ1bm5I7iHTgY%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337788390", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
         oauth_version="1.0"
   response:
     status:
@@ -38,7 +38,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 23 May 2012 15:39:38 GMT
+      - Wed, 23 May 2012 15:53:10 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -50,36 +50,36 @@ http_interactions:
       Status:
       - 200 OK
       Etag:
-      - ! '"134bc7a87b06f25f431443d12b2bf3a4"'
+      - ! '"5822de039c547528e69f48f88b4a5650"'
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Ua-Compatible:
       - IE=Edge,chrome=1
       Set-Cookie:
-      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlYmIxMjdjODY4NWE3YmZkOTRjNmJiMWZiMjRhYTYyNmJJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--fa8fffe8f03abe26df08a88682cfc94030cc27c9;
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlNDlmYjRmODQ0MWFjOTIwNDEyNTI5NmQ0NjU4ZGJiZWJJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--999fbd3225bcb2ead656025ec98e41895ea3b674;
         domain=.cartodb.com; path=/; HttpOnly
       X-Runtime:
-      - '0.014696'
+      - '0.025659'
       Content-Encoding:
       - gzip
     body:
       encoding: ASCII-8BIT
-      string: ! '{"total_entries":1,"tables":[{"id":4717,"name":"table_1","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","multipolygon"],["description","string"],["name","string"],["created_at","date"],["updated_at","date"]],"updated_at":"2012-05-23T17:39:21+02:00","rows_counted":0}]}'
+      string: ! '{"total_entries":4,"tables":[{"id":4724,"name":"polygon_geometry_model","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","polygon"],["updated_at","date"],["created_at","date"]],"updated_at":"2012-05-23T17:48:49+02:00","rows_counted":0},{"id":4723,"name":"custom_data_type_column_model","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["description","string"],["name","string"],["test","number"],["created_at","date"],["updated_at","date"]],"updated_at":"2012-05-23T17:48:48+02:00","rows_counted":0},{"id":4722,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]],"updated_at":"2012-05-23T17:48:43+02:00","rows_counted":0},{"id":4718,"name":"table_1","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["description","string"],["name","string"],["created_at","date"],["updated_at","date"]],"updated_at":"2012-05-23T17:39:39+02:00","rows_counted":0}]}'
     http_version: '1.1'
-  recorded_at: Wed, 23 May 2012 15:39:38 GMT
+  recorded_at: Wed, 23 May 2012 15:53:10 GMT
 - request:
     method: delete
-    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/table_1?
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/polygon_geometry_model?
     body:
       encoding: US-ASCII
       string: ''
     headers:
       Accept:
-      - *70174619284940
+      - *70347547176260
       Authorization:
-      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="7fMCdYDTS20kpBmtXUubwkBwbyrarTfKxwMcrK1QJXc",
-        oauth_signature="DPVaQEZm1EWnrlC%2FsTc%2Fwip149A%3D", oauth_signature_method="HMAC-SHA1",
-        oauth_timestamp="1337787578", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="ln36GI7sCB4fvICNlnZYyw3QPGDyTsllbbGqgpdzU",
+        oauth_signature="UvNC9nLmY80ddXMUUfXap8EVxww%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337788390", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
         oauth_version="1.0"
   response:
     status:
@@ -89,7 +89,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 23 May 2012 15:39:39 GMT
+      - Wed, 23 May 2012 15:53:10 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -105,15 +105,162 @@ http_interactions:
       X-Ua-Compatible:
       - IE=Edge,chrome=1
       Set-Cookie:
-      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlNmQ4MzI0MGI5NTkxOTIyMzkyNWVlYWY5NGFlM2FkMzhJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--547d339f58530462ee89130999ee1074e6628b35;
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlMDYwY2E4NWE2MGJlZmE5NDI4MjI1YzE2ZjRkMDY3MTZJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--91c56a0e50dfa569f02b89ca7a341285a18ad1e5;
         domain=.cartodb.com; path=/; HttpOnly
       X-Runtime:
-      - '0.162067'
+      - '0.190212'
       Content-Encoding:
       - gzip
     body:
       encoding: ASCII-8BIT
       string: ! ' '
     http_version: '1.1'
-  recorded_at: Wed, 23 May 2012 15:39:39 GMT
+  recorded_at: Wed, 23 May 2012 15:53:10 GMT
+- request:
+    method: delete
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/custom_data_type_column_model?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70347547176260
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="rNWAVHzmRIM6RxJTJKfjoAfkB4SNiLsxlSaIAFKdk",
+        oauth_signature="R2S1Q6coDbFdsBItWqu1sv3s9Wg%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337788390", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 15:53:11 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Cache-Control:
+      - no-cache
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlNDE5Nzg1Y2FjMzZiZjExNTgyODdlZTA0MDE4YTE0MmZJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--260748fd515484011639dd2385ea317eb716df32;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.216359'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! ' '
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 15:53:11 GMT
+- request:
+    method: delete
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70347547176260
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="m6fXY1zPmR8pp3DVhFwDfdw5Bt95gCiJEQVvZk1Y",
+        oauth_signature="K48l97G6kcKiben9SIquhTEs75s%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337788391", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 15:53:11 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Cache-Control:
+      - no-cache
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlMDAyNmQ4YTcxYzVlNmFkMzlhMTVhZmY4M2U2ZDg4OTFJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--f3852a6af7a2cac08662f993c97bb4e5361ce2cf;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.149254'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! ' '
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 15:53:11 GMT
+- request:
+    method: delete
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/table_1?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70347547176260
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="W9qeZVUT7etENgwtN6zsPZ2IgF1dmug3qyU4qDS6M",
+        oauth_signature="zY9gsWDwRR6fw2otdtxuxHOuhaY%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337788391", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 15:53:11 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Cache-Control:
+      - no-cache
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlN2JkZTQxZDhiYTFiM2IyMDkyYzMxODVhMGMyMGU2YjBJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--f0017b0d727604edaeb1a3d0c70d6d12adc50cf4;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.177177'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! ' '
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 15:53:11 GMT
 recorded_with: VCR 2.1.1

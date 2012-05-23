@@ -116,7 +116,9 @@ describe 'CartoDB model metadata methods', :vcr => true do
 
   it "should create model with polygon type geometry columns" do
     columns = PolygonGeometryModel.data_columns
-    columns.should include({:name => 'the_geom', :type => 'geometry', :geometry_type => 'multipolygon'})
+    columns.should have(4).items
+    columns.should include({:name => 'the_geom',       :type => 'geometry', :geometry_type => 'multipolygon'})
+    columns.should include({:name => 'another_column', :type => 'string'})
   end
 
 end

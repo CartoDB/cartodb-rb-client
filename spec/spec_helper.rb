@@ -28,6 +28,7 @@ Spork.prefork do
 
   require 'vcr'
   VCR.configure do |c|
+    c.default_cassette_options = { :record => :new_episodes }
     c.cassette_library_dir = 'spec/fixtures/cassettes'
     c.hook_into :typhoeus
     #c.preserve_exact_body_bytes

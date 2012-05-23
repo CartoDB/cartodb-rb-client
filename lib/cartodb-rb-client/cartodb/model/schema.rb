@@ -37,7 +37,7 @@ module CartoDB
         end
         private :field
 
-        def set_geometry_column(geometry_type = Point)
+        def set_geometry_type(geometry_type = Point)
           self.geometry_type = case geometry_type
                                when Class, Module
                                  geometry_type.name.split('::').last.downcase
@@ -45,7 +45,7 @@ module CartoDB
                                  geometry_type.to_s.downcase
                                end
         end
-        private :set_geometry_column
+        private :set_geometry_type
 
         def update_cartodb_schema
           table = nil
