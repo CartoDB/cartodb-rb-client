@@ -24,8 +24,8 @@ module Factories
       :left_corners     => 6,
       :right_corners    => 10,
       :longest_straight => '1068m',
-      :constructed      => Date.new(2004, 1, 1),
-      :modified         => Date.new(2004, 1, 1)
+      :constructed      => DateTime.new(2004, 1, 1),
+      :modified         => DateTime.new(2004, 1, 1)
     }
   end
 end

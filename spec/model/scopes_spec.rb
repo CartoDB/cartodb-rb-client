@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'model_specs_helper'
 
 describe 'CartoDB model scopes' do
   it "should return all records paginated" do

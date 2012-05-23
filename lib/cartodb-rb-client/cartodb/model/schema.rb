@@ -22,13 +22,14 @@ module CartoDB
         end
 
         def field(name, options = {:type => String})
+          return if name == 'the_geom'
+
           @columns_synchronized = false
           @model_columns ||= []
           column = {
             :name => name.to_s,
             :type =>  CARTODB_TYPES[options[:type]] || options[:type]
           }
-          column[:geometry_type] = options[:type].name.split('::').last.downcase if column[:type].eql?('geometry')
           return if model_columns.include?(column)
 
           model_columns << column
@@ -36,12 +37,22 @@ module CartoDB
         end
         private :field
 
+        def set_geometry_column(geometry_type = Point)
+          self.geometry_type = case geometry_type
+                               when Class, Module
+                                 geometry_type.name.split('::').last.downcase
+                               else
+                                 geometry_type.to_s.downcase
+                               end
+        end
+        private :set_geometry_column
+
         def update_cartodb_schema
           table = nil
           if cartodb_table_exists?
             table = cartodb_table
           else
-            table = connection.create_table table_name, model_columns
+            table = connection.create_table table_name, geometry_type
           end
 
           read_metadata table

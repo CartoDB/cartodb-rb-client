@@ -23,9 +23,8 @@ Spork.prefork do
 
   RgeoFactory = ::RGeo::Geographic.spherical_factory(:srid => 4326)
 
-  # Requires supporting files with custom matchers and macros, etc,
-  # in ./support/ and its subdirectories.
-  Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
+  require "#{File.dirname(__FILE__)}/support/cartodb_helpers.rb"
+  require "#{File.dirname(__FILE__)}/support/cartodb_factories.rb"
 
   RSpec.configure do |config|
     config.before(:each) do

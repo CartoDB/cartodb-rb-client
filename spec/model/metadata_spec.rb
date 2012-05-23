@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'model_specs_helper'
 
 describe 'CartoDB model metadata methods' do
 
@@ -28,6 +28,7 @@ describe 'CartoDB model metadata methods' do
   end
 
   it "should contain an array of columns" do
+
     model = MotoGPCircuit.new
 
     model.columns.should_not be_nil
@@ -111,6 +112,11 @@ describe 'CartoDB model metadata methods' do
   it "should create model with custom data types columns" do
     columns = CustomDataTypeColumnModel.data_columns
     columns.should include({:name => 'test', :type => 'number'})
+  end
+
+  it "should create model with polygon type geometry columns" do
+    columns = PolygonGeometryModel.data_columns
+    columns.should include({:name => 'the_geom', :type => 'geometry', :geometry_type => 'multipolygon'})
   end
 
 end

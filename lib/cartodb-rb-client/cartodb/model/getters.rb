@@ -39,6 +39,11 @@ module CartoDB
         end
         private :model_columns
 
+        def geometry_type
+          @geometry_type
+        end
+        private :geometry_type
+
       end
 
       def connection
@@ -52,14 +57,6 @@ module CartoDB
       def cartodb_table
         self.class.cartodb_table
       end
-
-      # def method_missing(name, *args, &block)
-      #   if args.empty? && block.nil? && column_names.include?(name.to_s)
-      #     attributes[name]
-      #   else
-      #     super
-      #   end
-      # end
 
       def columns
         self.class.columns

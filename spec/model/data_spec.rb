@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'model_specs_helper'
 
 describe 'CartoDB model data methods' do
 
@@ -31,7 +31,7 @@ describe 'CartoDB model data methods' do
     }.to change{CartoDB::Connection.records('moto_gp_circuit').total_rows}.from(0).to(1)
 
     record = CartoDB::Connection.row 'moto_gp_circuit', losail_circuit.cartodb_id
-    record.cartodb_id.should             be == 1
+    record.cartodb_id.should       be == 1
     record.name.should             be == 'Losail Circuit'
     record.description.should      match /The fabulous Losail International Circuit lies/
     record.latitude.should         be == 25.488840
@@ -41,8 +41,8 @@ describe 'CartoDB model data methods' do
     record.left_corners.should     be == 6
     record.right_corners.should    be == 10
     record.longest_straight.should be == '1068m'
-    record.constructed.should be == Date.new(2004, 1, 1)
-    record.modified.should    be == Date.new(2004, 1, 1)
+    record.constructed.should      be == DateTime.new(2004, 1, 1)
+    record.modified.should         be == DateTime.new(2004, 1, 1)
 
     losail_circuit.cartodb_id.should be == 1
     losail_circuit.name.should be == 'Losail Circuit'

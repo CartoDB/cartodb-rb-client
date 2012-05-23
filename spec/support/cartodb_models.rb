@@ -20,3 +20,7 @@ end
 class CustomDataTypeColumnModel < CartoDB::Model::Base
   field :test, :type => 'integer'
 end
+
+class PolygonGeometryModel < CartoDB::Model::Base
+  set_geometry_column :polygon
+end

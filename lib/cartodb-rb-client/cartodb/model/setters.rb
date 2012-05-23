@@ -19,6 +19,10 @@ module CartoDB
           @columns = columns
         end
 
+        def geometry_type=(geometry_type)
+          @geometry_type = geometry_type
+        end
+        private :geometry_type=
       end
 
       def cartodb_table=(table)
@@ -28,14 +32,6 @@ module CartoDB
       def attributes=(attributes)
         @attributes = prepare_geo_attributes(attributes)
       end
-
-      # def method_missing(name, *args, &block)
-      #   if args.count == 1 && block.nil? && name.to_s.ends_with?('=') && column_names.include?(name.to_s[0..-2])
-      #     attributes[name.to_s[0..-2].to_sym] = args.first
-      #   else
-      #     super
-      #   end
-      # end
 
     end
   end
