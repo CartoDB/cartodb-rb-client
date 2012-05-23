@@ -1,0 +1,1299 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - &70259176453560 !ruby/object:MIME::Type
+        content_type: application/json
+        raw_media_type: application
+        raw_sub_type: json
+        simplified: application/json
+        media_type: application
+        sub_type: json
+        extensions:
+        - json
+        encoding: 8bit
+        system: !!null 
+        registered: true
+        url:
+        - IANA
+        - RFC4627
+        obsolete: !!null 
+        docs: !!null 
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="h13ZvTwy6xlytnDYD3ROIzU0WYr1dSuabCWMGfx9XQ",
+        oauth_signature="XyfzbWmLOw6%2B4Gpx7Fn7KUfSvfU%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784748", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:28 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"cb8fbe19039d409b51b629feb67ef3cc"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlYzUxNGE4Y2I2MTVjNGJkZWRlZTliOGZkMzgzN2NiYzRJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--8b9c4dca087cd8fea7fa037218588805ebd51914;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.012916'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"total_entries":1,"tables":[{"id":4648,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["modified","date"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]],"updated_at":"2012-05-23T16:52:24+02:00","rows_counted":0}]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:28 GMT
+- request:
+    method: delete
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="IgZDJgVyZivM6dx6vfRxckYI4EvbpnRvFtqkbxSs",
+        oauth_signature="d7TQBCnzNqs7MTGBWpjdq14SiQs%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784748", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:29 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Cache-Control:
+      - no-cache
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlYjkxNDAzMTNlMTkxYzA4YmM2NmVlMmE5OGE4YTU0ZjFJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--a5f886bbb3c954aeb7cf301d0ee7593050464494;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.446740'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! ' '
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:29 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="YC1mga3SbOYymiJkwvHfb7syE88l0RPOYQzW08oF5c",
+        oauth_signature="7aqdKZfiFSQS1lsEr575GJyg9Os%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784749", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:29 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 404 Not Found
+      Cache-Control:
+      - no-cache
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlMjBkNmU3ZWNmZTkxM2YxZGEzYzQ2OTRiNmJjZjBjYzRJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--a86399640a10562748e2fb3f8a89b92b6aa60abc;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.009385'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! ' '
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:29 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="SKbjxWqHyaL8PAK8P3SlOK8oQi9zWtn1dH2tPnzuA",
+        oauth_signature="he3QXcdckHvPXgpioxA1t0XILOE%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784749", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:29 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 404 Not Found
+      Cache-Control:
+      - no-cache
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlZGY2OWY1YTQ5MzVlNTRhNDgyNDk2ZTcxNTA3ZWRhMGZJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--98eb25e438cd60e6d3db77e2573b014411a76189;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.009312'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! ' '
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:29 GMT
+- request:
+    method: post
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="xVnCZSYFSjohRg5YtaRcbFQV9yjS7qLs8mWlaNyEkg",
+        oauth_signature="EiYjHZy%2BB1Ldrd4itoVHF1iwju0%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784749", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Location:
+      - /tables/4649
+      Etag:
+      - ! '"dee9cda8e3f6a53d39810bc0e9e2984a"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlZWY2MGE1OGY3NTllYmY0YmUwNDZhODM5NGQ2OGQ1ZGZJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--55652aaf7cb87e537da19068958c876476f161df;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '2.093582'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4649,"name":"moto_gp_circuit","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["description","string"],["name","string"],["created_at","date"],["updated_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:32 GMT
+- request:
+    method: post
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit/columns
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="TM2DOyfDY25243hAITzDT6bvH1EneYl0WB0F9Byxs",
+        oauth_signature="AneCDGwfU80hZFR4V0JZ4BJAoxY%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784752", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"1d8ec3575e09ff60ecad35605669b22c"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlMTg5MGI4NTY4NDQwYzkxNTJlNWY0M2NmOWM2MTY3MWNJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--2941a5ed09f2164b8203e38319d3242548222993;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.045801'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"name":"length","type":"text","cartodb_type":"string"}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:32 GMT
+- request:
+    method: post
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit/columns
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="nu5h2jXgr69CZhR31bLQNXIZ8bQ2roQCAXpI8jwIrlU",
+        oauth_signature="QDxKtISdN1OwOrp4FERcW%2FJsJH0%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784752", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"e82b080654b5df6f5d5f582aae439d58"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlMzE4ODExNTUzNWM3MWYwMjM0MzgyNGY0MzAzN2MxMjVJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--57efab5e4fc7d06b224ae100cb78a6328374ba67;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.050595'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"name":"width","type":"text","cartodb_type":"string"}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:32 GMT
+- request:
+    method: post
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit/columns
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="qIdq7sawo8QySq26oR4cCp8d69n3EjFnW9WOzP6TyFM",
+        oauth_signature="lpaBgaLOuKYEau1TY%2F01zprPNx8%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784752", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"72d9dc37fa77b74502b76efdaff059d5"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlMTIwYTEwNDMzNmUxNDAyODljOWJjNTdiODRmMTc0YzhJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--1280c07a8ba0c53510a79a4c1a878edf6ca8dcbe;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.061713'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"name":"longest_straight","type":"text","cartodb_type":"string"}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:32 GMT
+- request:
+    method: post
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit/columns
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="rFR6tDXw4mlEApGNDt4bwqgqlYlxY6U9giyJoAPvK6E",
+        oauth_signature="evCjz0rmHqfjNqn%2Bnj%2BUm0hkR9o%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784752", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"b602480fcc0e512dc48fc82a407d693c"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlZTM0NDFiODIzZjczMDRhZWQyZTkyZGE1NzgwZTc3OTBJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--d7fe55a0b16aeaa82b609ea393eb29a419c399d3;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.067963'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"name":"left_corners","type":"numeric","cartodb_type":"number"}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:32 GMT
+- request:
+    method: post
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit/columns
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="zsqTCfPxa4Tke2tLsUvpsy7kt4rBtu8QpJoQjFl9Wdc",
+        oauth_signature="dCyBe1ANgfVZYusjdqiXegsPDGs%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784752", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"2830789a168cdfba40b91cbc98711d74"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlODBiMDJhNTQwOWM4MWRlN2FiYzUwMzhkODBlODY0MWRJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--6befc7d8408aaf15a58bdca27e7f4f89bd3bd6ec;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.135436'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"name":"right_corners","type":"numeric","cartodb_type":"number"}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:32 GMT
+- request:
+    method: post
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit/columns
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="hIPUWHu17VX7LE7dpOxOF75FlrDZYnrCnMr2i2O9ZU",
+        oauth_signature="aBJptbX02isAULfx5i1%2BY9nJlTI%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784752", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"b4f11f170f581e46523ca91965371c28"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlZDg4MjcxYjA3ZWIyOTY3MTdkZmUxMmQ5YTkxYmNjOTBJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--3a98edcc88dda13235fa4823fda8042bfbed8532;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.039063'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"name":"constructed","type":"timestamp","cartodb_type":"date"}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:32 GMT
+- request:
+    method: post
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit/columns
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="XvforxEJY5ctu060qIt4lUEF4arEBtWJPujlj8TvD4",
+        oauth_signature="AddZwL6w6q1Zu5cGogjzEei2W5Q%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784752", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"5b673b3f4b869a800810f0a965941052"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlZWNjMzYxNjQ2NGJiNjFkZjg1YzliYzNjOWI4Y2M1MjlJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--ebcbf6b1ebcb54841862cf178b15e122a3938ead;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.041027'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"name":"modified","type":"timestamp","cartodb_type":"date"}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:33 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="Yg2B2VnTxnb3mGABoYg55zFf8FIZCVo9dsDrLWAuM",
+        oauth_signature="xi579hrH8%2FHssHw1XF0RAtqQFIE%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784753", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"e1f0204a867832373345abdf6d17975f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlYTExYzY2ZWQ2OWY2ZjE5MmZmNzI5MzVkY2YwMTdhMDhJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--9cafc2cb27c9cd608be53e6884221cac4e8d6734;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.017115'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4649,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["modified","date"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:33 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="ISWdcZC4zzY8R7sS4zBowZjJnTWgyOYwzZJer78",
+        oauth_signature="%2F4NrorEXlKFyrO2DeI0ue3%2F0MNw%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784753", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"e1f0204a867832373345abdf6d17975f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlZWM4NzE1NjZkMDQxOGRjNjE1ZDU2MjA0NmRmNWJjZWRJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--dee0358feaa4359c00b59bbb619e3decd49c9f99;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.016890'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4649,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["modified","date"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:33 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="USAIlZGG4HldfQlrcdyL5wpD9mF2kiOb2mQyr8bDE",
+        oauth_signature="jJ6NnWThHWLklr0GFmyrRiV5qdM%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784753", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"e1f0204a867832373345abdf6d17975f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlZDE4MjMzZDkyNzM4NmUzMDQ5MGFiNjQ2OWUyMzM2ZDhJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--185d8de8167a3b77780aade7c34f07f75773cbe8;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.016654'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4649,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["modified","date"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:33 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="bibZiwaSVkM9BQPhFmE1ds5euxOQhysB7KCusSMSaWc",
+        oauth_signature="drgOjBETWZJaBZ1L%2FhycAXAj4wc%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784753", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"e1f0204a867832373345abdf6d17975f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlZWE3Njc4MWQ2MGEyYTQ0Nzc4NDJlY2VmODhhZTljYjRJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--67a1243768b76aa442eb96984d305422721d42bf;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.017019'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4649,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["modified","date"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:33 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="KzhN9ZX1iGOAefkzvI010NSeTIxfMrrbv9jTfcqcTcU",
+        oauth_signature="fgzKMQomPrBwlCpyt2AGODh5Dgc%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784753", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"e1f0204a867832373345abdf6d17975f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlZGRhN2EyY2E4ZDQ5OGY3ZDZkMjA1N2MyYTc0YjNiOTNJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--ecb901a395630aff4da8842fbc1bdb569bc31a63;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.017823'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4649,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["modified","date"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:33 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="N9xZflbw5sQys8LsX0AHXeplfuSKWiENirJgDYYd5k",
+        oauth_signature="ikCeFlDONwzCZMKSIOnrW7ysO5w%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784753", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"e1f0204a867832373345abdf6d17975f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlNGViNzMzMTkwMGIyMTFjOTEzYThjZWIwM2NjYTE2YzNJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--4639947620d60a19ea2117327df0acb8e32733ed;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.017071'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4649,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["modified","date"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:33 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="DfKWIh3RrSpyFHJEElmG5Yo5KGrlT2DUHCIOVm3yY",
+        oauth_signature="EleEx25Mejcie2oWI8VpFPE19OM%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784753", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"e1f0204a867832373345abdf6d17975f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlNmZlYzQ0OTZiNGMwODNkMGVhMjNlMWJmMzhmMzMyYzNJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--a2a43026616621ae2faf719dd3733133548274f7;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.016565'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4649,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["modified","date"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:33 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="ZkbMmj3cmYdLUNoNECKvNVjisUcnVgO7CNDXgnjaZk",
+        oauth_signature="8EIVdz%2B%2BXmyilK4awp9kOOKHlHI%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784753", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"e1f0204a867832373345abdf6d17975f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlMjc1NTExOTIzMTQ3NjQwNjkwYzdmNTZjZTIxMDRiZTlJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--7488c93ed4e417e274d71b0a259700d85e8144a2;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.017277'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4649,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["modified","date"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:33 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="qw0ycy7bbTZyjpvzjo1L3xbMUkFfoGvVVVAI4uT3bbE",
+        oauth_signature="aamXNvUCrbdn09zNb0qoSEDWK4I%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784753", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"e1f0204a867832373345abdf6d17975f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlMGI2M2NlMmViNjRmMGRiMzgyZjAxNmQ1YjQyNmQ3ZTVJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--eaa08aa5c1e0063cf54450dc8c6253bb6f4333db;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.016188'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4649,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["modified","date"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:33 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="pfCHZdc9OJsZTBCAMQdhT8wuuoq9Io2ghVfV8uG0",
+        oauth_signature="ZsFMXkMjgeoK6in8cz2kY9d%2Bb4I%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784753", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:34 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"e1f0204a867832373345abdf6d17975f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlNWIxZjExMGM5MGZkN2U1YjJkMGQyN2M3MWQzYjFkY2ZJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--46620ec16a0bc0150acbf552cd7262991b41d3b9;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.017646'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4649,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["modified","date"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:34 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="nL2QaV7k89COfp9xtKRDk912SDBwVCFhZczarEMuirY",
+        oauth_signature="fYQmVShy51hcTqIKFScFTCjreRk%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784754", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:34 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"e1f0204a867832373345abdf6d17975f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlZmU0Mjg3MzQxYzQ0MTM0Mzk5ZGRmZDlhMTZmYjk3ODFJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--b83a6a21362259385e713092f529cade75f54fd1;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.017040'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4649,"name":"moto_gp_circuit","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["the_geom","geometry","geometry","point"],["constructed","date"],["description","string"],["left_corners","number"],["length","string"],["longest_straight","string"],["modified","date"],["name","string"],["right_corners","number"],["width","string"],["created_at","date"],["updated_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:34 GMT
+- request:
+    method: post
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/sql
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="5rv0jNAixB4WQGkVgm7mFBl6D8DbypjcTx2Hgx4xnvE",
+        oauth_signature="G6cv95OSpEhuq6GESR7xLcMTryU%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784754", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:34 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      X-Powered-By:
+      - Express
+      Content-Disposition:
+      - inline; filename=cartodb-query.json; modification-date="Wed, 23 May 2012 14:52:34
+        GMT";
+      Access-Control-Allow-Origin:
+      - ! '*'
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+      Last-Modified:
+      - Wed, 23 May 2012 14:52:34 GMT
+      Cache-Control:
+      - no-cache,max-age=3600,must-revalidate, public
+      X-Cache-Channel:
+      - cartodb_user_384_db:moto_gp_circuit
+      Content-Length:
+      - '830'
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"time":0.128,"total_rows":1,"rows":[{"id":1,"cartodb_id":1,"name":"Losail
+        Circuit","description":"The fabulous Losail International Circuit lies on
+        the outskirts of Doha, the capital city of Qatar. Built in little over a year,
+        the track cost $58 million USD and required round-the-clock dedication from
+        almost 1,000 workers in order to get it ready for the inaugural event - the
+        Marlboro Grand Prix of Qatar on the 2nd October 2004.","created_at":"2012-05-23T16:52:34.219Z","updated_at":"2012-05-23T16:52:34.219Z","the_geom":"0101000020E6100000C1C9367007BA494005FA449E247D3940","the_geom_webmercator":"0101000020110F0000408B6E3C84D95541DF11F60B32664641","length":"5380m","width":"12m","longest_straight":"1068m","left_corners":6,"right_corners":10,"constructed":"2004-01-01T00:00:00.000Z","modified":"2004-01-01T00:00:00.000Z"}]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:34 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit/records/1?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70259176453560
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="7LlHXESSre0c7U7VUsaDjbHp9u8StATUvwYqRHoMOA",
+        oauth_signature="T%2BBJy5x8UDmzar5yCVV8EQObEKs%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337784754", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 14:52:34 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"ee2d90d9b913d1eb70e1e55b7cb2a3c5"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlYWEwZDJhNDcxYmZjY2Q3NjQ5NjBiZTkxM2NiYTRhOWVJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--a69f573950b4719ebbac056a7ed268997e6d39d2;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.016437'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"cartodb_id":1,"constructed":"2004-01-01T00:00:00+01:00","description":"The
+        fabulous Losail International Circuit lies on the outskirts of Doha, the capital
+        city of Qatar. Built in little over a year, the track cost $58 million USD
+        and required round-the-clock dedication from almost 1,000 workers in order
+        to get it ready for the inaugural event - the Marlboro Grand Prix of Qatar
+        on the 2nd October 2004.","left_corners":"6.0","length":"5380m","longest_straight":"1068m","modified":"2004-01-01T00:00:00+01:00","name":"Losail
+        Circuit","right_corners":"10.0","width":"12m","created_at":"2012-05-23T16:52:34+02:00","updated_at":"2012-05-23T16:52:34+02:00","the_geom":"{\"type\":\"Point\",\"coordinates\":[51.453352,25.48884]}"}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 14:52:34 GMT
+recorded_with: VCR 2.1.1

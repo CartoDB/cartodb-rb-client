@@ -1,6 +1,6 @@
 require 'model_specs_helper'
 
-describe 'CartoDB model scopes' do
+describe 'CartoDB model scopes', :vcr => true do
   it "should return all records paginated" do
     create_random_circuits(20)
 

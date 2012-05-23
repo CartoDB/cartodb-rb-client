@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/sql
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - !ruby/object:MIME::Type
+        content_type: application/json
+        raw_media_type: application
+        raw_sub_type: json
+        simplified: application/json
+        media_type: application
+        sub_type: json
+        extensions:
+        - json
+        encoding: 8bit
+        system: !!null 
+        registered: true
+        url:
+        - IANA
+        - RFC4627
+        obsolete: !!null 
+        docs: !!null 
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="lde3tyZkHSr7VTS24wMT7EXUZabIqlFW15jtT3cQDvc",
+        oauth_signature="3hwbr6q4RsRhmU11M%2BES8UddkBY%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337787521", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 15:38:41 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Connection:
+      - keep-alive
+      X-Powered-By:
+      - Express
+      Access-Control-Allow-Origin:
+      - ! '*'
+      Access-Control-Allow-Headers:
+      - X-Requested-With
+      Content-Length:
+      - '60'
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"error":["relation \"non_existing_table\" does not exist"]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 15:38:41 GMT
+recorded_with: VCR 2.1.1

@@ -26,14 +26,27 @@ Spork.prefork do
   require "#{File.dirname(__FILE__)}/support/cartodb_helpers.rb"
   require "#{File.dirname(__FILE__)}/support/cartodb_factories.rb"
 
+  require 'vcr'
+  VCR.configure do |c|
+    c.cassette_library_dir = 'spec/fixtures/cassettes'
+    c.hook_into :typhoeus
+    #c.preserve_exact_body_bytes
+    c.configure_rspec_metadata!
+  end
+
   RSpec.configure do |config|
     config.before(:each) do
-      drop_all_cartodb_tables
+      VCR.use_cassette('clean tables') do
+        drop_all_cartodb_tables
+      end
     end
 
     config.after(:all) do
-      drop_all_cartodb_tables
+      VCR.use_cassette('clean tables') do
+        drop_all_cartodb_tables
+      end
     end
+
   end
 end
 

@@ -1,0 +1,123 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - &70148920780040 !ruby/object:MIME::Type
+        content_type: application/json
+        raw_media_type: application
+        raw_sub_type: json
+        simplified: application/json
+        media_type: application
+        sub_type: json
+        extensions:
+        - json
+        encoding: 8bit
+        system: !!null 
+        registered: true
+        url:
+        - IANA
+        - RFC4627
+        obsolete: !!null 
+        docs: !!null 
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="jHUsf5DB55PHFCNKaSKopnhbdypnCuqKnIEc1KDSC2A",
+        oauth_signature="2UIcbYnf37Q3y1YF3jLH05ahP48%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337787210", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 15:33:30 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Location:
+      - /tables/4692
+      Etag:
+      - ! '"6fd47201727358f75a14683993f3395f"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlYTliNmMyOTQ5NTVjZjEzYTFjM2ZhMWU5YjZlYmRiOWVJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--9c78fc9703c5e47fc581666175755a8193cb19d0;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.654855'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4692,"name":"cartodb_spec","schema":[["cartodb_id","number"],["field1","string"],["field2","number"],["field3","date"],["field4","boolean"],["updated_at","date"],["created_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 15:33:31 GMT
+- request:
+    method: get
+    uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/cartodb_spec?
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - *70148920780040
+      Authorization:
+      - OAuth oauth_consumer_key="0gRpcgKQK8bpcvSzM5ED4NqaSbNQ8ivS4q0pVdJF", oauth_nonce="1QQmy81v5BH7ECfCaSGDgE0oT1fEYldtPl8lME2jOWU",
+        oauth_signature="RXblVAjBgJrF4UF90qsywqBks7s%3D", oauth_signature_method="HMAC-SHA1",
+        oauth_timestamp="1337787211", oauth_token="7PalByYmKY8Dzh76fnt05e0YPXRJino0dyqHZYCw",
+        oauth_version="1.0"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 23 May 2012 15:33:31 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Status:
+      - 200 OK
+      Etag:
+      - ! '"5f725fed30cc1c0e65b6e16a565e3366"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Set-Cookie:
+      - _cartodb_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFRiIlZTVlOTg1ZTBiOTU5ZDVmMzI2YzZjYWQ5OTZhZjA4MjNJIiZ3YXJkZW4udXNlci5jYXJ0b2RiLXJiLWNsaWVudC5rZXkGOwBUSSIWY2FydG9kYi1yYi1jbGllbnQGOwBU--5be567cb37becc044a25ed4fc3306840b9a0ed80;
+        domain=.cartodb.com; path=/; HttpOnly
+      X-Runtime:
+      - '0.017056'
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: ! '{"id":4692,"name":"cartodb_spec","privacy":"PUBLIC","tags":"","schema":[["cartodb_id","number"],["field1","string"],["field2","number"],["field3","date"],["field4","boolean"],["updated_at","date"],["created_at","date"]]}'
+    http_version: '1.1'
+  recorded_at: Wed, 23 May 2012 15:33:31 GMT
+recorded_with: VCR 2.1.1

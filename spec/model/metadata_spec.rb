@@ -1,6 +1,6 @@
 require 'model_specs_helper'
 
-describe 'CartoDB model metadata methods' do
+describe 'CartoDB model metadata methods', :vcr => true do
 
   it "should have a valid CartoDB::Client instance as a connection object" do
     model = MotoGPCircuit.new

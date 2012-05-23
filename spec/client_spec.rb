@@ -1,7 +1,7 @@
 # coding: UTF-8
 require 'spec_helper'
 
-describe 'CartoDB client' do
+describe 'CartoDB client', :vcr => true do
 
   it "should create a table and get its table definition" do
 
