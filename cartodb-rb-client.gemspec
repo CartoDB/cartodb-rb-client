@@ -29,6 +29,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'i18n', '>= 0.5.0', '<= 0.6.0'
   s.add_dependency 'rgeo', '>= 0.3.2'
   s.add_dependency 'rgeo-geojson', '>= 0.2.1'
-  s.add_dependency 'pg', '0.11.0' if postgresql_installed?
+  s.add_dependency('pg', '0.11.0') if postgresql_installed?
   s.add_dependency 'json', '>= 1.5.3'
 end
