@@ -195,7 +195,7 @@ describe 'CartoDB client', :vcr => true do
       {:name => 'field4', :type => 'boolean'}
     ]
 
-    today = DateTime.now
+    today = DateTime.new(2004, 1, 1)
 
     record = CartoDB::Connection.insert_row 'table_1', {
       'field1'      => 'lorem',
@@ -218,7 +218,7 @@ describe 'CartoDB client', :vcr => true do
       {:name => 'field4', :type => 'boolean'}
     ]
 
-    today = DateTime.now
+    today = DateTime.new(2004, 1, 1)
 
     record = CartoDB::Connection.insert_row 'table_1', {
       'field1'      => 'lorem',

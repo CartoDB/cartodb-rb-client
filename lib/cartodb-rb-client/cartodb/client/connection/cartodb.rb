@@ -208,7 +208,7 @@ module CartoDB
           end
 
           request = cartodb_request uri, :post, :params => params do |response|
-            return Utils.parse_json(response)
+            Utils.parse_json(response)
           end
 
           execute_queue

@@ -11,7 +11,7 @@ module CartoDB
 
       def initialize(attributes = {})
         self.class.cartodb_table = nil
-        self.class.send(:set_geometry_type)
+        self.class.send(:set_geometry_type) unless self.class.send(:geometry_type).present?
         self.attributes = attributes
         self.class.send(:update_cartodb_schema) unless schema_synchronized?
       end
