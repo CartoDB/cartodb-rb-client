@@ -2,7 +2,7 @@ require 'model_specs_helper'
 
 describe 'CartoDB model data methods', :vcr => true do
 
-  it "should initialize attributes of the model without persisting them into cartodb using the `new` method" do
+  it "should initialize attributes of the model without persisting them" do
 
     losail_circuit = new_circuit
 

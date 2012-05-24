@@ -48,7 +48,7 @@ describe 'CartoDB model metadata methods', :vcr => true do
     model.columns.should include({:name => 'modified',         :type => 'date'})
   end
 
-  it "should add more columns if the table previously exists and doesn't have all model columns" do
+  it "should add more columns if the table previously exists" do
     table = CartoDB::Connection.create_table 'moto_gp_circuit'
     table.schema.should include(["cartodb_id", "number"])
     table.schema.should include(["name", "string"])
