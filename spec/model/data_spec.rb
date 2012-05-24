@@ -108,7 +108,7 @@ describe 'CartoDB model data methods', :vcr => true do
     record.name.should             be == 'Prueba'
     record.description.should      match /Lorem ipsum dolor sit amet, consectetur adipisicing elit/
     record.latitude.should         be == 40.582394
-    record.longitude.should        be == -3.9941309999999817
+    record.longitude.should        be == -3.994131
     record.length.should           be == '1243m'
 
     losail_circuit.name.should be == 'Prueba'
@@ -124,6 +124,33 @@ describe 'CartoDB model data methods', :vcr => true do
      expect {
       losail_circuit.destroy
     }.to change{CartoDB::Connection.records('moto_gp_circuit').total_rows}.by(-1)
+
+  end
+
+  it "should save polygons in different formats" do
+    polygon_json = '{"type":"MultiPolygon","coordinates":[[[[-3.779297,32.249974],[-8.525391,26.588527],[-2.021484,20.303418],[9.228516,23.563987],[6.943359,29.688053],[5.712891,32.546813]]]]}'
+
+    polygon_model = PolygonGeometryModel.new
+    polygon_model.the_geom = polygon_json
+    polygon_model.the_geom.should eql(RGeo::GeoJSON.decode(polygon_json, :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326)))
+    expect {
+      polygon_model.save.should be_true
+    }.to change{CartoDB::Connection.records('polygon_geometry_model').total_rows}.by(1)
+    polygon_model.the_geom.should eql(RGeo::GeoJSON.decode(polygon_json, :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326)))
+
+    polygon_model = PolygonGeometryModel.new(:the_geom => polygon_json)
+    polygon_model.the_geom.should eql(RGeo::GeoJSON.decode(polygon_json, :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326)))
+    expect {
+      polygon_model.save.should be_true
+    }.to change{CartoDB::Connection.records('polygon_geometry_model').total_rows}.by(1)
+    polygon_model.the_geom.should eql(RGeo::GeoJSON.decode(polygon_json, :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326)))
+
+    polygon_model = PolygonGeometryModel.new(:the_geom => ::JSON.parse(polygon_json))
+    polygon_model.the_geom.should eql(RGeo::GeoJSON.decode(polygon_json, :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326)))
+    expect {
+      polygon_model.save.should be_true
+    }.to change{CartoDB::Connection.records('polygon_geometry_model').total_rows}.by(1)
+    polygon_model.the_geom.should eql(RGeo::GeoJSON.decode(polygon_json, :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326)))
 
   end
 

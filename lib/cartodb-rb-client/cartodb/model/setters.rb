@@ -22,7 +22,6 @@ module CartoDB
         def geometry_type=(geometry_type)
           @geometry_type = geometry_type
         end
-        private :geometry_type=
       end
 
       def cartodb_table=(table)

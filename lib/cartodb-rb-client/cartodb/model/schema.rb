@@ -90,19 +90,18 @@ module CartoDB
           @columns.each do |c|
             column_name = c[:name]
             column_type = c[:type]
-            setup_geometry_column(c) and next if column_name.eql?(GEOMETRY_COLUMN) || column_type.eql?('geometry')
 
-            # unless self.methods.include?(column_name)
+            if column_name.eql?(GEOMETRY_COLUMN) || column_type.eql?('geometry')
+              setup_geometry_column(c)
+            else
               self.send :define_method, column_name do
                 self.attributes[column_name.to_sym]
               end
-            # end
 
-            # unless self.methods.include?("#{column_name}=")
               self.send :define_method, "#{column_name}=" do |value|
                 self.attributes[column_name.to_sym] = value
               end
-            # end
+            end
           end
         end
         private :create_column_accessors

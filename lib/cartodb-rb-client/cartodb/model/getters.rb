@@ -34,15 +34,14 @@ module CartoDB
           columns.reject{|c| %w(cartodb_id created_at updated_at).include?(c[:name])}.compact
         end
 
+        def geometry_type
+          @geometry_type
+        end
+
         def model_columns
           @model_columns || []
         end
         private :model_columns
-
-        def geometry_type
-          @geometry_type
-        end
-        private :geometry_type
 
       end
 

@@ -15,17 +15,25 @@ module CartoDB
 
           geometry_name = geometry_column[:name].to_sym
 
-          self.send :define_method, :the_geom do
-            self.attributes[geometry_name]
-          end
-
-          self.send :define_method, :the_geom= do |the_geom|
-            self.attributes[geometry_name] = the_geom
-          end
-
           case geometry_column[:geometry_type].upcase
           when 'POINT'
+            self.send :define_method, :the_geom do
+              self.attributes[geometry_name]
+            end
+
+            self.send :define_method, :the_geom= do |the_geom|
+              self.attributes[geometry_name] = the_geom
+            end
+
             setup_point_geometry
+          when 'MULTIPOLYGON'
+            self.send :define_method, :the_geom do
+              self.attributes[geometry_name]
+            end
+
+            self.send :define_method, :the_geom= do |the_geom|
+              self.attributes[geometry_name] = convert_to_polygon(the_geom)
+            end
           end
         end
         private :setup_geometry_column
@@ -59,15 +67,34 @@ module CartoDB
 
       def prepare_geo_attributes(attributes)
         return if attributes.nil?
-        longitude = attributes.delete(:longitude)
-        latitude = attributes.delete(:latitude)
-        if latitude && longitude
-          attributes[:the_geom] = RGEO_FACTORY.point(longitude, latitude)
+
+        case self.class.geometry_type
+        when 'point'
+          longitude = attributes.delete(:longitude)
+          latitude = attributes.delete(:latitude)
+
+          attributes[:the_geom] = convert_to_point(latitude, longitude) if latitude && longitude
+        when /polygon/
+          attributes[:the_geom] = convert_to_polygon(attributes[:the_geom])
         end
 
         attributes
       end
       private :prepare_geo_attributes
+
+      def convert_to_point(latitude, longitude)
+        RGEO_FACTORY.point(longitude, latitude)
+      end
+
+      def convert_to_polygon(the_geom)
+        case the_geom
+        when String
+          RGeo::GeoJSON.decode(the_geom, :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326))
+        when Hash
+          RGeo::GeoJSON.decode(::JSON.generate(the_geom), :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326))
+        end
+      end
+      private :convert_to_polygon
 
     end
   end
