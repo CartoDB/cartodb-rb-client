@@ -9,7 +9,7 @@ group :development do
 end
 
 group :test do
-  gem "rspec", "~> 2.3.0"
+  gem "rspec", "~> 2.10.0"
   gem "spork", "~> 0.9.0"
   gem "vcr"
 end
