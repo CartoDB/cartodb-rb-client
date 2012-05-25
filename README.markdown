@@ -1,4 +1,4 @@
-cartoDB Ruby Client
+cartoDB Ruby Client [![Build Status](https://secure.travis-ci.org/Vizzuality/cartodb-rb-client.png)](http://travis-ci.org/Vizzuality/cartodb-rb-client)
 ===================
 
 cartoDB ruby client that allows an easy and simple interaction with the cartoDB API.
@@ -41,7 +41,7 @@ Setup
 3. Setup your cartoDB connection object:
 
         CartoDB::Init.start YAML.load_file(Rails.root.join('config/cartodb_config.yml'))
-        
+
 And that's it. Now you should be able to run querys against the cartoDB servers using the CartoDB::Connection object.
 
 Note: You have to use strings instead of symbols for the configuration hash keys.
