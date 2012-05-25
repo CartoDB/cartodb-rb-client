@@ -16,7 +16,18 @@ Spork.prefork do
   require 'cartodb-rb-client/cartodb'
   require 'active_support/core_ext/array/random_access.rb'
 
-  CartoDB::Settings = YAML.load_file("#{File.dirname(__FILE__)}/support/cartodb_config.yml") unless defined? CartoDB::Settings
+  cartodb_config = {
+    'host'         => 'https://cartodb-rb-client.cartodb.com',
+    'oauth_key'    => ENV['CARTODB_OAUTH_KEY'],
+    'oauth_secret' => ENV['CARTODB_OAUTH_SECRET'],
+    'username'     => ENV['CARTODB_USERNAME'],
+    'password'     => ENV['CARTODB_PASSWORD']
+  }
+
+  if File.exists?("#{File.dirname(__FILE__)}/support/cartodb_config.yml")
+    cartodb_config = YAML.load_file("#{File.dirname(__FILE__)}/support/cartodb_config.yml")
+  end
+  CartoDB::Settings = cartodb_config
   CartoDB::Connection = CartoDB::Client::Connection::Base.new unless defined? CartoDB::Connection
   # CartoDB::Settings = YAML.load_file("#{File.dirname(__FILE__)}/support/database.yml") unless defined? CartoDB::Settings
   # CartoDB::Connection = CartoDB::Client::Connection::Base.new unless defined? CartoDB::Connection
