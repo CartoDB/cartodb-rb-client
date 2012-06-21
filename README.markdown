@@ -19,8 +19,16 @@ Setup
 
         gem 'cartodb-rb-client'
 
-2. Log into http://cartodb.com, get your OAUTH credentials and put them in a YAML file:
+2. Log into http://cartodb.com, and grab your API_KEY or your OAUTH credentials and put them in a YAML file:
 
+    For the API_KEY:
+
+    *cartodb\_config.yml:*
+
+        host: 'YOUR_CARTODB_DOMAIN'
+        api_key: 'YOUR_API_KEY'
+
+    For the OAUTH Credentials:
 
     *cartodb\_config.yml:*
 
@@ -31,6 +39,8 @@ Setup
         oauth_access_token_secret: 'YOUR_OAUTH_ACCES_TOKEN_SECRET'
 
     We also support xAuth protocol. In order to use it, provide your username and password instead of your access token:
+
+    *cartodb\_config.yml:*
 
         host: 'YOUR_CARTODB_DOMAIN'
         oauth_key: 'YOUR_OAUTH_KEY'
@@ -351,4 +361,5 @@ More info
 ---------
 
 You can also check the oficial [cartoDB Documentation](http://developers.cartodb.com/) if you want more info about the cartoDB API.
+
 

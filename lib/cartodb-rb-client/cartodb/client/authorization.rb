@@ -9,11 +9,17 @@ module CartoDB
       def signed_request(request_uri, arguments)
         arguments[:disable_ssl_peer_verification] = true
 
+        if CartoDB::Settings['api_key'].present?
+          arguments[:params][:api_key] = CartoDB::Settings['api_key']
+        end
+
         request = Typhoeus::Request.new(request_uri, arguments)
 
         request = as_multipart(request, arguments[:params]) if arguments[:multipart] == true
 
-        request.headers.merge!({"Authorization" => oauth_helper(request, request_uri).header})
+        unless arguments[:params][:api_key].present?
+          request.headers.merge!({"Authorization" => oauth_helper(request, request_uri).header})
+        end
 
         request
       end

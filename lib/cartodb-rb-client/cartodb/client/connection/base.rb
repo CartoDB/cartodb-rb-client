@@ -29,7 +29,7 @@ module CartoDB
         private :settings
 
         def cartodb_settings?
-          settings.has_key?('oauth_key') && settings.has_key?('oauth_secret')
+          settings.has_key?('api_key') || (settings.has_key?('oauth_key') && settings.has_key?('oauth_secret'))
         end
         private :cartodb_settings?
 
