@@ -1,2 +1,1 @@
-rvm use --create 1.9.2@cartodb-rb-client > /dev/null
-rvm wrapper current textmate
+rvm use --create 1.9.3@cartodb-rb-client > /dev/null
