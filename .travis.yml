@@ -1,6 +1,5 @@
 language: ruby
 bundler_args: --without development
-before_script: "cp spec/support/cartodb_config.yml.travis spec/support/cartodb_config.yml"
 script: "rspec --format=documentation spec"
 
 rvm:
