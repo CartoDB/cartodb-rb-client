@@ -2,10 +2,11 @@
 # CartoDB Credentials
 #############################
 host:
-oauth_key:
-oauth_secret:
-oauth_access_token:
-oauth_access_token_secret:
+api_key:
+# oauth_key:
+# oauth_secret:
+# oauth_access_token:
+# oauth_access_token_secret:
 # username:
 # password:
 
