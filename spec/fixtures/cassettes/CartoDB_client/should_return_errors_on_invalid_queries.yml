@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - &70219582202140 !ruby/object:MIME::Type
+      - &70293202938040 !ruby/object:MIME::Type
         content_type: application/json
         raw_media_type: application
         raw_sub_type: json
@@ -36,7 +36,7 @@ http_interactions:
         bmdpbng=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyMCBBdWcgMjAxMiAwOTozNTowNyBHTVQ=
+        TW9uLCAyMCBBdWcgMjAxMiAxMDo0NTozMSBHTVQ=
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOA==
@@ -64,14 +64,14 @@ http_interactions:
       !binary "U2V0LUNvb2tpZQ==":
       - !binary |-
         X2NhcnRvZGJfc2Vzc2lvbj1CQWg3QjBraUQzTmxjM05wYjI1ZmFXUUdPZ1pG
-        UmlJbFlUTmpZVFEzT1dWa1lXVXhNekJpWXpRek5UWXhaV0prWVdZM1pEWmxN
-        emhKSWlaM1lYSmtaVzR1ZFhObGNpNWpZWEowYjJSaUxYSmlMV05zYVdWdWRD
-        NXJaWGtHT3dCVVNTSVdZMkZ5ZEc5a1lpMXlZaTFqYkdsbGJuUUdPd0JVLS1k
-        OTA0YmY1MjliNTQ4ZjM1MTJkNDYwMzA3Njk2NmRmNjZjYWU4OTBmOyBkb21h
+        UmlJbE5qTmhNMlF5TldFMk16RXlabU13WkdJM05XRXpNak01TUdObFpESmhN
+        akpKSWlaM1lYSmtaVzR1ZFhObGNpNWpZWEowYjJSaUxYSmlMV05zYVdWdWRD
+        NXJaWGtHT3dCVVNTSVdZMkZ5ZEc5a1lpMXlZaTFqYkdsbGJuUUdPd0JVLS04
+        ZjY0ZmU1Mzg5MmYyYzU2M2E2YWNjNDM1YmM1Y2RmMzNjMzMzNjY0OyBkb21h
         aW49LmNhcnRvZGIuY29tOyBwYXRoPS87IEh0dHBPbmx5
       !binary "WC1SdW50aW1l":
       - !binary |-
-        MC4wMDQ4MDE=
+        MC4wNjA5ODQ=
       !binary "Q29udGVudC1FbmNvZGluZw==":
       - !binary |-
         Z3ppcA==
@@ -81,7 +81,7 @@ http_interactions:
         eyJ0b3RhbF9lbnRyaWVzIjowLCJ0YWJsZXMiOltdfQ==
     http_version: !binary |-
       MS4x
-  recorded_at: Mon, 20 Aug 2012 09:35:11 GMT
+  recorded_at: Mon, 20 Aug 2012 10:45:31 GMT
 - request:
     method: post
     uri: https://cartodb-rb-client.cartodb.com/api/v1/sql
@@ -90,7 +90,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - *70219582202140
+      - *70293202938040
   response:
     status:
       code: 400
@@ -102,7 +102,7 @@ http_interactions:
         bmdpbng=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyMCBBdWcgMjAxMiAwOTozNTowNyBHTVQ=
+        TW9uLCAyMCBBdWcgMjAxMiAxMDo0NTozMiBHTVQ=
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOA==
@@ -128,5 +128,5 @@ http_interactions:
         ZXMgbm90IGV4aXN0Il19
     http_version: !binary |-
       MS4x
-  recorded_at: Mon, 20 Aug 2012 09:35:11 GMT
+  recorded_at: Mon, 20 Aug 2012 10:45:32 GMT
 recorded_with: VCR 2.2.4

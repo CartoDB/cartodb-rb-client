@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - &70337242320340 !ruby/object:MIME::Type
+      - &70293202938040 !ruby/object:MIME::Type
         content_type: application/json
         raw_media_type: application
         raw_sub_type: json
@@ -36,7 +36,7 @@ http_interactions:
         bmdpbng=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyMCBBdWcgMjAxMiAwOTo0Mzo0MCBHTVQ=
+        TW9uLCAyMCBBdWcgMjAxMiAxMDo0NjoxOSBHTVQ=
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOA==
@@ -54,7 +54,7 @@ http_interactions:
         MjAwIE9L
       !binary "RXRhZw==":
       - !binary |-
-        IjcxYzU3YjA2Mjk0ZGRlZDEyMjQyMGVhYzczNTcyOTJhIg==
+        IjQzY2U4MTM5MmM0YTE3MTU4ZjlkODI0ODk3NGFmNDBjIg==
       !binary "Q2FjaGUtQ29udHJvbA==":
       - !binary |-
         bWF4LWFnZT0wLCBwcml2YXRlLCBtdXN0LXJldmFsaWRhdGU=
@@ -64,21 +64,21 @@ http_interactions:
       !binary "U2V0LUNvb2tpZQ==":
       - !binary |-
         X2NhcnRvZGJfc2Vzc2lvbj1CQWg3QjBraUQzTmxjM05wYjI1ZmFXUUdPZ1pG
-        UmlJbFkyVTVNMlV3TnpWa09XVm1aVFJtTkdZelpEZzJOVFl6WWpSa1ptWmhN
-        V1JKSWlaM1lYSmtaVzR1ZFhObGNpNWpZWEowYjJSaUxYSmlMV05zYVdWdWRD
-        NXJaWGtHT3dCVVNTSVdZMkZ5ZEc5a1lpMXlZaTFqYkdsbGJuUUdPd0JVLS03
-        YjBlYzAxNDQxNzM2ZGE0Yjc4ZjQ3N2YxYjJiMWQ0YTcyYWExNjZlOyBkb21h
+        UmlJbFpXUXlNalkzWlRGaU5XTXdZakpoWVdGaVlXRXdNek13Tm1JM1ltVTJP
+        VEJKSWlaM1lYSmtaVzR1ZFhObGNpNWpZWEowYjJSaUxYSmlMV05zYVdWdWRD
+        NXJaWGtHT3dCVVNTSVdZMkZ5ZEc5a1lpMXlZaTFqYkdsbGJuUUdPd0JVLS1k
+        MTAyMjJlYzJiNjBjNmUyNzkzNTYwODE2ZmU2MjA2NmJjODIwMWNmOyBkb21h
         aW49LmNhcnRvZGIuY29tOyBwYXRoPS87IEh0dHBPbmx5
       !binary "WC1SdW50aW1l":
       - !binary |-
-        MC4wMTI2Njk=
+        MC4wMDg0OTk=
       !binary "Q29udGVudC1FbmNvZGluZw==":
       - !binary |-
         Z3ppcA==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJ0b3RhbF9lbnRyaWVzIjoxLCJ0YWJsZXMiOlt7ImlkIjo4MTMwLCJuYW1l
+        eyJ0b3RhbF9lbnRyaWVzIjoxLCJ0YWJsZXMiOlt7ImlkIjo4MjA4LCJuYW1l
         IjoibW90b19ncF9jaXJjdWl0IiwicHJpdmFjeSI6IlBVQkxJQyIsInRhZ3Mi
         OiIiLCJzY2hlbWEiOltbImNhcnRvZGJfaWQiLCJudW1iZXIiXSxbInRoZV9n
         ZW9tIiwiZ2VvbWV0cnkiLCJnZW9tZXRyeSIsInBvaW50Il0sWyJjb25zdHJ1
@@ -88,10 +88,10 @@ http_interactions:
         WyJuYW1lIiwic3RyaW5nIl0sWyJyaWdodF9jb3JuZXJzIiwibnVtYmVyIl0s
         WyJ3aWR0aCIsInN0cmluZyJdLFsiY3JlYXRlZF9hdCIsImRhdGUiXSxbInVw
         ZGF0ZWRfYXQiLCJkYXRlIl1dLCJ1cGRhdGVkX2F0IjoiMjAxMi0wOC0yMFQx
-        MTo0MzozOCswMjowMCIsInJvd3NfY291bnRlZCI6MH1dfQ==
+        Mjo0NjoxNiswMjowMCIsInJvd3NfY291bnRlZCI6MH1dfQ==
     http_version: !binary |-
       MS4x
-  recorded_at: Mon, 20 Aug 2012 09:43:40 GMT
+  recorded_at: Mon, 20 Aug 2012 10:46:19 GMT
 - request:
     method: delete
     uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/moto_gp_circuit?api_key=242015a0c60666b5cdff0ce614334668817b52ac
@@ -100,7 +100,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - *70337242320340
+      - *70293202938040
   response:
     status:
       code: 200
@@ -112,7 +112,7 @@ http_interactions:
         bmdpbng=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyMCBBdWcgMjAxMiAwOTo0Mzo0MCBHTVQ=
+        TW9uLCAyMCBBdWcgMjAxMiAxMDo0NjoxOSBHTVQ=
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOA==
@@ -137,14 +137,14 @@ http_interactions:
       !binary "U2V0LUNvb2tpZQ==":
       - !binary |-
         X2NhcnRvZGJfc2Vzc2lvbj1CQWg3QjBraUQzTmxjM05wYjI1ZmFXUUdPZ1pG
-        UmlJbE9UWmhPRE00TnpSa016VXlNVFpqT0dZNE9UVmtZV0UzWW1NeFlXRmxP
-        VFJKSWlaM1lYSmtaVzR1ZFhObGNpNWpZWEowYjJSaUxYSmlMV05zYVdWdWRD
-        NXJaWGtHT3dCVVNTSVdZMkZ5ZEc5a1lpMXlZaTFqYkdsbGJuUUdPd0JVLS0y
-        NjFmZGVjNWJjNzU2YzI0OTYzNGZlZTg0NzczZWJhZTBlMWNjMTI3OyBkb21h
+        UmlJbFlUWTNPRGxpTTJOak9UUTJOelZpWTJabVpEaGxOV1U0Tm1SalptTXdN
+        R1ZKSWlaM1lYSmtaVzR1ZFhObGNpNWpZWEowYjJSaUxYSmlMV05zYVdWdWRD
+        NXJaWGtHT3dCVVNTSVdZMkZ5ZEc5a1lpMXlZaTFqYkdsbGJuUUdPd0JVLS1k
+        ZmUxMDRiMWE0ZTQzZWZkNmU4ZTEyMTAzOWJlNDMzOGNmNTA2ZTM5OyBkb21h
         aW49LmNhcnRvZGIuY29tOyBwYXRoPS87IEh0dHBPbmx5
       !binary "WC1SdW50aW1l":
       - !binary |-
-        MC4xNjExMjE=
+        MC4yMjQ5OTE=
       !binary "Q29udGVudC1FbmNvZGluZw==":
       - !binary |-
         Z3ppcA==
@@ -154,7 +154,7 @@ http_interactions:
         IA==
     http_version: !binary |-
       MS4x
-  recorded_at: Mon, 20 Aug 2012 09:43:41 GMT
+  recorded_at: Mon, 20 Aug 2012 10:46:19 GMT
 - request:
     method: get
     uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/my_table_with_custom_name?api_key=242015a0c60666b5cdff0ce614334668817b52ac
@@ -163,7 +163,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - *70337242320340
+      - *70293202938040
   response:
     status:
       code: 404
@@ -175,7 +175,7 @@ http_interactions:
         bmdpbng=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyMCBBdWcgMjAxMiAwOTo0Mzo0MSBHTVQ=
+        TW9uLCAyMCBBdWcgMjAxMiAxMDo0NjoxOSBHTVQ=
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOA==
@@ -200,14 +200,14 @@ http_interactions:
       !binary "U2V0LUNvb2tpZQ==":
       - !binary |-
         X2NhcnRvZGJfc2Vzc2lvbj1CQWg3QjBraUQzTmxjM05wYjI1ZmFXUUdPZ1pG
-        UmlJbE5EZzRaRFF5WVdFMlpXTXpNRE0wTUdSaU9HVXhZekZqT0dObU1qSTVO
-        elZKSWlaM1lYSmtaVzR1ZFhObGNpNWpZWEowYjJSaUxYSmlMV05zYVdWdWRD
-        NXJaWGtHT3dCVVNTSVdZMkZ5ZEc5a1lpMXlZaTFqYkdsbGJuUUdPd0JVLS0y
-        NWQ5MTRjMDg4NjdlMTI0ZGNhNzgzM2MzMWE4ZWRkNTMzMzBiYjY0OyBkb21h
+        UmlJbFpqUmxNalF4WVdWbE5tUm1ZVFF4WXpka01qWXpObVJrWVRoa09XUTFO
+        RFpKSWlaM1lYSmtaVzR1ZFhObGNpNWpZWEowYjJSaUxYSmlMV05zYVdWdWRD
+        NXJaWGtHT3dCVVNTSVdZMkZ5ZEc5a1lpMXlZaTFqYkdsbGJuUUdPd0JVLS01
+        MTcyZWY5NjBhYmQwYjU0OTFlY2NiOWU4ZTllNDNmMjI0OTJiODYyOyBkb21h
         aW49LmNhcnRvZGIuY29tOyBwYXRoPS87IEh0dHBPbmx5
       !binary "WC1SdW50aW1l":
       - !binary |-
-        MC4wMDQyMzA=
+        MC4wMDQ1MDg=
       !binary "Q29udGVudC1FbmNvZGluZw==":
       - !binary |-
         Z3ppcA==
@@ -217,7 +217,7 @@ http_interactions:
         IA==
     http_version: !binary |-
       MS4x
-  recorded_at: Mon, 20 Aug 2012 09:43:41 GMT
+  recorded_at: Mon, 20 Aug 2012 10:46:19 GMT
 - request:
     method: get
     uri: https://cartodb-rb-client.cartodb.com/api/v1/tables/my_table_with_custom_name?api_key=242015a0c60666b5cdff0ce614334668817b52ac
@@ -226,7 +226,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - *70337242320340
+      - *70293202938040
   response:
     status:
       code: 404
@@ -238,7 +238,7 @@ http_interactions:
         bmdpbng=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyMCBBdWcgMjAxMiAwOTo0Mzo0MSBHTVQ=
+        TW9uLCAyMCBBdWcgMjAxMiAxMDo0NjoxOSBHTVQ=
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOA==
@@ -263,14 +263,14 @@ http_interactions:
       !binary "U2V0LUNvb2tpZQ==":
       - !binary |-
         X2NhcnRvZGJfc2Vzc2lvbj1CQWg3QjBraUQzTmxjM05wYjI1ZmFXUUdPZ1pG
-        UmlJbE5EWmpaamhoTURNeU16QTRaVE5pTkRFeU5EVTVaakEzWWpNM09UVXpP
-        VGxKSWlaM1lYSmtaVzR1ZFhObGNpNWpZWEowYjJSaUxYSmlMV05zYVdWdWRD
-        NXJaWGtHT3dCVVNTSVdZMkZ5ZEc5a1lpMXlZaTFqYkdsbGJuUUdPd0JVLS0z
-        ODE1ZDY5Mzk2ZmZkZmFmZDFiMjlhZDNjYTVmYzRmMDMzM2UyMTY0OyBkb21h
+        UmlJbE56bGtPV0psWmpJMllqRTROMlE0T0RBelpETTJOakZrT0dSalpHSXhO
+        emxKSWlaM1lYSmtaVzR1ZFhObGNpNWpZWEowYjJSaUxYSmlMV05zYVdWdWRD
+        NXJaWGtHT3dCVVNTSVdZMkZ5ZEc5a1lpMXlZaTFqYkdsbGJuUUdPd0JVLS04
+        OTc3MDgxNmU1MDZkMWI1MDVmYmVhYmFmMmEyNmY5ZDUzOWI1YTU1OyBkb21h
         aW49LmNhcnRvZGIuY29tOyBwYXRoPS87IEh0dHBPbmx5
       !binary "WC1SdW50aW1l":
       - !binary |-
-        MC4wMDQ1MzY=
+        MC4wMDQwNTM=
       !binary "Q29udGVudC1FbmNvZGluZw==":
       - !binary |-
         Z3ppcA==
@@ -280,7 +280,7 @@ http_interactions:
         IA==
     http_version: !binary |-
       MS4x
-  recorded_at: Mon, 20 Aug 2012 09:43:41 GMT
+  recorded_at: Mon, 20 Aug 2012 10:46:19 GMT
 - request:
     method: post
     uri: https://cartodb-rb-client.cartodb.com/api/v1/tables
@@ -289,7 +289,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - *70337242320340
+      - *70293202938040
   response:
     status:
       code: 200
@@ -301,7 +301,7 @@ http_interactions:
         bmdpbng=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyMCBBdWcgMjAxMiAwOTo0Mzo0MSBHTVQ=
+        TW9uLCAyMCBBdWcgMjAxMiAxMDo0NjoyMSBHTVQ=
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOA==
@@ -319,10 +319,10 @@ http_interactions:
         MjAwIE9L
       !binary "TG9jYXRpb24=":
       - !binary |-
-        L3RhYmxlcy84MTMx
+        L3RhYmxlcy84MjA5
       !binary "RXRhZw==":
       - !binary |-
-        ImFiNGMzYzZiNzhlMDk3MzI4ODU5NTVmZTI3YWE2ZGJiIg==
+        Ijk0NDRhMzhhZmU0ZjkzNjM0YjM3ODUzNDZhYWNiOTk3Ig==
       !binary "Q2FjaGUtQ29udHJvbA==":
       - !binary |-
         bWF4LWFnZT0wLCBwcml2YXRlLCBtdXN0LXJldmFsaWRhdGU=
@@ -332,26 +332,26 @@ http_interactions:
       !binary "U2V0LUNvb2tpZQ==":
       - !binary |-
         X2NhcnRvZGJfc2Vzc2lvbj1CQWg3QjBraUQzTmxjM05wYjI1ZmFXUUdPZ1pG
-        UmlJbE1qRXhZV05sWWpKbVlqUTFObVl5Wm1NM01HVTNNalJtTjJOaU0yWTFZ
-        elpKSWlaM1lYSmtaVzR1ZFhObGNpNWpZWEowYjJSaUxYSmlMV05zYVdWdWRD
-        NXJaWGtHT3dCVVNTSVdZMkZ5ZEc5a1lpMXlZaTFqYkdsbGJuUUdPd0JVLS1h
-        YTRlYzI0M2EyN2U1NjkyMGU4YzMzOWU1NWQyMmUyYTA3ZGRhMWJjOyBkb21h
+        UmlJbFpqVTJNemc1TURjNE0yWXdZalJoTVRFNU16YzFabUZqT1dJME1qUmla
+        V05KSWlaM1lYSmtaVzR1ZFhObGNpNWpZWEowYjJSaUxYSmlMV05zYVdWdWRD
+        NXJaWGtHT3dCVVNTSVdZMkZ5ZEc5a1lpMXlZaTFqYkdsbGJuUUdPd0JVLS0y
+        OTU5MTI4YWU0MzFhYWIwM2MwYjVhN2Q4ODhkMzg1YjI2MjgzOGRjOyBkb21h
         aW49LmNhcnRvZGIuY29tOyBwYXRoPS87IEh0dHBPbmx5
       !binary "WC1SdW50aW1l":
       - !binary |-
-        MC41NjQ3MTg=
+        MS41MTIzOTE=
       !binary "Q29udGVudC1FbmNvZGluZw==":
       - !binary |-
         Z3ppcA==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ODEzMSwibmFtZSI6Im15X3RhYmxlX3dpdGhfY3VzdG9tX25hbWUi
+        eyJpZCI6ODIwOSwibmFtZSI6Im15X3RhYmxlX3dpdGhfY3VzdG9tX25hbWUi
         LCJzY2hlbWEiOltbImNhcnRvZGJfaWQiLCJudW1iZXIiXSxbInRoZV9nZW9t
         IiwiZ2VvbWV0cnkiLCJnZW9tZXRyeSIsInBvaW50Il0sWyJkZXNjcmlwdGlv
         biIsInN0cmluZyJdLFsibmFtZSIsInN0cmluZyJdLFsiY3JlYXRlZF9hdCIs
         ImRhdGUiXSxbInVwZGF0ZWRfYXQiLCJkYXRlIl1dfQ==
     http_version: !binary |-
       MS4x
-  recorded_at: Mon, 20 Aug 2012 09:43:41 GMT
+  recorded_at: Mon, 20 Aug 2012 10:46:21 GMT
 recorded_with: VCR 2.2.4

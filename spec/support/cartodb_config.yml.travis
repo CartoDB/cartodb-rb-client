@@ -1,5 +1,0 @@
-#############################
-# CartoDB Credentials
-#############################
-host: https://cartodb-rb-client-travis.cartodb.com
-api_key: 16e27a82f6bee3f2f7b51c09fd3aa0786f6053f9
