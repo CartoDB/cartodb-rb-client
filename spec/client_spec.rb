@@ -286,7 +286,7 @@ describe 'CartoDB client', :vcr => true do
       row.cartodb_id.should be > 0
       row.name.should_not be_empty
       row.latitude.should be == 40.42222
-      row.longitude.should be == -3.6996199999999817
+      row.longitude.should be == -3.69962
       row.description.should_not be_empty
       row.created_at.should_not be_nil
       row.updated_at.should_not be_nil
