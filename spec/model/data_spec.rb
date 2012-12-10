@@ -154,4 +154,17 @@ describe 'CartoDB model data methods', :vcr => true do
 
   end
 
+  it "should save geometries in different formats" do
+    geometry_json = '{"type":"Geometry","coordinates":[[[[-3.779297,32.249974],[-8.525391,26.588527],[-2.021484,20.303418],[9.228516,23.563987],[6.943359,29.688053],[5.712891,32.546813]]]]}'
+
+    geometry_model = GeometryGeometryModel.new
+    geometry_model.the_geom = geometry_json
+    geometry_model.the_geom.should eql(RGeo::GeoJSON.decode(geometry_json, :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326)))
+    expect {
+      geometry_model.save.should be_true
+    }.to change{CartoDB::Connection.records('geometry_geometry_model').total_rows}.by(1)
+    geometry_model.the_geom.should eql(RGeo::GeoJSON.decode(geometry_json, :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326)))
+
+  end
+
 end

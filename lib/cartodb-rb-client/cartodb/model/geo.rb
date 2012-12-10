@@ -26,13 +26,13 @@ module CartoDB
             end
 
             setup_point_geometry
-          when 'MULTIPOLYGON'
+          when 'MULTIPOLYGON', 'GEOMETRY'
             self.send :define_method, :the_geom do
               self.attributes[geometry_name]
             end
 
             self.send :define_method, :the_geom= do |the_geom|
-              self.attributes[geometry_name] = convert_to_polygon(the_geom)
+              self.attributes[geometry_name] = convert_to_geometry(the_geom)
             end
           end
         end
@@ -75,7 +75,7 @@ module CartoDB
 
           attributes[:the_geom] = convert_to_point(latitude, longitude) if latitude && longitude
         when /polygon/
-          attributes[:the_geom] = convert_to_polygon(attributes[:the_geom])
+          attributes[:the_geom] = convert_to_geometry(attributes[:the_geom])
         end
 
         attributes
@@ -86,7 +86,7 @@ module CartoDB
         RGEO_FACTORY.point(longitude, latitude)
       end
 
-      def convert_to_polygon(the_geom)
+      def convert_to_geometry(the_geom)
         case the_geom
         when String
           RGeo::GeoJSON.decode(the_geom, :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326))
@@ -94,7 +94,7 @@ module CartoDB
           RGeo::GeoJSON.decode(::JSON.generate(the_geom), :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326))
         end
       end
-      private :convert_to_polygon
+      private :convert_to_geometry
 
     end
   end

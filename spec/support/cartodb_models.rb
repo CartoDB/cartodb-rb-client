@@ -26,4 +26,9 @@ VCR.use_cassette('cartodb spec models') do
     set_geometry_type :polygon
     field :another_column
   end
+
+  class GeometryGeometryModel < CartoDB::Model::Base
+    set_geometry_type :geometry
+    field :another_column
+  end
 end

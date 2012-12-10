@@ -33,19 +33,19 @@ describe 'CartoDB model metadata methods', :vcr => true do
 
     model.columns.should_not be_nil
     model.columns.should have(13).items
-    model.columns.should include({:name => 'cartodb_id',       :type => 'number'})
-    model.columns.should include({:name => 'name',             :type => 'string'})
-    model.columns.should include({:name => 'description',      :type => 'string'})
-    model.columns.should include({:name => 'the_geom',         :type => 'geometry', :geometry_type => 'point'})
-    model.columns.should include({:name => 'created_at',       :type => 'date'})
-    model.columns.should include({:name => 'updated_at',       :type => 'date'})
-    model.columns.should include({:name => 'length',           :type => 'string'})
-    model.columns.should include({:name => 'width',            :type => 'string'})
-    model.columns.should include({:name => 'left_corners',     :type => 'number'})
-    model.columns.should include({:name => 'right_corners',    :type => 'number'})
-    model.columns.should include({:name => 'longest_straight', :type => 'string'})
-    model.columns.should include({:name => 'constructed',      :type => 'date'})
-    model.columns.should include({:name => 'modified',         :type => 'date'})
+    model.columns.should include({:name => 'cartodb_id',       :type => 'number'                              })
+    model.columns.should include({:name => 'name',             :type => 'string'                              })
+    model.columns.should include({:name => 'description',      :type => 'string'                              })
+    model.columns.should include({:name => 'the_geom',         :type => 'geometry', :geometry_type => 'point' })
+    model.columns.should include({:name => 'created_at',       :type => 'date'                                })
+    model.columns.should include({:name => 'updated_at',       :type => 'date'                                })
+    model.columns.should include({:name => 'length',           :type => 'string'                              })
+    model.columns.should include({:name => 'width',            :type => 'string'                              })
+    model.columns.should include({:name => 'left_corners',     :type => 'number'                              })
+    model.columns.should include({:name => 'right_corners',    :type => 'number'                              })
+    model.columns.should include({:name => 'longest_straight', :type => 'string'                              })
+    model.columns.should include({:name => 'constructed',      :type => 'date'                                })
+    model.columns.should include({:name => 'modified',         :type => 'date'                                })
   end
 
   it "should add more columns if the table previously exists" do
@@ -121,4 +121,10 @@ describe 'CartoDB model metadata methods', :vcr => true do
     columns.should include({:name => 'another_column', :type => 'string'})
   end
 
+  it "should create model with geometry type geometry columns" do
+    columns = GeometryGeometryModel.data_columns
+    columns.should have(4).items
+    columns.should include({:name => 'the_geom',       :type => 'geometry', :geometry_type => 'geometry'})
+    columns.should include({:name => 'another_column', :type => 'string'})
+  end
 end
