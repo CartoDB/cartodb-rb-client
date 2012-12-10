@@ -3,6 +3,8 @@ source "http://rubygems.org"
 # Specify your gem's dependencies in cartodb-rb-client.gemspec
 gemspec
 
+gem 'rake'
+
 group :development do
   gem "bundler", "> 1.0.0"
   gem 'debugger'
