@@ -97,7 +97,7 @@ Results:
      :name=>"_20120314_21932_1fx2580whs_features",
      :schema=>
      [["cartodb_id", "number"],
-      ["the_geom", "geometry", "geometry", "point"],
+      ["the_geom", "geometry", "geometry", "geometry"],
       ["comments", "string"],
       ["country", "string"],
       ["criteria", "string"],
@@ -193,7 +193,7 @@ Results:
       :tags => "",
       :schema =>
       [["cartodb_id", "number"],
-       ["the_geom", "geometry", "geometry", "point"],
+       ["the_geom", "geometry", "geometry", "geometry"],
        ["field1", "string"],
        ["created_at", "string"],
        ["updated_at", "string"]],

@@ -7,6 +7,9 @@ gem 'rake'
 
 group :development do
   gem "bundler", "> 1.0.0"
+end
+
+group :development, :test do
   gem 'debugger'
 end
 

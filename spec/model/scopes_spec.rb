@@ -11,8 +11,8 @@ describe 'CartoDB model scopes', :vcr => true do
     circuits.first.cartodb_id.should be == 1
     circuits.first.name.should be == 'circuit #1'
     circuits.first.description.should be == 'awesome circuit #1'
-    circuits.first.latitude.should be == 25.488840
-    circuits.first.longitude.should be == 51.453352
+    circuits.first.the_geom.y.should be == 25.488840
+    circuits.first.the_geom.x.should be == 51.453352
     circuits.first.length.should be == '5380m'
     circuits.first.width.should be == '12m'
     circuits.first.left_corners.should be == 6
@@ -40,8 +40,8 @@ describe 'CartoDB model scopes', :vcr => true do
     circuit.cartodb_id.should be == 1
     circuit.name.should be == 'circuit #1'
     circuit.description.should be == 'awesome circuit #1'
-    circuit.latitude.should be == 25.488840
-    circuit.longitude.should be == 51.453352
+    circuit.the_geom.y.should be == 25.488840
+    circuit.the_geom.x.should be == 51.453352
     circuit.length.should be == '5380m'
     circuit.width.should be == '12m'
     circuit.left_corners.should be == 6
@@ -55,8 +55,8 @@ describe 'CartoDB model scopes', :vcr => true do
     same_circuit.cartodb_id.should be == 1
     same_circuit.name.should be == 'circuit #1'
     same_circuit.description.should be == 'awesome circuit #1'
-    same_circuit.latitude.should be == 25.488840
-    same_circuit.longitude.should be == 51.453352
+    same_circuit.the_geom.y.should be == 25.488840
+    same_circuit.the_geom.x.should be == 51.453352
     same_circuit.length.should be == '5380m'
     same_circuit.width.should be == '12m'
     same_circuit.left_corners.should be == 6
@@ -140,8 +140,8 @@ describe 'CartoDB model scopes', :vcr => true do
     circuits.first.cartodb_id.should be == 1
     circuits.first.name.should be == 'circuit #1'
     circuits.first.description.should be_nil
-    circuits.first.latitude.should be_nil
-    circuits.first.longitude.should be_nil
+    circuits.first.the_geom.y.should be_nil
+    circuits.first.the_geom.x.should be_nil
     circuits.first.length.should be_nil
     circuits.first.width.should be_nil
     circuits.first.left_corners.should be_nil
@@ -156,8 +156,8 @@ describe 'CartoDB model scopes', :vcr => true do
     circuits.first.cartodb_id.should be == 1
     circuits.first.name.should be == 'circuit #1'
     circuits.first.description.should be_nil
-    circuits.first.latitude.should be_nil
-    circuits.first.longitude.should be_nil
+    circuits.first.the_geom.y.should be_nil
+    circuits.first.the_geom.x.should be_nil
     circuits.first.length.should be_nil
     circuits.first.width.should be_nil
     circuits.first.left_corners.should be_nil

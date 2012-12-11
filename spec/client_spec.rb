@@ -15,7 +15,7 @@ describe 'CartoDB client', :vcr => true do
     table.schema.should include(["updated_at", "date"])
     table.schema.should include(["name", "string"])
     table.schema.should include(["description", "string"])
-    table.schema.should include(["the_geom", "geometry", "geometry", "point"])
+    table.schema.should include(["the_geom", "geometry", "geometry", "geometry"])
   end
 
   it "should create a table forcing the schema and get its table definition" do
@@ -53,8 +53,8 @@ describe 'CartoDB client', :vcr => true do
 
     records.rows.first.cartodb_id.should be > 0
     records.rows.first.title.should be == "Aflaj Irrigation Systems of Oman"
-    records.rows.first.latitude.should be > 0
-    records.rows.first.longitude.should be > 0
+    records.rows.first.the_geom.x.should be > 0
+    records.rows.first.the_geom.y.should be > 0
     records.rows.first.description.should match /A qanāt \(from Arabic: قناة‎\) \(Iran, Syria and Jordan\) is a water management system used to provide/
     records.rows.first.region.should be == "Dakhiliya, Sharqiya and Batinah Regions"
     records.rows.first.type.should be == "cultural"
@@ -87,8 +87,8 @@ describe 'CartoDB client', :vcr => true do
     end
   end
 
-  it "should create a table with POINT type geometry" do
-    table = CartoDB::Connection.create_table 'cartodb_spec', 'point'
+  it "should create a table with GEOMETRY type geometry" do
+    table = CartoDB::Connection.create_table 'cartodb_spec'
 
     table.should_not be_nil
     table = CartoDB::Connection.table 'cartodb_spec'
@@ -98,21 +98,7 @@ describe 'CartoDB client', :vcr => true do
     table.schema.should include(["updated_at", "date"])
     table.schema.should include(["name", "string"])
     table.schema.should include(["description", "string"])
-    table.schema.should include(["the_geom", "geometry", "geometry", "point"])
-  end
-
-  it "should create a table with MULTIPOLYGON type geometry" do
-    table = CartoDB::Connection.create_table 'cartodb_spec', 'multipolygon'
-
-    table.should_not be_nil
-    table = CartoDB::Connection.table 'cartodb_spec'
-    table.schema.should have(6).items
-    table.schema.should include(["cartodb_id", "number"])
-    table.schema.should include(["created_at", "date"])
-    table.schema.should include(["updated_at", "date"])
-    table.schema.should include(["name", "string"])
-    table.schema.should include(["description", "string"])
-    table.schema.should include(["the_geom", "geometry", "geometry", "multipolygon"])
+    table.schema.should include(["the_geom", "geometry", "geometry", "geometry"])
   end
 
   it "should rename an existing table" do
@@ -122,20 +108,6 @@ describe 'CartoDB client', :vcr => true do
 
     table = CartoDB::Connection.rename_table 'cartodb_spec', 'renamed_cartodb_spec'
     table.name.should be == 'renamed_cartodb_spec'
-  end
-
-  it "should create a table with MULTILINESTRING type geometry" do
-    table = CartoDB::Connection.create_table 'cartodb_spec', 'multilinestring'
-
-    table.should_not be_nil
-    table = CartoDB::Connection.table 'cartodb_spec'
-    table.schema.should have(6).items
-    table.schema.should include(["cartodb_id", "number"])
-    table.schema.should include(["created_at", "date"])
-    table.schema.should include(["updated_at", "date"])
-    table.schema.should include(["name", "string"])
-    table.schema.should include(["description", "string"])
-    table.schema.should include(["the_geom", "geometry", "geometry", "multilinestring"])
   end
 
   it "should add and remove colums in a previously created table" do
@@ -285,8 +257,8 @@ describe 'CartoDB client', :vcr => true do
     results.rows.each do |row|
       row.cartodb_id.should be > 0
       row.name.should_not be_empty
-      row.latitude.should be == 40.42222
-      row.longitude.should be == -3.69962
+      row.the_geom.y.should be == 40.42222
+      row.the_geom.x.should be == -3.69962
       row.description.should_not be_empty
       row.created_at.should_not be_nil
       row.updated_at.should_not be_nil
