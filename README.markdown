@@ -1,3 +1,5 @@
+IMPORTANT: this library is deprecated and it could stop working at any time.
+
 cartoDB Ruby Client [![Build Status](https://secure.travis-ci.org/Vizzuality/cartodb-rb-client.png)](http://travis-ci.org/Vizzuality/cartodb-rb-client)
 ===================
 
