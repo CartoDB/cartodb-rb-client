@@ -346,7 +346,7 @@ Example:
     10.times{ CartoDB::Connection.insert_row 'table_1', :field1 => 'cartoDB is awesome!'}
 
     # And now, the query itself
-    CartoDB::Connection.query 'SELECT * FROM table_1', :page => 1,
+    CartoDB::Connection.query 'SELECT * FROM table_1', :page => 1
 :rows_per_page => 5
 
 Results:
